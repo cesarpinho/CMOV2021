@@ -234,29 +234,29 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="81dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="25dp">
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/btn_register_link"
+                        android:id="@+id/btn_register_action"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_margin="10dp"
-                        android:layout_marginTop="20dp"
                         android:layout_weight="0.5"
                         android:background="@drawable/button_background"
                         android:fontFamily="@font/amatic_sc"
                         android:text="@string/str_register"
+                        android:textColor="@color/colorLight"
                         android:textSize="24sp" />
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="2" />
                 </LinearLayout>
 
