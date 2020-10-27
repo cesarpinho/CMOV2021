@@ -4,6 +4,258 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/left_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorBeige" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/amatic_sc"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textSize="90sp" />
+
+        <LinearLayout
+            android:id="@+id/right_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorBeige" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/inputs_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_register_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amatic_sc"
+                android:labelFor="@id/input_register_name"
+                android:padding="6dp"
+                android:text="@string/str_name"
+                android:textColor="@color/colorBeige"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/input_register_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:autofillHints=""
+                android:background="@drawable/input_text_background"
+                android:ems="10"
+                android:fontFamily="@font/amatic_sc"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@color/colorLight"
+                android:textColorHighlight="@color/colorLight"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_resgiter_credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amatic_sc"
+                android:labelFor="@id/input_register_credit_card"
+                android:padding="6dp"
+                android:text="@string/str_credit_card"
+                android:textColor="@color/colorBeige"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/input_register_credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:autofillHints=""
+                android:background="@drawable/input_text_background"
+                android:ems="10"
+                android:fontFamily="@font/amatic_sc"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/colorLight"
+                android:textColorHighlight="@color/colorLight" />
+
+            <TextView
+                android:id="@+id/text_register_nif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amatic_sc"
+                android:labelFor="@id/input_register_nif"
+                android:padding="6dp"
+                android:text="@string/str_nif"
+                android:textColor="@color/colorBeige"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/input_register_nif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:autofillHints=""
+                android:background="@drawable/input_text_background"
+                android:ems="10"
+                android:fontFamily="@font/amatic_sc"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/colorLight"
+                android:textColorHighlight="@color/colorLight" />
+
+            <TextView
+                android:id="@+id/text_register_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amatic_sc"
+                android:labelFor="@id/input_register_nickname"
+                android:padding="6dp"
+                android:text="@string/str_nickname"
+                android:textColor="@color/colorBeige"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/input_register_nickname"
+                style="@style/Widget.AppCompat.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:autofillHints=""
+                android:background="@drawable/input_text_background"
+                android:ems="10"
+                android:fontFamily="@font/amatic_sc"
+                android:inputType="textShortMessage"
+                android:padding="8dp"
+                android:textColor="@color/colorLight"
+                android:textColorHighlight="@color/colorLight"
+                android:textColorLink="@color/colorLight"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_register_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amatic_sc"
+                android:labelFor="@id/input_register_password"
+                android:padding="6dp"
+                android:text="@string/str_password"
+                android:textColor="@color/colorBeige"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/input_register_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:autofillHints=""
+                android:background="@drawable/input_text_background"
+                android:ems="10"
+                android:fontFamily="@font/amatic_sc"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/colorLight"
+                android:textColorHighlight="@color/colorLight"
+                android:textColorLink="@color/colorLight" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <Button
+                    android:id="@+id/btn_register_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/amatic_sc"
+                    android:text="@string/str_register"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>

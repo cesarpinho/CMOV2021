@@ -5,7 +5,7 @@
     <solid
         android:color="@color/colorInputBackground"/>
     <corners
-        android:radius="5dp"/>
+        android:radius="8dp"/>
     <stroke
         android:color="@color/colorBeige"
         android:width="1dp"/>
