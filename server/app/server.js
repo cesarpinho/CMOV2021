@@ -24,7 +24,16 @@ app.get('/test/api', (req, res) => {
   })
 }) */
 
-app.listen(PORT, () => {
-  console.log(`Our app is running on port ${ PORT }`)
+
+// Development
+const ADDRESS = '192.168.0.100' // Run ipconfig to check your IPv4 Address 
+
+app.listen(PORT, ADDRESS, () => {
+  console.log(`App is running on http://${ ADDRESS }:${ PORT }`)
 });
 
+// Production
+/* app.listen(PORT, () => {
+  console.log(`App is running on port ${ PORT }`)
+});
+ */

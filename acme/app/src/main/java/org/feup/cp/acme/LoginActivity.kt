@@ -1,11 +1,12 @@
 package org.feup.cp.acme
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -15,12 +16,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun btnLoginAction(view: View) {
         val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
 
+        startActivity(intent)
         TODO("Create login action")
     }
 
-    private fun btnRegisterLink (view: View) {
+    private fun btnRegisterLink(view: View) {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
