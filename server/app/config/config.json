@@ -4,20 +4,24 @@
     "password": "admin",
     "database": "acme_dev",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "operatorsAliases": false
   },
   "test": {
     "username": "postgres",
     "password": "admin",
     "database": "acme_test",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "operatorsAliases": false
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "postgres",
+    "password": "admin",
+    "database": "da6fll2f1bbgib",
+    "host": "localhost",
+    "dialect": "postgres",
+    "operatorsAliases": false,
+    "use_env_variable": "DATABASE_URL"
   }
 }
