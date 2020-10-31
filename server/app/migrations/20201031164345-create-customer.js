@@ -11,14 +11,14 @@ module.exports = {
       uuid: {
         allowNull: false,            
         unique: true,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING
       },
       card: {
-        allowNull: false,
+        allowNull: false,        
         type: Sequelize.INTEGER
       },
       nif: {
@@ -32,8 +32,7 @@ module.exports = {
       },
       password: {
         allowNull: false,
-        type: Sequelize.STRING,
-        is: /^[0-9a-f]{64}$/i
+        type: Sequelize.STRING(64)
       },
       createdAt: {
         allowNull: false,
