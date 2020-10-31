@@ -40,12 +40,18 @@
 * Run `DROP DATABASE "<db_name>"` to delete a local database.
 * Run `psql -U postgres` to acess the database managment environment
 * Run `psql -U postgres -p 5432 "<db_name>"` to acess the database managment environment of a specific database.
+* Model Generator
+    * `npx sequelize-cli model:generate --name <name> --attributes <name>:<type>`
 * Migrations 
     * `npx sequelize-cli db:migrate`
     * `npx sequelize-cli db:migrate:undo`
     * `npx sequelize-cli db:migrate:undo:all`
 * Seeders
     * `npx sequelize-cli seed:generate --name <model_name>`
+    * `npx sequelize-cli db:seed:all`
+    * `npx sequelize-cli db:seed:undo:all`
+    * `npx sequelize-cli db:seed:undo:all`
+
 
 #### Production
 

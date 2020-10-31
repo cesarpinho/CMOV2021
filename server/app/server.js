@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// const db = require('./models/index.js')
+const db = require('./models/index.js')
 
 app.use(express.urlencoded({ extended: true }))
 
@@ -25,6 +25,14 @@ app.get('/test/api', (req, res) => {
 }) */
 
 // For test purposes only
+app.get('/url', function(req, res) {
+  db.Customer
+  db.Customer.findOrCreate({where: {id: 1, name: "", nif: "", nickname: "", password: ""}})
+    .then(([urlObj, created]) => {
+      res.send(urlObj)
+    })
+})
+
 app.get('/posts', (req, res) => {
   res.send([{'user_id': 5, 'id': 34, 'title': "", 'body': ""}])
 })
