@@ -7,4 +7,8 @@
     <string name="str_name">Name</string>
     <string name="str_credit_card">Credit Card</string>
     <string name="str_nif">NIF</string>
+    <string name="cart_icon_description">Cart Icon to access buying items</string>
+    <string name="coffee_icon_description">Coffee icon</string>
+    <string name="str_coffee_time">Coffee Time</string>
+    <string name="str_menu">Menu</string>
 </resources>

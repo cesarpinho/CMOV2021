@@ -19,17 +19,12 @@
         android:layout_weight="2.5"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/left_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            android:gravity="center">
 
             <View
                 android:id="@+id/divider2"
@@ -37,11 +32,7 @@
                 android:layout_height="3dp"
                 android:background="@color/colorBeige" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/app_title"
@@ -52,19 +43,15 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:textAlignment="center"
+            android:textColor="@color/colorLight"
             android:textSize="90sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/right_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            android:gravity="center">
 
             <View
                 android:id="@+id/divider4"
@@ -72,11 +59,7 @@
                 android:layout_height="3dp"
                 android:background="@color/colorBeige" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -85,21 +68,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/inputs_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+            android:gravity="center">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -129,18 +106,18 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/text_resgiter_credit_card"
+                    android:id="@+id/text_resgiter_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/amatic_sc"
-                    android:labelFor="@id/input_register_credit_card"
+                    android:labelFor="@id/input_register_card"
                     android:padding="6dp"
                     android:text="@string/str_credit_card"
                     android:textColor="@color/colorBeige"
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/input_register_credit_card"
+                    android:id="@+id/input_register_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -232,41 +209,27 @@
                     android:textColorHighlight="@color/colorLight"
                     android:textColorLink="@color/colorLight" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:gravity="center"
                     android:padding="25dp">
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2" />
 
                     <Button
                         android:id="@+id/btn_register_action"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_weight="0.5"
                         android:background="@drawable/button_background"
                         android:fontFamily="@font/amatic_sc"
                         android:text="@string/str_register"
                         android:textColor="@color/colorLight"
                         android:textSize="24sp" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2" />
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </LinearLayout>

@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 //            }
 //        })
 
-         val intent = Intent(this, RegisterActivity::class.java)
+         val intent = Intent(this, HomeActivity::class.java)
 
          startActivity(intent)
 

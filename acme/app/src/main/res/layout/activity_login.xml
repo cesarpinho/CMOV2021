@@ -48,6 +48,7 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:textAlignment="center"
+            android:textColor="@color/colorLight"
             android:textSize="90sp" />
 
         <LinearLayout
