@@ -24,6 +24,11 @@ app.get('/test/api', (req, res) => {
   })
 }) */
 
+// For test purposes only
+app.get('/posts', (req, res) => {
+  res.send([{'user_id': 5, 'id': 34, 'title': "", 'body': ""}])
+})
+
 
 // Development
 const ADDRESS = '192.168.0.100' // Run ipconfig to check your IPv4 Address 
