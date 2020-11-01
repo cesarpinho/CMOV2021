@@ -17,11 +17,6 @@ class KeyStoreManager(alias: String) {
     private val provider = "AndroidKeyStore"
 
     /**
-     * Keystore alias
-     */
-    private var alias: String
-
-    /**
      * Key Pair Generator
      */
     private var kpg: KeyPairGenerator
@@ -45,9 +40,6 @@ class KeyStoreManager(alias: String) {
      * Primary constructor
      */
     init {
-        // Initialize alias
-        this.alias = alias
-
         val startDate = GregorianCalendar()
         val endDate = GregorianCalendar()
         endDate.add(Calendar.YEAR, 1)
@@ -57,7 +49,7 @@ class KeyStoreManager(alias: String) {
 
         // Creating the key pair with sign and verify purposes
         this.parameterSpec = KeyGenParameterSpec
-            .Builder(this.alias, KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY)
+            .Builder(alias, KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY)
             .run {
                 setCertificateSerialNumber(BigInteger.valueOf(1))
                 setCertificateSubject(X500Principal("CN=$alias"))
@@ -86,58 +78,86 @@ class KeyStoreManager(alias: String) {
     }
 
     /**
-     * Deletes an existent entry in the key store instance
+     * Static functions
      */
-    fun deleteKeyPairEntry() {
-        if(this.ks.containsAlias(this.alias))
-            this.ks.deleteEntry(this.alias)
-    }
+    companion object {
 
-    /**
-     *
-     */
-    fun getPrivateKey(): PrivateKey {
-        return this.ks.getKey(this.alias, null) as PrivateKey
-    }
-
-    /**
-     *
-     */
-    fun getCertificate(): Certificate {
-        return this.ks.getCertificate(this.alias)
-    }
-
-    /**
-     *
-     */
-    fun getPublicKey(): PublicKey {
-        return this.getCertificate().publicKey
-    }
-
-    /**
-     *
-     */
-    fun signData(data: String, privateKey: PrivateKey): String {
-        val signature: ByteArray = Signature.getInstance("SHA256withRSA").run {
-            initSign(privateKey)
-            update(data.toByteArray())
-            sign()
+        /**
+         * Deletes an existent entry in the key store instance
+         */
+        fun deleteKeyStoreEntry(alias: String) {
+            val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+                .apply {
+                    load(null)
+                }
+            ks.deleteEntry(alias)
         }
-        return encodeToString(signature, DEFAULT)
-    }
 
-    /**
-     *
-     */
-    fun verifySignature(signature: String, data: String, certificate: Certificate): Boolean {
-        // Decode the signature value
-        val decodedSignature: ByteArray = decode(signature, DEFAULT)
+        /**
+         * Retrieves private key
+         */
+        fun getPrivateKey(alias: String): PrivateKey {
+            val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+                .apply {
+                    load(null)
+                }
+            return ks.getKey(alias, null) as PrivateKey
+        }
 
-        // Check if the signature is valid. Use RSA algorithm along SHA-256 digest algorithm
-        return Signature.getInstance("SHA256withRSA").run {
-            initVerify(certificate)
-            update(data.toByteArray())
-            verify(decodedSignature)
+        /**
+         * Retrieves certificate
+         */
+        fun getCertificate(alias: String): Certificate {
+            val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+                .apply {
+                    load(null)
+                }
+            return ks.getCertificate(alias)
+        }
+
+        /**
+         * Retrieves public key
+         */
+        fun getPublicKey(alias: String): PublicKey {
+            return getCertificate(alias).publicKey
+        }
+
+        /**
+         *  Signs data by means of private key
+         */
+        fun signData(data: String, privateKey: PrivateKey): String {
+            val signature: ByteArray = Signature.getInstance("SHA256withRSA").run {
+                initSign(privateKey)
+                update(data.toByteArray())
+                sign()
+            }
+            return encodeToString(signature, DEFAULT)
+        }
+
+        /**
+         * Displays current entries present in the keystore
+         */
+        fun showKeyStoreEntries() {
+            val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+                .apply {
+                    load(null)
+                }
+            println(ks.aliases().toList())
+        }
+
+        /**
+         * Verifies certificate signature
+         */
+        fun verifySignature(signature: String, data: String, certificate: Certificate): Boolean {
+            // Decode the signature value
+            val decodedSignature: ByteArray = decode(signature, DEFAULT)
+
+            // Check if the signature is valid. Use RSA algorithm along SHA-256 digest algorithm
+            return Signature.getInstance("SHA256withRSA").run {
+                initVerify(certificate)
+                update(data.toByteArray())
+                verify(decodedSignature)
+            }
         }
     }
 }

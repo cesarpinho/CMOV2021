@@ -45,7 +45,7 @@ class HttpClient() {
     }
 
     /**
-     * Static methods and functions
+     * Static functions
      */
     companion object {
         var uniqueInstance: HttpClient? = null
