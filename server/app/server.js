@@ -39,7 +39,7 @@ app.get('/posts', (req, res) => {
 
 
 // Development
-const ADDRESS = '192.168.0.100' // Run ipconfig to check your IPv4 Address 
+const ADDRESS = '192.168.0.101' // Run ipconfig to check your IPv4 Address 
 
 app.listen(PORT, ADDRESS, () => {
   console.log(`App is running on http://${ ADDRESS }:${ PORT }`)

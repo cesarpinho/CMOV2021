@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import org.feup.cp.acme.network.HttpClient
+import org.feup.cp.acme.network.Posts
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,27 +22,19 @@ class LoginActivity : AppCompatActivity() {
 
      private fun btnLoginAction(view: View) {
 
-//        val retrofitClient = NetworkUtils
-//                .getRetrofitInstance("http://192.168.0.100:3000")
-//        // https://jsonplaceholder.typicode.com/
-//
-//        val endpoint = retrofitClient.create(Endpoint::class.java)
-//
-//        val callback = endpoint.getPosts()
+//        val callback = HttpClient.getInstance()!!.getEndpoint().getPosts()
 //
 //        callback.enqueue(object : Callback<List<Posts>> {
-//            override fun onFailure(call: Call<List<Posts>>, t: Throwable) {
-//                println(t)
+//            override fun onResponse(call: Call<List<Posts>>, response: Response<List<Posts>>) {
+//
+//                response.body()?.forEach {}
+//
+//                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+//                startActivity(intent)
 //            }
 //
-//            override fun onResponse(call: Call<List<Posts>>, response: Response<List<Posts>>) {
-//                println("2222222222222222")
-//                response.body()?.forEach {
-//
-//                }
-//                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-//
-//                startActivity(intent)
+//            override fun onFailure(call: Call<List<Posts>>, t: Throwable) {
+//                println(t.stackTrace)
 //            }
 //        })
 
