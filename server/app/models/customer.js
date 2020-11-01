@@ -23,19 +23,19 @@ module.exports = (sequelize, DataTypes) => {
     uuid: {
       allowNull: false,            
       unique: true,
-      type: DataTypes.UUID
+      type: DataTypes.UUID,
     },
     name: {
       allowNull: false,
       type: DataTypes.STRING
     },
     card: {
-      allowNull: false,
+      allowNull: false,        
       type: DataTypes.INTEGER
     },
     nif: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER 
     },
     nickname: {
       allowNull: false,
@@ -44,8 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       allowNull: false,
-      type: DataTypes.STRING,
-      is: /^[0-9a-f]{64}$/i
+      type: DataTypes.STRING(64)
     },
     createdAt: {
       allowNull: false,
