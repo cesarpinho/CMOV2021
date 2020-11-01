@@ -16,6 +16,6 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
 
-        TODO("Create Register action")
+//        TODO("Create Register action")
     }
 }

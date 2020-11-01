@@ -8,7 +8,6 @@
     <color name="colorTroopGreen">#767441</color>
     <color name="colorLight">#F6F7EB</color>
     <color name="colorBeige">#B9B079</color>
-    <!--    <color name="colorCenterGradient" >#525443</color>-->
     <color name="colorCenterGradient" >#404444</color>
     <color name="colorEndGradient" >#646442</color>
     <color name="colorInputBackground">#2d33446a</color>

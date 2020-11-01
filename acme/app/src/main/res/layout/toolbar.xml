@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_burger_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/burger_menu"
+            android:textColor="@color/colorGunmetal" />
+
+        <Button
+            android:id="@+id/btn_cart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/cart_icon"
+            android:translationX="-20dp" />
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>
+
+
+

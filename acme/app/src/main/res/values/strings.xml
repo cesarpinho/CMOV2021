@@ -11,4 +11,9 @@
     <string name="coffee_icon_description">Coffee icon</string>
     <string name="str_coffee_time">Coffee Time</string>
     <string name="str_menu">Menu</string>
+    <string name="str_home">Home</string>
+    <string name="str_products">Products</string>
+    <string name="str_account">Account</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_x">X</string>
 </resources>
