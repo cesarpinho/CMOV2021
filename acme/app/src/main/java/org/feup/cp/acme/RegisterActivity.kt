@@ -17,5 +17,6 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
 
 //        TODO("Create Register action")
+
     }
 }
