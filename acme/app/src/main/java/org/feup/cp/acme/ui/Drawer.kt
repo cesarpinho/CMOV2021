@@ -1,4 +1,4 @@
-package org.feup.cp.acme
+package org.feup.cp.acme.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import org.feup.cp.acme.R
 
 class Drawer(private val activity: Activity, actualMenuView: String) {
     private val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer)

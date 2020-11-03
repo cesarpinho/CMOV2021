@@ -1,30 +1,10 @@
-package org.feup.cp.acme
+package org.feup.cp.acme.ui
 
-import android.app.KeyguardManager
 import android.content.Intent
-import android.hardware.biometrics.BiometricManager
-import android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import android.os.Bundle
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
-import android.util.Base64
-import android.util.Base64.*
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import org.feup.cp.acme.network.HttpClient
-import org.feup.cp.acme.network.Posts
-import org.feup.cp.acme.security.KeyStoreManager
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
-import java.math.BigInteger
-import java.security.*
-import java.security.cert.Certificate
-import java.util.*
-import javax.security.auth.x500.X500Principal
+import org.feup.cp.acme.R
 
 class LoginActivity : AppCompatActivity() {
 

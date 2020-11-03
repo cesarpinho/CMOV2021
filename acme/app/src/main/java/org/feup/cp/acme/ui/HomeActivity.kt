@@ -1,7 +1,8 @@
-package org.feup.cp.acme
+package org.feup.cp.acme.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.feup.cp.acme.R
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

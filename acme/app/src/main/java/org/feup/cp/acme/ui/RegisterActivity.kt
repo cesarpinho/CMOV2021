@@ -1,9 +1,10 @@
-package org.feup.cp.acme
+package org.feup.cp.acme.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import org.feup.cp.acme.R
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
