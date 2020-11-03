@@ -14,6 +14,5 @@ data class RegisterData(
         @SerializedName("password")
         var password : String,
         @SerializedName("certificate")
-        var certificate : String,
-
+        var certificate : String?
 )

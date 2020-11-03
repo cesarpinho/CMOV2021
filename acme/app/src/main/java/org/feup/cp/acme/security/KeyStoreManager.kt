@@ -90,7 +90,20 @@ class KeyStoreManager(alias: String) {
                 .apply {
                     load(null)
                 }
+            ks.isKeyEntry(alias)
             ks.deleteEntry(alias)
+        }
+
+        /**
+         * Checks if key entry is unique. Returns true if it is,
+         * false otherwise.
+         */
+        fun isKeyEntryUnique(alias: String) : Boolean {
+            val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+                .apply {
+                    load(null)
+                }
+            return !ks.isKeyEntry(alias)
         }
 
         /**
@@ -120,6 +133,13 @@ class KeyStoreManager(alias: String) {
          */
         fun getPublicKey(alias: String): PublicKey {
             return getCertificate(alias).publicKey
+        }
+
+        /**
+         * Encodes the certificate to a string with Base64
+         */
+        fun encodeCertToString(alias: String) : String {
+            return encodeToString(getCertificate(alias).encoded, DEFAULT);
         }
 
         /**

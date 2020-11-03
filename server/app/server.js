@@ -35,7 +35,10 @@ app.get('/', (req, res) => {
  * an empty response with the 400 status code.
  */
 app.post('/register', (req, res) => {
-  // TODO - Deal with the certificate
+  // TODO - Validate request body
+  // TODO - Deal with the certificate to retrieve the user public key
+  // TODO - Add certificate/public key to server database depending on the differente possibilities
+  // TODO - Depending on the applicability of the previous TODO, create a public key table to boost app robustness
 
   // Generate uuid and hashed password
   const customerID = uuid.v4()
