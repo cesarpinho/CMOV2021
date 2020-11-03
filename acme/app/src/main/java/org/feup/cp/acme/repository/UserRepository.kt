@@ -4,12 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.feup.cp.acme.network.HttpClient
 import org.feup.cp.acme.network.HttpClientInterface
-import org.feup.cp.acme.network.Posts
-import org.feup.cp.acme.room.dao.UserDao
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.concurrent.Executor
+import org.feup.cp.acme.network.RegisterData
 
 class UserRepository {
 
@@ -19,20 +14,20 @@ class UserRepository {
 //    private val userDao: UserDao
 
     // Serves only as an example for project structure purposes
-    fun getPosts() : LiveData<List<Posts>> {
+    fun getPosts() : LiveData<List<RegisterData>> {
 
-        val data = MutableLiveData<List<Posts>>()
+        val data = MutableLiveData<List<RegisterData>>()
 
-        webService.getPosts().enqueue(object : Callback<List<Posts>> {
-            override fun onResponse(call: Call<List<Posts>>, response: Response<List<Posts>>) {
-                data.value = response.body()
+//        webService.getPosts().enqueue(object : Callback<List<Posts>> {
+//            override fun onResponse(call: Call<List<Posts>>, response: Response<List<Posts>>) {
+//                data.value = response.body()
 //                response.body()?.forEach {}
-            }
-
-            override fun onFailure(call: Call<List<Posts>>, t: Throwable) {
-                println(t.stackTrace)
-            }
-        })
+//            }
+//
+//            override fun onFailure(call: Call<List<Posts>>, t: Throwable) {
+//                println(t.stackTrace)
+//            }
+//        })
         return  data
     }
 

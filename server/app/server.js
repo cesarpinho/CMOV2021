@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
 
 const db = require('./models/index.js')
 
-app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -35,6 +37,25 @@ app.get('/url', function(req, res) {
 
 app.get('/posts', (req, res) => {
   res.send([{'user_id': 5, 'id': 34, 'title': "", 'body': ""}])
+})
+
+app.post('/register', (req, res) => {
+  // Check if nickname is unique
+  // Generate uuid 
+  // Hash password
+  // Store information on server database
+  // Send response
+  console.log(req.body)
+
+  // Mock response
+  res.send({
+    "uuid": "123456632",
+    "name": req.body.name,
+    "card": req.body.name,
+    "nif": req.body.name,
+    "nickname": req.body.nickname
+  })
+  
 })
 
 
