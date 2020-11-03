@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background">
 
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/layout_toolbar"/>
 
         <View
             android:id="@+id/divider"
@@ -98,6 +98,6 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <include layout="@layout/drawer_layout"/>
+    <include layout="@layout/layout_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

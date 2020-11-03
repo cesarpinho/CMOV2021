@@ -1,10 +1,10 @@
-package org.feup.cp.acme.ui.productTabs
+package org.feup.cp.acme.ui.tabs.products
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class PagerAdapter (fm: FragmentManager): FragmentStatePagerAdapter(fm) {
+class PagerAdapter (fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     private var fragmentList = mutableListOf<Fragment>()
 

@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import org.feup.cp.acme.R
-import org.feup.cp.acme.ui.productTabs.CoffeesFragment
-import org.feup.cp.acme.ui.productTabs.DrinksFragment
-import org.feup.cp.acme.ui.productTabs.PagerAdapter
-import org.feup.cp.acme.ui.productTabs.SnacksFragment
+import org.feup.cp.acme.ui.tabs.products.CoffeesFragment
+import org.feup.cp.acme.ui.tabs.products.DrinksFragment
+import org.feup.cp.acme.ui.tabs.products.PagerAdapter
+import org.feup.cp.acme.ui.tabs.products.SnacksFragment
 
 class ProductsActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout

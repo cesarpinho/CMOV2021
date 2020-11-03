@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/layout_toolbar" />
 
         <View
             android:id="@+id/divider"
@@ -24,7 +24,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_below="@+id/divider"
             android:id="@+id/tabs"
             app:tabIndicatorColor="@color/colorLight"
@@ -52,8 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/tabs"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
             android:background="@color/colorBeige" />
 
         <androidx.viewpager.widget.ViewPager
@@ -64,5 +62,5 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/drawer_layout" />
+    <include layout="@layout/layout_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
