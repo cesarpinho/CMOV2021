@@ -11,17 +11,18 @@
 
         <Button
             android:id="@+id/btn_burger_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/burger_menu"
-            android:textColor="@color/colorGunmetal" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_burger_menu"
+            android:textColor="@color/colorGunmetal"
+            android:layout_centerVertical="true"/>
 
         <Button
             android:id="@+id/btn_cart"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/cart_icon"
+            android:background="@drawable/ic_cart"
             android:translationX="-20dp" />
 
     </RelativeLayout>
