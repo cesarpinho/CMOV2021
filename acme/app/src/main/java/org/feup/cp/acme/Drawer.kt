@@ -52,9 +52,8 @@ class Drawer(private val activity: Activity, actualMenuView: String) {
     }
 
     private fun productsRedirect(view: View) {
-        val intent = Intent(activity, LoginActivity::class.java)
+        val intent = Intent(activity, ProductsActivity::class.java)
         activity.startActivity(intent)
-//        TODO("Not yet implemented")
     }
 
     private fun accountRedirect(view: View) {
