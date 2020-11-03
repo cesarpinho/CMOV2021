@@ -17,25 +17,9 @@ class LoginActivity : AppCompatActivity() {
 
      private fun btnLoginAction(view: View) {
 
-//        val callback = HttpClient.getInstance()!!.getEndpoint().getPosts()
-//
-//        callback.enqueue(object : Callback<List<Posts>> {
-//            override fun onResponse(call: Call<List<Posts>>, response: Response<List<Posts>>) {
-//
-//                response.body()?.forEach {}
-//
-//                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-//                startActivity(intent)
-//            }
-//
-//            override fun onFailure(call: Call<List<Posts>>, t: Throwable) {
-//                println(t.stackTrace)
-//            }
-//        })
+         val intent = Intent(this, HomeActivity::class.java)
 
-//         val intent = Intent(this, HomeActivity::class.java)
-//
-//         startActivity(intent)
+         startActivity(intent)
 
     }
 
