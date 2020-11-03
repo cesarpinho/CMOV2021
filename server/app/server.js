@@ -1,61 +1,72 @@
+///////////////////
+// CONFIGURATION //
+///////////////////
+
 const express = require('express')
 const app = express()
+const uuid = require('uuid')
+const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
+
 const PORT = process.env.PORT || 3000
+const SALT_ROUNDS = 10
 
 const db = require('./models/index.js')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+///////////////
+// ENDPOINTS //
+///////////////
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('ACME REST SERVICE')
 })
 
-/* app.get('/url', function(req, res) {
-  db.Url.findOrCreate({where: {url: "url", shortUrl: "shortUrl"}})
-    .then(([urlObj, created]) => {
-      res.send(urlObj)
-    })
-})
-
-
-app.get('/test/api', (req, res) => {
-  db.Url.findAll().then(([urlObj, created]) => {
-    res.send(urlObj)
-  })
-}) */
-
-// For test purposes only
-app.get('/url', function(req, res) {
-  db.Customer
-  db.Customer.findOrCreate({where: {id: 1, name: "", nif: "", nickname: "", password: ""}})
-    .then(([urlObj, created]) => {
-      res.send(urlObj)
-    })
-})
-
-app.get('/posts', (req, res) => {
-  res.send([{'user_id': 5, 'id': 34, 'title': "", 'body': ""}])
-})
-
+/**
+ * < Description >
+ * Endpoint responsible for registering new
+ * customers into the server.
+ * 
+ * < Return >
+ * Returns the needed user information for 
+ * local storage on success. Otherwise, returns
+ * an empty response with the 400 status code.
+ */
 app.post('/register', (req, res) => {
-  // Check if nickname is unique
-  // Generate uuid 
-  // Hash password
-  // Store information on server database
-  // Send response
-  console.log(req.body)
+  // TODO - Deal with the certificate
 
-  // Mock response
-  res.send({
-    "uuid": "123456632",
-    "name": req.body.name,
-    "card": req.body.name,
-    "nif": req.body.name,
-    "nickname": req.body.nickname
-  })
+  // Generate uuid and hashed password
+  const customerID = uuid.v4()
+  const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
   
+  // Store information on server database
+  db.Customer.findOrCreate( { where: {
+                                nickname: req.body.nickname
+                              }, 
+                              defaults: {
+                                uuid: customerID, 
+                                name: req.body.name,
+                                card: req.body.card, 
+                                nif: req.body.nif, 
+                                nickname: req.body.nickname, 
+                                password: hash
+                              }
+                            }
+                          )
+  .then(([customer, created]) => {
+    if(!created)
+      res.status(400).send({description: "Nickname chosen is already taken."})
+    else
+      res.send({
+        "uuid": customer.dataValues.uuid,
+        "name": customer.dataValues.name,
+        "card": customer.dataValues.card,
+        "nif": customer.dataValues.nif,
+        "nickname": customer.dataValues.nickname
+      })
+  })
 })
 
 

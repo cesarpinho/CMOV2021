@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
         webService.register(user).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                 // TODO - Check response code to see if everything was ok (possibility of non-unique identifier)
-                // TODO - If everything is ok store the user information locally using room 
+                // TODO - If everything is ok store the user information locally using room
                 println(response.body())
 //                response.body()?.forEach {}
 
