@@ -1,4 +1,4 @@
-package org.feup.cp.acme.productTabs
+package org.feup.cp.acme.ui.productTabs
 
 import android.os.Bundle
 import android.view.LayoutInflater

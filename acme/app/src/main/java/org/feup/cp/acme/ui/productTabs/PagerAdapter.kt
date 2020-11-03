@@ -1,4 +1,4 @@
-package org.feup.cp.acme.productTabs
+package org.feup.cp.acme.ui.productTabs
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,9 +16,6 @@ class PagerAdapter (fm: FragmentManager): FragmentStatePagerAdapter(fm) {
         return fragmentList[position]
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return "@drawable/ic_croissant"
-    }
     fun addFragment(fragment: Fragment) {
         fragmentList.add(fragment)
     }
