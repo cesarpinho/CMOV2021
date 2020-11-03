@@ -5,21 +5,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DrinksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DrinksFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drinks, container, false)
+        val hList = listOf(
+            hashMapOf(
+                "card_image" to R.drawable.ic_drinks,
+                "card_product_name" to "Drink A",
+                "card_product_price" to "10.5€"
+            ),
+            hashMapOf(
+                "card_image" to R.drawable.ic_croissant,
+                "card_product_name" to "Drink B",
+                "card_product_price" to "1.25€"
+            ),
+            hashMapOf(
+                "card_image" to R.drawable.ic_cart,
+                "card_product_name" to "Drink C",
+                "card_product_price" to "5.75€"
+            )
+        )
+
+        val view = inflater.inflate(R.layout.fragment_drinks, container, false)
+        val listView = view.findViewById<RecyclerView>(R.id.list_view)
+        listView.layoutManager = LinearLayoutManager(inflater.context)
+        val adapter = ProductsAdapter(hList as List<HashMap<String, Any>>)
+        listView.adapter = adapter
+
+        return view
     }
 
     companion object {

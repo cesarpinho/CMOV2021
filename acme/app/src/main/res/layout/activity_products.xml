@@ -22,13 +22,19 @@
             android:layout_alignBottom="@+id/toolbar"
             android:background="@color/colorBeige" />
 
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignBottom="@+id/tabs"
+            android:background="@color/colorBeige" />
+
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_below="@+id/divider"
             android:id="@+id/tabs"
-            app:tabIndicatorColor="@color/colorLight"
-            app:tabSelectedTextColor="@color/colorLight">
+            app:tabIndicatorColor="@color/colorLight">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -46,13 +52,6 @@
                 android:icon="@drawable/ic_croissant" />
 
         </com.google.android.material.tabs.TabLayout>
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/tabs"
-            android:background="@color/colorBeige" />
 
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"

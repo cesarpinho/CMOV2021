@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayout
 import org.feup.cp.acme.R
 import org.feup.cp.acme.ui.tabs.products.CoffeesFragment
 import org.feup.cp.acme.ui.tabs.products.DrinksFragment
-import org.feup.cp.acme.ui.tabs.products.PagerAdapter
+import org.feup.cp.acme.ui.tabs.PagerAdapter
 import org.feup.cp.acme.ui.tabs.products.SnacksFragment
 
 class ProductsActivity : AppCompatActivity() {
