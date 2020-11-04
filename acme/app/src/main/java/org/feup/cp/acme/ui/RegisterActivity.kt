@@ -28,20 +28,27 @@ class RegisterActivity : AppCompatActivity() {
         val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
 
         // TODO - Retrieve data from input fields and make sure it is not empty
-        val nickname = "rmaria"
-        val user = RegisterData("Roberto Maria", 123456789, 123456789, nickname, "1234", null)
+        val nickname = "test"
 
         // TODO - Generate certificate with alias being equal to the nickame. This way we can easily verify if nickname was already used at least locally. Such verification must be made at the server level
         if(!KeyStoreManager.isKeyEntryUnique(nickname)) {
             println("Invalid nickname")
         }
 
-        KeyStoreManager("rmaria").generateKeyPair()
-        println(user)
-        KeyStoreManager.showKeyStoreEntries()
-        user.certificate = "Test"
+        KeyStoreManager(nickname).generateKeyPair()
 
-        println(user)
+        val data = KeyStoreManager.signData("Roberto", KeyStoreManager.getPrivateKey(nickname))
+
+        println(data)
+        println("State" + KeyStoreManager.verifySignature(data, "Roberto", KeyStoreManager.getCertificate(nickname)))
+
+        println(KeyStoreManager.getCertificate(nickname))
+
+        val user = RegisterData(data, 123456789, 123456789, nickname, "1234", null)
+
+        user.certificate = KeyStoreManager.encodeCertToString(nickname)
+
+//        println(user)
 //        val user = RegisterData("Roberto Maria",
 //            123456789,
 //            123456789,
@@ -49,29 +56,29 @@ class RegisterActivity : AppCompatActivity() {
 //            "1234",
 //            "KeyStoreManager.getCertificate().toString()")
 
-//        webService.register(user).enqueue(object : Callback<RegisterResponse> {
-//            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-//                // TODO - Check response code to see if everything was ok (possibility of non-unique identifier)
-//                // TODO - If everything is ok store the user information locally using room
-//
-//                if(!response.isSuccessful) {
-//                    // Invalid nickname
-//                    // Delete key pair
-//                    println("insuccess")
-//                }
-//                else {
-//                    println(response.body())
-////                response.body()?.forEach {}
-//
-////                val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
-////                startActivity(intent)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-//                println(t.stackTrace)
-//            }
-//        })
+        webService.register(user).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                // TODO - Check response code to see if everything was ok (possibility of non-unique identifier)
+                // TODO - If everything is ok store the user information locally using room
+
+                if(!response.isSuccessful) {
+                    // Invalid nickname
+                    // Delete key pair
+                    println("insuccess")
+                }
+                else {
+                    println(response.body())
+//                response.body()?.forEach {}
+
+//                val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+//                startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                println(t.stackTrace)
+            }
+        })
 
     }
 }

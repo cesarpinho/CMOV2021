@@ -6,7 +6,9 @@ const express = require('express')
 const app = express()
 const uuid = require('uuid')
 const bcrypt = require('bcrypt')
+const forge = require('node-forge')
 const bodyParser = require('body-parser')
+
 
 const PORT = process.env.PORT || 3000
 const SALT_ROUNDS = 10
@@ -23,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
   res.send('ACME REST SERVICE')
 })
+
+var crypto = require('crypto');
 
 /**
  * < Description >
@@ -43,8 +47,21 @@ app.post('/register', (req, res) => {
   // Generate uuid and hashed password
   const customerID = uuid.v4()
   const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
+
   
-  // Store information on server database
+  var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
+
+  const cert = forge.pki.certificateFromAsn1(object)
+
+  console.log(forge.pki.publicKeyToPem(cert.publicKey))
+
+  var verifier = crypto.createVerify('sha256WithRSAEncryption');
+  verifier.update("Robert22o");
+  var ver = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), req.body.name, 'base64');
+  console.log(ver);//<--- always false!
+
+  res.send({error: "asdasasd"})
+  /* // Store information on server database
   db.Customer.findOrCreate( { where: {
                                 nickname: req.body.nickname
                               }, 
@@ -69,7 +86,7 @@ app.post('/register', (req, res) => {
         "nif": customer.dataValues.nif,
         "nickname": customer.dataValues.nickname
       })
-  })
+  }) */
 })
 
 
