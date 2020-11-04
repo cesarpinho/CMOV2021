@@ -45,9 +45,7 @@ app.post('/register', (req, res) => {
   if(!reqBodyValidation.status)
     return res.status(400).send({description: reqBodyValidation.description})
 
-  // TODO - Deal with the certificate to retrieve the user public key
-  // TODO - Add certificate/public key to server database depending on the differente possibilities
-  // TODO - Depending on the applicability of the previous TODO, create a public key table to boost app robustness
+  // TODO - Add certificate to server database depending on the differente possibilities
 
   // Generate uuid and hashed password
   const customerID = uuid.v4()
