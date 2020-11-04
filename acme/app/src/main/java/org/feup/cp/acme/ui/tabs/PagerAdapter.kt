@@ -1,4 +1,4 @@
-package org.feup.cp.acme.ui.tabs.products
+package org.feup.cp.acme.ui.tabs
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
