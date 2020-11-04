@@ -43,23 +43,25 @@ class Drawer(private val activity: Activity, actualMenuView: String) {
         drawerLayout.closeDrawer(GravityCompat.START)
     }
 
-    private fun logoutAction(view: View) {
-//        TODO("Implement Logout Action")
-    }
-
     private fun homeRedirect(view: View) {
         val intent = Intent(activity, HomeActivity::class.java)
+        drawerClose(view)
         activity.startActivity(intent)
     }
 
     private fun productsRedirect(view: View) {
         val intent = Intent(activity, ProductsActivity::class.java)
+        drawerClose(view)
         activity.startActivity(intent)
     }
 
     private fun accountRedirect(view: View) {
-        val intent = Intent(activity, RegisterActivity::class.java)
+        val intent = Intent(activity, AccountActivity::class.java)
+        drawerClose(view)
         activity.startActivity(intent)
-//        TODO("Not yet implemented")
+    }
+
+    private fun logoutAction(view: View) {
+//        TODO("Implement Logout Action")
     }
 }
