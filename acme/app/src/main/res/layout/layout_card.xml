@@ -8,7 +8,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:id="@+id/card_image"
-        android:contentDescription="@string/coffee_icon_description"
+        android:contentDescription="@string/card_img_description"
         android:layout_margin="15dp" />
 
     <TextView

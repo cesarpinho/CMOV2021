@@ -8,9 +8,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
 
-class ProductsAdapter(private val dataSet: List<HashMap<String, Any>>) :
+class ProductsAdapter(private val dataSet: List<HashMap<String, String>>) :
     RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
     class ProductsViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
@@ -26,8 +27,8 @@ class ProductsAdapter(private val dataSet: List<HashMap<String, Any>>) :
 
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         val card = holder.itemView
-        card.findViewById<ImageView>(R.id.card_image)
-            .setImageResource(dataSet[position]["card_image"] as Int)
+        Picasso.get().load(dataSet[position]["card_image"])
+            .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_product_name).text =
             dataSet[position]["card_product_name"] as String
         card.findViewById<TextView>(R.id.card_product_price).text =

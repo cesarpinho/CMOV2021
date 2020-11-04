@@ -17,17 +17,17 @@ class CoffeesFragment : Fragment() {
     ): View? {
         val hList = listOf(
             hashMapOf(
-                "card_image" to R.drawable.home_coffee,
+                "card_image" to "https://images.freeimages.com/images/premium/small-comps/2380/23805331-coffee-art.jpg",
                 "card_product_name" to "Coffee A",
                 "card_product_price" to "0.5€"
             ),
             hashMapOf(
-                "card_image" to R.drawable.ic_croissant,
+                "card_image" to "https://pbs.twimg.com/profile_images/703891712427425793/KF1zgVqx.jpg",
                 "card_product_name" to "Coffee B",
                 "card_product_price" to "1.25€"
             ),
             hashMapOf(
-                "card_image" to R.drawable.ic_cart,
+                "card_image" to "http://i.imgur.com/DvpvklR.png",
                 "card_product_name" to "Coffee C",
                 "card_product_price" to "5.75€"
             )
@@ -36,7 +36,7 @@ class CoffeesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_coffees, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        val adapter = ProductsAdapter(hList as List<HashMap<String, Any>>)
+        val adapter = ProductsAdapter(hList)
         listView.adapter = adapter
 
         return view

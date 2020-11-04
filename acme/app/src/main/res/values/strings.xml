@@ -17,4 +17,5 @@
     <string name="str_logout">Logout</string>
     <string name="str_x">X</string>
     <string name="add_cart">Add to Cart</string>
+    <string name="card_img_description">Product image</string>
 </resources>
