@@ -6,8 +6,10 @@ const express = require('express')
 const app = express()
 const uuid = require('uuid')
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const forge = require('node-forge')
 const bodyParser = require('body-parser')
+const validator = require('./validator.js')
 
 
 const PORT = process.env.PORT || 3000
@@ -26,40 +28,31 @@ app.get('/', (req, res) => {
   res.send('ACME REST SERVICE')
 })
 
-var crypto = require('crypto');
-
 /**
- * < Description >
+ * @description 
  * Endpoint responsible for registering new
  * customers into the server.
  * 
- * < Return >
+ * @returns
  * Returns the needed user information for 
  * local storage on success. Otherwise, returns
  * an empty response with the 400 status code.
  */
 app.post('/register', (req, res) => {
-  // TODO - Validate request body
+  // Validate request body
+  const reqBodyValidation = validator.endpointRegisterBody(req.body)
+
+  if(!reqBodyValidation.status)
+    return res.status(400).send({description: reqBodyValidation.description})
+
   // TODO - Deal with the certificate to retrieve the user public key
   // TODO - Add certificate/public key to server database depending on the differente possibilities
   // TODO - Depending on the applicability of the previous TODO, create a public key table to boost app robustness
 
   // Generate uuid and hashed password
   const customerID = uuid.v4()
-  const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
-
+  const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS)
   
-  var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
-
-  const cert = forge.pki.certificateFromAsn1(object)
-
-  console.log(forge.pki.publicKeyToPem(cert.publicKey))
-
-  var verifier = crypto.createVerify('sha256WithRSAEncryption');
-  verifier.update("Robert22o");
-  var ver = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), req.body.name, 'base64');
-  console.log(ver);//<--- always false!
-
   res.send({error: "asdasasd"})
   /* // Store information on server database
   db.Customer.findOrCreate( { where: {
@@ -89,6 +82,22 @@ app.post('/register', (req, res) => {
   }) */
 })
 
+/*
+
+// This code snippet is used to make the signature validation function
+
+var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
+
+  const cert = forge.pki.certificateFromAsn1(object)
+
+  console.log(forge.pki.publicKeyToPem(cert.publicKey))
+
+  var verifier = crypto.createVerify('sha256WithRSAEncryption');
+  verifier.update("Robert22o");
+  var ver = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), req.body.name, 'base64');
+  console.log(ver);//<--- always false!
+
+*/
 
 // Development
 const ADDRESS = '192.168.0.101' // Run ipconfig to check your IPv4 Address 
