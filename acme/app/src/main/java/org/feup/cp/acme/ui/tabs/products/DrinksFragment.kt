@@ -46,12 +46,6 @@ class DrinksFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment DrinksFragment.
-         */
         @JvmStatic
         fun newInstance() =
             DrinksFragment()

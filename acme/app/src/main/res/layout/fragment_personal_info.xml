@@ -1,14 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.tabs.account.PersonalInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/str_nickname" />
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorBeige"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_name" />
+
+        <TextView
+            android:id="@+id/info_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorBeige"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_nif" />
+
+        <TextView
+            android:id="@+id/info_nif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorBeige"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_credit_card" />
+
+        <TextView
+            android:id="@+id/info_credit_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorBeige"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_nickname" />
+
+        <TextView
+            android:id="@+id/info_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginStart="15dp" >
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorBeige"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_password" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/amatic_sc"
+            android:textColor="@color/colorLight"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/str_hidden_text" />
+    </TableRow>
+</TableLayout>
