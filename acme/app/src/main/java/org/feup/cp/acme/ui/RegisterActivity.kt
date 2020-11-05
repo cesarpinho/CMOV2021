@@ -10,6 +10,8 @@ import org.feup.cp.acme.network.HttpClient
 import org.feup.cp.acme.network.HttpClientInterface
 import org.feup.cp.acme.network.RegisterData
 import org.feup.cp.acme.network.RegisterResponse
+import org.feup.cp.acme.room.AppDatabase
+import org.feup.cp.acme.room.entity.Customer
 import org.feup.cp.acme.security.KeyStoreManager
 import org.json.JSONObject
 import retrofit2.Call
@@ -59,6 +61,13 @@ class RegisterActivity : AppCompatActivity() {
                     // TODO - If everything is ok store the user information locally using room
                     println(response.body())
                     println("success")
+
+//                    var db = AppDatabase.getInstance()
+//                    println(db?.customerDao()?.getAll())
+//                    db?.customerDao()?.nukeTable()
+//                    //db?.customerDao()?.insertAll(Customer(1,"asdas", "Name", 12345, 12355, "nickname"))
+//                    println(db?.customerDao()?.getAll())
+
 //                    response.body()?.forEach {}
 //
 //                    val intent = Intent(this@RegisterActivity, HomeActivity::class.java)

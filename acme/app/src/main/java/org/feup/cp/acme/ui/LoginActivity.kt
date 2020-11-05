@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import org.feup.cp.acme.R
 import org.feup.cp.acme.room.AppDatabase
+import org.feup.cp.acme.room.entity.Customer
 
 class LoginActivity : AppCompatActivity() {
-
-    // private var db: AppDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        AppDatabase.getInstance(context = this)
 
         val inputNickname = findViewById<EditText>(R.id.input_login_nickname)
         inputNickname.setOnFocusChangeListener { view, hasFocus ->
@@ -27,14 +27,13 @@ class LoginActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btn_register_link).setOnClickListener(this::btnRegisterLink)
         findViewById<Button>(R.id.btn_login_action).setOnClickListener(this::btnLoginAction)
-        // db = AppDatabase.getAppDataBase(context = this)
     }
 
      private fun btnLoginAction(view: View) {
 
-         val intent = Intent(this, HomeActivity::class.java)
-
-         startActivity(intent)
+//         val intent = Intent(this, HomeActivity::class.java)
+//
+//         startActivity(intent)
 
     }
 

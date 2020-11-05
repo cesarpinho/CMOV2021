@@ -103,7 +103,7 @@ var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
 */
 
 // Development
-const ADDRESS = '192.168.0.101' // Run ipconfig to check your IPv4 Address 
+const ADDRESS = '10.227.158.255' // Run ipconfig to check your IPv4 Address 
 
 app.listen(PORT, ADDRESS, () => {
   console.log(`App is running on http://${ ADDRESS }:${ PORT }`)
