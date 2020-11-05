@@ -30,12 +30,14 @@ class RegisterActivity : AppCompatActivity() {
 
         // TODO - Retrieve data from input fields and make sure it is not empty
         val nickname = "rmaria"
-        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, nickname, "a1234", null)
 
         // Check for key entry pair with customer current nickname
         if(!KeyStoreManager.isKeyEntryUnique(nickname)) {
-            println("Nickname chosen is already taken. [Local]") // TODO - Update UI with message: "Nickname chosen is already taken."
+            return println("Nickname chosen is already taken.") // TODO - Update UI with printed message
         }
+
+        // Create customer data object
+        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, nickname, "a1234", null)
 
         // Create new key pair for the current customer
         KeyStoreManager(customer.nickname).generateKeyPair()
@@ -48,10 +50,8 @@ class RegisterActivity : AppCompatActivity() {
                     // Delete key pair entry from key store
                     KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
 
-                    // Extract error and display it in the UI
                     try {
-                        val errorMsg = JSONObject(response.errorBody()!!.string()).get("description")
-                        return println(errorMsg)    // TODO - Update UI with message: errorMsg
+                        return println(JSONObject(response.errorBody()!!.string()).get("description"))    // TODO - Update UI with printed message
                     } catch (e: Exception) {
                         println(e.stackTrace)
                     }
