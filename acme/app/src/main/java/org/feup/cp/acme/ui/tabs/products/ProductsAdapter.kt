@@ -24,7 +24,7 @@ class ProductsAdapter(
 
         return ProductsViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout_card, parent, false) as RelativeLayout
+                .inflate(R.layout.layout_product_card, parent, false) as RelativeLayout
         )
     }
 
