@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     card: {
       allowNull: false,        
-      type: DataTypes.INTEGER
+      type: DataTypes.BIGINT
     },
     nif: {
       allowNull: false,

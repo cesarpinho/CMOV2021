@@ -45,14 +45,11 @@ app.post('/register', (req, res) => {
   if(!reqBodyValidation.status)
     return res.status(400).send({description: reqBodyValidation.description})
 
-  // TODO - Add certificate to server database depending on the differente possibilities
-
   // Generate uuid and hashed password
   const customerID = uuid.v4()
   const hash = bcrypt.hashSync(req.body.password, SALT_ROUNDS)
   
-  res.send({error: "asdasasd"})
-  /* // Store information on server database
+  // Store information on server database
   db.Customer.findOrCreate( { where: {
                                 nickname: req.body.nickname
                               }, 
@@ -69,15 +66,23 @@ app.post('/register', (req, res) => {
   .then(([customer, created]) => {
     if(!created)
       res.status(400).send({description: "Nickname chosen is already taken."})
-    else
-      res.send({
-        "uuid": customer.dataValues.uuid,
-        "name": customer.dataValues.name,
-        "card": customer.dataValues.card,
-        "nif": customer.dataValues.nif,
-        "nickname": customer.dataValues.nickname
+    else {
+      db.Certificate.create(  {
+                                certificate: req.body.certificate,
+                                id_customer: customer.dataValues.id
+                              }
+                            )
+      .then((_) => {
+        res.send({
+          "uuid": customer.dataValues.uuid,
+          "name": customer.dataValues.name,
+          "card": customer.dataValues.card,
+          "nif": customer.dataValues.nif,
+          "nickname": customer.dataValues.nickname
+        })
       })
-  }) */
+    }      
+  })
 })
 
 /*

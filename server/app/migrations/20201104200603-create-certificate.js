@@ -11,7 +11,7 @@ module.exports = {
       certificate: {
         allowNull: false,
         unique: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       id_customer: {
         allowNull: false,

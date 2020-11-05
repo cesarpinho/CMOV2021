@@ -19,7 +19,7 @@ module.exports = {
       },
       card: {
         allowNull: false,        
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       nif: {
         allowNull: false,

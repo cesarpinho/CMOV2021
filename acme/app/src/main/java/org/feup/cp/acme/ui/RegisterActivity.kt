@@ -1,20 +1,21 @@
 package org.feup.cp.acme.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64.*
-import android.util.JsonReader
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import okhttp3.RequestBody
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.*
+import org.feup.cp.acme.network.HttpClient
+import org.feup.cp.acme.network.HttpClientInterface
+import org.feup.cp.acme.network.RegisterData
+import org.feup.cp.acme.network.RegisterResponse
 import org.feup.cp.acme.security.KeyStoreManager
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
+
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,50 +29,40 @@ class RegisterActivity : AppCompatActivity() {
         val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
 
         // TODO - Retrieve data from input fields and make sure it is not empty
-        val nickname = "test"
+        val nickname = "rmaria"
+        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, nickname, "a1234", null)
 
-        // TODO - Generate certificate with alias being equal to the nickame. This way we can easily verify if nickname was already used at least locally. Such verification must be made at the server level
+        // Check for key entry pair with customer current nickname
         if(!KeyStoreManager.isKeyEntryUnique(nickname)) {
-            println("Invalid nickname")
+            println("Nickname chosen is already taken. [Local]") // TODO - Update UI with message: "Nickname chosen is already taken."
         }
 
-        KeyStoreManager(nickname).generateKeyPair()
+        // Create new key pair for the current customer
+        KeyStoreManager(customer.nickname).generateKeyPair()
+        customer.certificate = KeyStoreManager.encodeCertToString(nickname)
 
-        val data = KeyStoreManager.signData("Roberto", KeyStoreManager.getPrivateKey(nickname))
-
-        println(data)
-        println("State" + KeyStoreManager.verifySignature(data, "Roberto", KeyStoreManager.getCertificate(nickname)))
-
-        println(KeyStoreManager.getCertificate(nickname))
-
-        val user = RegisterData(data, 123456789, 123456789, nickname, "1234", null)
-
-        user.certificate = KeyStoreManager.encodeCertToString(nickname)
-
-//        println(user)
-//        val user = RegisterData("Roberto Maria",
-//            123456789,
-//            123456789,
-//            "rmaria",
-//            "1234",
-//            "KeyStoreManager.getCertificate().toString()")
-
-        webService.register(user).enqueue(object : Callback<RegisterResponse> {
+        // Register customer in servers' database
+        webService.register(customer).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                // TODO - Check response code to see if everything was ok (possibility of non-unique identifier)
-                // TODO - If everything is ok store the user information locally using room
+                if (!response.isSuccessful) {
+                    // Delete key pair entry from key store
+                    KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
 
-                if(!response.isSuccessful) {
-                    // Invalid nickname
-                    // Delete key pair
-                    println("insuccess")
-                }
-                else {
+                    // Extract error and display it in the UI
+                    try {
+                        val errorMsg = JSONObject(response.errorBody()!!.string()).get("description")
+                        return println(errorMsg)    // TODO - Update UI with message: errorMsg
+                    } catch (e: Exception) {
+                        println(e.stackTrace)
+                    }
+                } else {
+                    // TODO - If everything is ok store the user information locally using room
                     println(response.body())
-//                response.body()?.forEach {}
-
-//                val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
-//                startActivity(intent)
+                    println("success")
+//                    response.body()?.forEach {}
+//
+//                    val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+//                    startActivity(intent)
                 }
             }
 

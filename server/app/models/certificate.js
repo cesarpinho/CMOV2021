@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Certificate.belongsTo(models.Customer)
+      Certificate.belongsTo(models.Customer, { foreignKey: 'id_customer' })
     }
   };
   Certificate.init({
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     certificate: {
       allowNull: false,
       unique: true,
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     },
     id_customer: {
       allowNull: false,
