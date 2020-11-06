@@ -1,7 +1,6 @@
 package org.feup.cp.acme.ui.tabs.products
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -24,24 +23,25 @@ class ProductsAdapter(
 
         return ProductsViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout_product_card, parent, false) as RelativeLayout
+                .inflate(R.layout.layout_card, parent, false) as RelativeLayout
         )
     }
 
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         val card = holder.itemView
+        val button = card.findViewById<Button>(R.id.card_button)
+
         Picasso.get().load(dataSet[position]["card_image"])
             .into(card.findViewById<ImageView>(R.id.card_image))
-        card.findViewById<TextView>(R.id.card_product_name).text =
+        card.findViewById<TextView>(R.id.card_title).text =
             dataSet[position]["card_product_name"] as String
-        card.findViewById<TextView>(R.id.card_product_price).text =
+        card.findViewById<TextView>(R.id.card_subtitle).text =
             dataSet[position]["card_product_price"] as String
-        card.findViewById<Button>(R.id.card_button)
-            .setOnClickListener(fun(view: View) {
-                println("position: $position")
-                val dialog = AddCartDialog(dataSet[position]["id_product"]!!.toInt())
-                dialog.show(activity.supportFragmentManager, "addCart")
-            })
+        button.visibility = Button.VISIBLE
+        button.setOnClickListener { view ->
+            val dialog = AddCartDialog(dataSet[position]["id_product"]!!.toInt())
+            dialog.show(activity.supportFragmentManager, "addCart")
+        }
     }
 
     override fun getItemCount() = dataSet.size

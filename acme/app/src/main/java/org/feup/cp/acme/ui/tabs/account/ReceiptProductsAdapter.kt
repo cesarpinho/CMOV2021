@@ -31,6 +31,7 @@ class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
         val quantity = card.findViewById<TextView>(R.id.card_right_info)
         quantity.text = products[position]["quantity"].plus(" units")
         quantity.textSize = 25F
+        quantity.visibility = TextView.VISIBLE
         Picasso.get().load(products[position]["image"])
             .into(card.findViewById<ImageView>(R.id.card_image))
     }

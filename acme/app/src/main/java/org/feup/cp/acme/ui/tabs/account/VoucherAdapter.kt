@@ -25,9 +25,11 @@ class VoucherAdapter(private val vouchers: List<Map<String, String>>, val contex
 
     override fun onBindViewHolder(holder: VoucherViewHolder, position: Int) {
         val card = holder.itemView
+        val date = card.findViewById<TextView>(R.id.card_right_info)
         card.findViewById<TextView>(R.id.card_subtitle).text =
             context.getString(R.string.str_hash_tag).plus(vouchers[position]["id"])
-        card.findViewById<TextView>(R.id.card_right_info).text = vouchers[position]["date"]
+        date.text = vouchers[position]["date"]
+        date.visibility = TextView.VISIBLE
 
         when (vouchers[position]["type"]) {
             "discount" -> {
