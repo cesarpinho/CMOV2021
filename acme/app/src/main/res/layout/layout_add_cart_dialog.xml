@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        android:background="@drawable/dialog_background">
+        android:background="@drawable/background_dialog">
 
         <Button
             android:id="@+id/btn_close_dialog"
@@ -63,7 +63,7 @@
             android:layout_below="@id/input_dialog_quantity"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:background="@drawable/button_background"
+            android:background="@drawable/background_button"
             android:fontFamily="@font/amatic_sc"
             android:text="@string/add_cart"
             android:textColor="@color/colorGunmetal"
