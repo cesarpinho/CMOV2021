@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="transparent">#00000000</color>
+    <!-- Solid Colors -->
     <color name="colorGunmetal">#2D3344</color>
     <color name="colorTroopGreen">#767441</color>
     <color name="colorLight">#F6F7EB</color>
     <color name="colorBeige">#B9B079</color>
     <color name="colorCenterGradient" >#404444</color>
     <color name="colorEndGradient" >#646442</color>
+
+    <!-- Semi-Transparent Colors -->
     <color name="colorInputBackground">#2d33446a</color>
     <color name="colorBlocked">#6533446A</color>
+    <color name="colorSelected">#90B9B079</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

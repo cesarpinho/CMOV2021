@@ -17,7 +17,7 @@ class ProductsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products)
-        Drawer(this, "products")
+        Toolbar(this, "products")
 
         tabLayout = findViewById(R.id.tabs)
         viewPager = findViewById(R.id.view_pager)

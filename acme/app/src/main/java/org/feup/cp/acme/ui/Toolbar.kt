@@ -9,8 +9,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import org.feup.cp.acme.R
 
-class Drawer(private val activity: Activity, actualMenuView: String) {
+class Toolbar(private val activity: Activity, actualMenuView: String?) {
     private val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer)
+    private val cartIndicator: View = activity.findViewById(R.id.cart_selected)
     private val btn = mapOf<String, View>(
         "home" to activity.findViewById(R.id.text_drawer_home),
         "products" to activity.findViewById(R.id.text_drawer_products),
@@ -19,6 +20,7 @@ class Drawer(private val activity: Activity, actualMenuView: String) {
     )
 
     init {
+        activity.findViewById<View>(R.id.btn_cart).setOnClickListener(this::cartRedirect)
         activity.findViewById<View>(R.id.btn_burger_menu).setOnClickListener(this::drawerOpen)
         activity.findViewById<View>(R.id.btn_close_drawer).setOnClickListener(this::drawerClose)
         activity.findViewById<View>(R.id.text_drawer_logout).setOnClickListener(this::logoutAction)
@@ -26,13 +28,15 @@ class Drawer(private val activity: Activity, actualMenuView: String) {
         btn["products"]?.setOnClickListener(this::productsRedirect)
         btn["account"]?.setOnClickListener(this::accountRedirect)
 
-        (btn[actualMenuView] as Button).setTextColor(
-            ContextCompat.getColor(
-                activity,
-                R.color.colorLight
+        if (actualMenuView != null) {
+            (btn[actualMenuView] as Button).setTextColor(
+                ContextCompat.getColor(
+                    activity,
+                    R.color.colorLight
+                )
             )
-        )
-        btn[actualMenuView]?.setOnClickListener(null)
+            btn[actualMenuView]?.setOnClickListener(null)
+        }
     }
 
     private fun drawerOpen(view: View) {
@@ -41,6 +45,16 @@ class Drawer(private val activity: Activity, actualMenuView: String) {
 
     private fun drawerClose(view: View) {
         drawerLayout.closeDrawer(GravityCompat.START)
+    }
+
+    private fun cartRedirect(view: View) {
+        val intent = Intent(activity, CartActivity::class.java)
+//        true.cartSelect()
+        activity.startActivity(intent)
+    }
+
+    private fun Boolean.cartSelect() {
+        cartIndicator.visibility = if (this) View.VISIBLE else View.GONE
     }
 
     private fun homeRedirect(view: View) {

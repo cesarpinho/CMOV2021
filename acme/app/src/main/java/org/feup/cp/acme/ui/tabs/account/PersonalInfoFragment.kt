@@ -14,6 +14,7 @@ class PersonalInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        TODO("Replace variables for db information")
         val name = "John Costa Lion Doe"
         val nif = 123456789
         val creditCard = 6060589412347676

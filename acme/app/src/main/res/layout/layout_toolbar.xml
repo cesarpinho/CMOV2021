@@ -22,8 +22,19 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_cart"
-            android:translationX="-20dp" />
+            android:layout_marginEnd="20dp" />
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/cart_selected"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="12.5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/background_cart"/>
 
     </RelativeLayout>
 
