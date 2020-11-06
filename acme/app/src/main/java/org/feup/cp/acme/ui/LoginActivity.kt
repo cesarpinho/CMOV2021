@@ -30,11 +30,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
      private fun btnLoginAction(view: View) {
-
-//         val intent = Intent(this, HomeActivity::class.java)
-//
-//         startActivity(intent)
-
+         val intent = Intent(this, HomeActivity::class.java)
+         startActivity(intent)
     }
 
     private fun btnRegisterLink(view: View) {
