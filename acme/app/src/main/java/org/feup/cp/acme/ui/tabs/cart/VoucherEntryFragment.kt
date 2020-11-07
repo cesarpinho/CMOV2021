@@ -17,9 +17,6 @@ class VoucherEntryFragment(
     private val cartActivity: CartActivity
 ) : Fragment() {
 
-    // TODO - Replace Constant Voucher Size
-    private val VOUCHER_SIZE = 8
-
     /**
      * Creates the voucher tab view of the cart
      */
@@ -56,6 +53,12 @@ class VoucherEntryFragment(
      * Static functions
      */
     companion object {
+
+        /**
+         * Voucher length constant
+         */
+        const val VOUCHER_SIZE = 8
+
         @JvmStatic
         fun newInstance(cartActivity: CartActivity) = VoucherEntryFragment(cartActivity)
     }
