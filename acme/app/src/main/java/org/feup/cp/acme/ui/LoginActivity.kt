@@ -68,12 +68,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun btnLoginAction(view: View) {
         // Validate input login fields before actually login the customer
-        if(anyInputEmpty() || anyInvalidInput()) {
-            return println("All fields are required and must be valid!") // TODO - Update UI with printed message
-        }
+//        if(anyInputEmpty() || anyInvalidInput()) {
+//            return println("All fields are required and must be valid!") // TODO - Update UI with printed message
+//        }
 
         // Create customer data object
-        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
+//        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
+        val customer = LoginData("rmaria", "a1234")
 
         // Create new key pair for the current customer if current nickname is absent on key store
         if(KeyStoreManager.isKeyEntryUnique(customer.nickname)) {

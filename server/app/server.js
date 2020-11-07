@@ -127,6 +127,46 @@ app.post('/register', (req, res) => {
   })
 })
 
+/**
+ * @description 
+ * Endpoint responsible for retrieving the products
+ * present on the database, making sure the local one
+ * is up-to-date.
+ * 
+ * @returns
+ * Returns all the products present in the database if the local
+ * on does not have any product or has older versions that need
+ * to be updated. Otherwise returns a BAD_REQUEST which means that
+ * the local database is up-to-date.
+ */
+app.get('/products', async (req, res) => {
+  // Retrieves the version of oldest product present the app local database
+  const version = req.query.version == undefined ? null: req.query.version
+  
+  // Retrieve the most recent product instance from the database
+  const newestProduct = await db.Product.findOne({
+    order: [
+      ['updatedAt', 'DESC']
+    ]
+  })
+
+  // Convert dates to date objects for comparison
+  let versionDate = new Date(version)
+  let newestProductDate = new Date(newestProduct.dataValues.updatedAt)
+
+  // Check if there is the need to update the app local database
+  if(newestProductDate.getTime() - versionDate.getTime() > 0) {
+    db.Product.findAll({
+      attributes: ['type', 'icon', 'name', 'price', 'updatedAt']
+    })
+    .then((products) => {
+      res.send(products)
+    })
+  } 
+  else 
+    return res.status(400).send({description: "Products table up-to-date!"})
+})
+
 /*
 
 // This code snippet is used to make the signature validation function
