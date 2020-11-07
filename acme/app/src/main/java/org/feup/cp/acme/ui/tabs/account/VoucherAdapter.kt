@@ -13,9 +13,15 @@ import org.feup.cp.acme.R
 class VoucherAdapter(private val vouchers: List<Map<String, String>>, val context: Context) :
     RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder>() {
 
+    /**
+     * Voucher View holder class
+     */
     class VoucherViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
 
+    /**
+     * Creates card view holder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoucherViewHolder {
         return VoucherViewHolder(
             LayoutInflater.from(parent.context)
@@ -23,6 +29,9 @@ class VoucherAdapter(private val vouchers: List<Map<String, String>>, val contex
         )
     }
 
+    /**
+     * Binds a view holder / card with each voucher
+     */
     override fun onBindViewHolder(holder: VoucherViewHolder, position: Int) {
         val card = holder.itemView
         val date = card.findViewById<TextView>(R.id.card_right_info)
@@ -51,5 +60,8 @@ class VoucherAdapter(private val vouchers: List<Map<String, String>>, val contex
 
     }
 
+    /**
+     * Returns the quantity of card views
+     */
     override fun getItemCount() = vouchers.size
 }

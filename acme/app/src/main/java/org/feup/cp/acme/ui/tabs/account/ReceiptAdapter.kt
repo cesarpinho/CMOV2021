@@ -15,9 +15,15 @@ import org.feup.cp.acme.R
 class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: Context) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
+    /**
+     * Receipt View holder class
+     */
     class ReceiptViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
 
+    /**
+     * Creates card view holder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptViewHolder {
         return ReceiptViewHolder(
             LayoutInflater.from(parent.context)
@@ -25,6 +31,9 @@ class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: C
         )
     }
 
+    /**
+     * Binds a view holder / card with each receipt
+     */
     override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) {
         val card = holder.itemView
 
@@ -44,6 +53,9 @@ class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: C
         productsList.adapter = productsAdapter
     }
 
+    /**
+     * Makes visible the receipt details
+     */
     private fun openCollapsible(view: View) {
         view.findViewById<ImageView>(R.id.card_btn_collapse).rotationX = 180F
         view.findViewById<LinearLayout>(R.id.card_receipt_details).visibility =
@@ -51,6 +63,9 @@ class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: C
         view.setOnClickListener(this::closeCollapsible)
     }
 
+    /**
+     * Hides the receipt details
+     */
     private fun closeCollapsible(view: View) {
         view.findViewById<ImageView>(R.id.card_btn_collapse).rotationX = 0F
         view.findViewById<LinearLayout>(R.id.card_receipt_details).visibility =
@@ -58,6 +73,9 @@ class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: C
         view.setOnClickListener(this::openCollapsible)
     }
 
+    /**
+     * Returns the quantity of card views
+     */
     override fun getItemCount() = dataSet.size
 
 }

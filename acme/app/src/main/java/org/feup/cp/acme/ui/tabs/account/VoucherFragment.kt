@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
 
 class VoucherFragment : Fragment() {
+
+    /**
+     * Creates voucher tab view
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +43,9 @@ class VoucherFragment : Fragment() {
         return view
     }
 
+    /**
+     * Static function
+     */
     companion object {
         @JvmStatic
         fun newInstance() = VoucherFragment()

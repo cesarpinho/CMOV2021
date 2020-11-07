@@ -11,9 +11,20 @@ import org.feup.cp.acme.ui.tabs.account.ReceiptFragment
 import org.feup.cp.acme.ui.tabs.account.VoucherFragment
 
 class AccountActivity : AppCompatActivity() {
+
+    /**
+     * Tab Layout instance
+     */
     private lateinit var tabLayout: TabLayout
+
+    /**
+     * View pager instance
+     */
     private lateinit var viewPager: ViewPager
 
+    /**
+     * Creates the account activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
@@ -22,10 +33,13 @@ class AccountActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabs)
         viewPager = findViewById(R.id.view_pager)
 
-        getTabs()
+        addTabs()
     }
 
-    private fun getTabs() {
+    /**
+     * Add tabs and icons to the tab bar
+     */
+    private fun addTabs() {
         val pagerAdapter = PagerAdapter(supportFragmentManager)
         pagerAdapter.addFragment(PersonalInfoFragment.newInstance())
         pagerAdapter.addFragment(ReceiptFragment.newInstance())

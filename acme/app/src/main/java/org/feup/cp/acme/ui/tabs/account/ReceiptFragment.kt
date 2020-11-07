@@ -11,6 +11,9 @@ import org.feup.cp.acme.R
 
 class ReceiptFragment : Fragment() {
 
+    /**
+     * Creates receipt tab view
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,6 +57,9 @@ class ReceiptFragment : Fragment() {
         return view
     }
 
+    /**
+     * Static functions
+     */
     companion object {
 
         @JvmStatic

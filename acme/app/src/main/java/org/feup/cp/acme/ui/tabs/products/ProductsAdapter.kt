@@ -16,17 +16,26 @@ class ProductsAdapter(
     private val activity: FragmentActivity
 ) :
     RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+
+    /**
+     * Products View holder class
+     */
     class ProductsViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
 
+    /**
+     * Creates card view holder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
-
         return ProductsViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_card, parent, false) as RelativeLayout
         )
     }
 
+    /**
+     * Binds a view holder / card with each element of the dataSet
+     */
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         val card = holder.itemView
         val button = card.findViewById<Button>(R.id.card_button)
@@ -44,5 +53,8 @@ class ProductsAdapter(
         }
     }
 
+    /**
+     * Returns the quantity of card views
+     */
     override fun getItemCount() = dataSet.size
 }

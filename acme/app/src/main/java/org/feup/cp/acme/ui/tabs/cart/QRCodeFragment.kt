@@ -9,6 +9,9 @@ import org.feup.cp.acme.R
 
 class QRCodeFragment : Fragment() {
 
+    /**
+     *
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -17,6 +20,9 @@ class QRCodeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_qrcode,container,false)
     }
 
+    /**
+     * Static functions
+     */
     companion object {
         @JvmStatic
         fun newInstance() = QRCodeFragment()

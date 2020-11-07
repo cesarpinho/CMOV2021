@@ -12,10 +12,25 @@ import org.feup.cp.acme.ui.tabs.cart.QRCodeFragment
 import org.feup.cp.acme.ui.tabs.cart.VoucherEntryFragment
 
 class CartActivity : AppCompatActivity() {
+
+    /**
+     * Tab Layout instance
+     */
     private lateinit var tabLayout: TabLayout
+
+    /**
+     * View pager instance
+     */
     private lateinit var viewPager: ViewPager
+
+    /**
+     * Pager adapter instance
+     */
     private lateinit var pagerAdapter: PagerAdapter
 
+    /**
+     * Creates the cart activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -33,12 +48,18 @@ class CartActivity : AppCompatActivity() {
         addCartListTab()
     }
 
+    /**
+     * Add cart list tab to the tab bar
+     */
     private fun addCartListTab() {
         pagerAdapter.addFragment(CartListFragment.newInstance(this))
         pagerAdapter.notifyDataSetChanged()
         addTabIcons()
     }
 
+    /**
+     * Add voucher tab to the tab bar
+     */
     fun addVoucherTab() {
         pagerAdapter.addFragment(VoucherEntryFragment.newInstance(this))
         pagerAdapter.notifyDataSetChanged()
@@ -46,6 +67,9 @@ class CartActivity : AppCompatActivity() {
         viewPager.setCurrentItem(1, true)
     }
 
+    /**
+     * Add qr code tab to the tab bar
+     */
     fun addQRCodeTab() {
         pagerAdapter.addFragment(QRCodeFragment.newInstance())
         pagerAdapter.notifyDataSetChanged()
@@ -53,6 +77,9 @@ class CartActivity : AppCompatActivity() {
         viewPager.setCurrentItem(2, true)
     }
 
+    /**
+     * Add the tab icons when a new tab is added
+     */
     private fun addTabIcons() {
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_num_1_light)
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_num_2_light)

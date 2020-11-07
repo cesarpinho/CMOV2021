@@ -11,9 +11,20 @@ import org.feup.cp.acme.ui.tabs.PagerAdapter
 import org.feup.cp.acme.ui.tabs.products.SnacksFragment
 
 class ProductsActivity : AppCompatActivity() {
+
+    /**
+     * Tab Layout instance
+     */
     private lateinit var tabLayout: TabLayout
+
+    /**
+     * View pager instance
+     */
     private lateinit var viewPager: ViewPager
 
+    /**
+     * Creates the account activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products)
@@ -25,6 +36,9 @@ class ProductsActivity : AppCompatActivity() {
         getTabs()
     }
 
+    /**
+     * Add tabs and icons to the tab bar
+     */
     private fun getTabs() {
         val pagerAdapter = PagerAdapter(supportFragmentManager)
         pagerAdapter.addFragment(CoffeesFragment.newInstance())

@@ -13,6 +13,9 @@ import org.feup.cp.acme.R
 class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
+    /**
+     * Creates card view holder
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -23,6 +26,9 @@ class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
         )
     }
 
+    /**
+     * Binds a view holder / card with each product
+     */
     override fun onBindViewHolder(holder: ReceiptAdapter.ReceiptViewHolder, position: Int) {
         val card = holder.itemView
         card.findViewById<View>(R.id.divider).visibility = View.GONE
@@ -36,6 +42,9 @@ class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
             .into(card.findViewById<ImageView>(R.id.card_image))
     }
 
+    /**
+     * Returns the quantity of card views
+     */
     override fun getItemCount() = products.size
 
 }

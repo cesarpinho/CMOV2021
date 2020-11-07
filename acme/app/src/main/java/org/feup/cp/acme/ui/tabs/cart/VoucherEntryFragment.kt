@@ -8,8 +8,15 @@ import androidx.fragment.app.Fragment
 import org.feup.cp.acme.R
 import org.feup.cp.acme.ui.CartActivity
 
-class VoucherEntryFragment(private val cartActivity: CartActivity) : Fragment() {
+class VoucherEntryFragment(
+    /**
+     * Cart activity instance
+     */
+    private val cartActivity: CartActivity) : Fragment() {
 
+    /**
+     * Creates the voucher tab view of the cart
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,6 +27,9 @@ class VoucherEntryFragment(private val cartActivity: CartActivity) : Fragment() 
         return view
     }
 
+    /**
+     * Static functions
+     */
     companion object {
         @JvmStatic
         fun newInstance(cartActivity: CartActivity) = VoucherEntryFragment(cartActivity)

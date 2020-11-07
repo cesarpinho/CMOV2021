@@ -9,11 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
 
-class CardProductsAdapter(private val totalView: TextView) :
-    RecyclerView.Adapter<CardProductsAdapter.ViewHolder>() {
+class CartProductsAdapter(private val totalView: TextView) :
+    RecyclerView.Adapter<CartProductsAdapter.ViewHolder>() {
+
+    /**
+     * Cart product View holder class
+     */
     class ViewHolder(relativeLayout: RelativeLayout) : RecyclerView.ViewHolder(relativeLayout)
 
-    var totalCalc: MutableMap<String, Int> = mutableMapOf()
+    /**
+     * Quantities of each product for calculate the total
+     */
+    private var totalCalc: MutableMap<String, Int> = mutableMapOf()
 
     //    TODO - Replace with Cart info
     val products = mutableListOf(
@@ -33,11 +40,17 @@ class CardProductsAdapter(private val totalView: TextView) :
         )
     )
 
+    /**
+     * Primary constructor
+     */
     init {
         products.forEach { totalCalc[it["id"]!!] = it["quantity"]!!.toInt() }
         calculateTotal()
     }
 
+    /**
+     * Creates card view holder
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -48,17 +61,23 @@ class CardProductsAdapter(private val totalView: TextView) :
         )
     }
 
+    /**
+     * Binds a view holder / card with each product
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val card = holder.itemView
         val quantityInput = card.findViewById<EditText>(R.id.input_quantity)
         val removeBtn = card.findViewById<Button>(R.id.btn_remove)
 
+        // Load the image
         Picasso.get().load(products[position]["image"])
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text = products[position]["name"]
         card.findViewById<TextView>(R.id.card_subtitle).text = products[position]["price"]
         quantityInput.visibility = EditText.VISIBLE
         quantityInput.setText(products[position]["quantity"])
+
+        // Add listener to update the total when th quantity is changed
         quantityInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -73,6 +92,7 @@ class CardProductsAdapter(private val totalView: TextView) :
                 }
             }
         })
+
         removeBtn.visibility = Button.VISIBLE
         removeBtn.setOnClickListener { view ->
             products.removeAt(position)
@@ -80,6 +100,9 @@ class CardProductsAdapter(private val totalView: TextView) :
         }
     }
 
+    /**
+     * Calculates and display the total
+     */
     private fun calculateTotal() {
         var newTotal = 0F
 
@@ -93,5 +116,8 @@ class CardProductsAdapter(private val totalView: TextView) :
         totalView.text = totalText
     }
 
+    /**
+     * Returns the quantity of card views
+     */
     override fun getItemCount() = products.size
 }

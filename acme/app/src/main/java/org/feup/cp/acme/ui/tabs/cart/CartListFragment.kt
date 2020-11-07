@@ -13,6 +13,9 @@ import org.feup.cp.acme.ui.CartActivity
 
 class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
 
+    /**
+     * Creates card list tab view
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,9 +24,10 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart_list, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        val adapter = CardProductsAdapter(view.findViewById(R.id.cart_total))
+        val adapter = CartProductsAdapter(view.findViewById(R.id.cart_total))
         listView.adapter = adapter
 
+        // Add listener to the Next button
         view.findViewById<Button>(R.id.btn_next).setOnClickListener {
             cartActivity.addVoucherTab()
         }
@@ -31,6 +35,9 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
         return view
     }
 
+    /**
+     * Static functions
+     */
     companion object {
         @JvmStatic
         fun newInstance(cartActivity: CartActivity) = CartListFragment(cartActivity)

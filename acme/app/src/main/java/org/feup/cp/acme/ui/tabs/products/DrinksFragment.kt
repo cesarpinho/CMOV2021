@@ -11,6 +11,9 @@ import org.feup.cp.acme.R
 
 class DrinksFragment : Fragment() {
 
+    /**
+     * Creates the drinks tab view
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,9 +48,11 @@ class DrinksFragment : Fragment() {
         return view
     }
 
+    /**
+     * Static functions
+     */
     companion object {
         @JvmStatic
-        fun newInstance() =
-            DrinksFragment()
+        fun newInstance() = DrinksFragment()
     }
 }

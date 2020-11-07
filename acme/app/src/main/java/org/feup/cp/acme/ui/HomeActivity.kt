@@ -6,6 +6,10 @@ import org.feup.cp.acme.R
 import org.feup.cp.acme.room.User
 
 class HomeActivity : AppCompatActivity() {
+
+    /**
+     * Creates the home activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
