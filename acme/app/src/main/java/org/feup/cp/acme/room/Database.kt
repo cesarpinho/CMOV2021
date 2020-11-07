@@ -30,17 +30,24 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context? = null): AppDatabase? {
             if (instance == null){
                 synchronized(AppDatabase::class){
-                    instance = Room.databaseBuilder(context?.applicationContext!!, AppDatabase::class.java, "myDB").allowMainThreadQueries().build()
+                    instance = Room.databaseBuilder(context?.applicationContext!!, AppDatabase::class.java, "ACME-DB").allowMainThreadQueries().build()
                 }
             }
             return instance
         }
 
         /**
-         * Destoys database instance
+         * Destroys database instance
          */
-        fun destroyDataBase(){
+        fun destroyDatabaseInstance(){
             instance = null
+        }
+
+        /**
+         * Destroys database
+         */
+        fun nukeDatabase(context: Context) {
+            context.deleteDatabase("ACME-DB")
         }
     }
 }

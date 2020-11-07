@@ -9,7 +9,7 @@ class HttpClient() {
     /**
      * Url used for the development environment
      */
-    private val devBaseUrl: String = "http://192.168.0.101:3000"
+    private val devBaseUrl: String = "http://192.168.0.102:3000"
 
     /**
      * Url used for the production environment

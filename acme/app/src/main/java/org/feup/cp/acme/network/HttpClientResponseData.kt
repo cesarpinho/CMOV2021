@@ -2,7 +2,7 @@ package org.feup.cp.acme.network
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponse(
+data class CustomerInfoResponse(
         @SerializedName("uuid")
         var uuid : String,
         @SerializedName("name")
