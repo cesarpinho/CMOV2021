@@ -23,4 +23,6 @@
     <string name="str_free_coffee">1 Free Coffee</string>
     <string name="str_hash_tag">#</string>
     <string name="str_next">Next</string>
+    <string name="str_voucher">Voucher</string>
+    <string name="str_complete">Complete</string>
 </resources>

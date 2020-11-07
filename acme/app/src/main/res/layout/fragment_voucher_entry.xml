@@ -5,9 +5,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabs.cart.VoucherEntryFragment">
 
-    <EditText
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_voucher"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_input_text" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:labelFor="@id/input_voucher"
+        android:fontFamily="@font/amatic_sc"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/colorLight"
+        android:text="@string/str_voucher"/>
+
+    <EditText
+        android:id="@+id/input_voucher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="5dp"
+        android:layout_toEndOf="@+id/text_voucher"
+        android:background="@drawable/background_input_text"
+        android:fontFamily="@font/amatic_sc"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/colorLight"
+        android:autofillHints=""
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/background_button"
+        android:fontFamily="@font/amatic_sc"
+        android:text="@string/str_complete"
+        android:textColor="@color/colorGunmetal"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -29,6 +29,16 @@ class CartActivity : AppCompatActivity() {
     private lateinit var pagerAdapter: PagerAdapter
 
     /**
+     * Voucher tab lock indicator
+     */
+    private var lockVoucher = true
+
+    /**
+     * QRCode tab lock indicator
+     */
+    private var lockQRCode = true
+
+    /**
      * Creates the cart activity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +71,12 @@ class CartActivity : AppCompatActivity() {
      * Add voucher tab to the tab bar
      */
     fun addVoucherTab() {
-        pagerAdapter.addFragment(VoucherEntryFragment.newInstance(this))
-        pagerAdapter.notifyDataSetChanged()
-        addTabIcons()
+        if (lockVoucher) {
+            pagerAdapter.addFragment(VoucherEntryFragment.newInstance(this))
+            pagerAdapter.notifyDataSetChanged()
+            addTabIcons()
+            lockVoucher = false
+        }
         viewPager.setCurrentItem(1, true)
     }
 
@@ -71,9 +84,12 @@ class CartActivity : AppCompatActivity() {
      * Add qr code tab to the tab bar
      */
     fun addQRCodeTab() {
-        pagerAdapter.addFragment(QRCodeFragment.newInstance())
-        pagerAdapter.notifyDataSetChanged()
-        addTabIcons()
+        if (lockQRCode) {
+            pagerAdapter.addFragment(QRCodeFragment.newInstance())
+            pagerAdapter.notifyDataSetChanged()
+            addTabIcons()
+            lockQRCode = false
+        }
         viewPager.setCurrentItem(2, true)
     }
 
