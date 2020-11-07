@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
+import org.feup.cp.acme.ui.CartActivity
 
-class CartListFragment : Fragment() {
+class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,15 +21,19 @@ class CartListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart_list, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        val adapter = CardProductsAdapter()
+        val adapter = CardProductsAdapter(view.findViewById(R.id.cart_total))
         listView.adapter = adapter
+
+        view.findViewById<Button>(R.id.btn_next).setOnClickListener {
+            cartActivity.addVoucherTab()
+        }
+
         return view
     }
 
-
     companion object {
         @JvmStatic
-        fun newInstance() = CartListFragment()
+        fun newInstance(cartActivity: CartActivity) = CartListFragment(cartActivity)
     }
 
 }
