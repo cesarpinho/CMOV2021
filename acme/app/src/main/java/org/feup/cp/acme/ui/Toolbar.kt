@@ -17,27 +17,27 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
         "home" to activity.findViewById(R.id.text_drawer_home),
         "products" to activity.findViewById(R.id.text_drawer_products),
         "account" to activity.findViewById(R.id.text_drawer_account),
-        "logout" to activity.findViewById(R.id.text_drawer_logout)
+        "logout" to activity.findViewById(R.id.text_drawer_logout),
+        "cart" to activity.findViewById<View>(R.id.btn_cart)
     )
 
     init {
-        activity.findViewById<View>(R.id.btn_cart).setOnClickListener(this::cartRedirect)
         activity.findViewById<View>(R.id.btn_burger_menu).setOnClickListener(this::drawerOpen)
         activity.findViewById<View>(R.id.btn_close_drawer).setOnClickListener(this::drawerClose)
         activity.findViewById<View>(R.id.text_drawer_logout).setOnClickListener(this::logoutAction)
         btn["home"]?.setOnClickListener(this::homeRedirect)
         btn["products"]?.setOnClickListener(this::productsRedirect)
         btn["account"]?.setOnClickListener(this::accountRedirect)
+        btn["cart"]?.setOnClickListener(this::cartRedirect)
 
-        if (actualMenuView != null) {
-            (btn[actualMenuView] as Button).setTextColor(
-                ContextCompat.getColor(
-                    activity,
-                    R.color.colorLight
-                )
+        (btn[actualMenuView] as Button).setTextColor(
+            ContextCompat.getColor(
+                activity,
+                R.color.colorLight
             )
-            btn[actualMenuView]?.setOnClickListener(null)
-        }
+        )
+        btn[actualMenuView]?.setOnClickListener(null)
+
     }
 
     private fun drawerOpen(view: View) {
@@ -50,12 +50,7 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
 
     private fun cartRedirect(view: View) {
         val intent = Intent(activity, CartActivity::class.java)
-//        true.cartSelect()
         activity.startActivity(intent)
-    }
-
-    private fun Boolean.cartSelect() {
-        cartIndicator.visibility = if (this) View.VISIBLE else View.GONE
     }
 
     private fun homeRedirect(view: View) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -39,7 +38,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/card_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,27 +47,56 @@
         android:layout_marginEnd="10dp">
 
         <Button
-            android:visibility="gone"
             android:id="@+id/card_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:background="@drawable/background_button"
             android:fontFamily="@font/amatic_sc"
+            android:text="@string/add_cart"
             android:textColor="@color/colorGunmetal"
             android:textSize="18sp"
-            android:text="@string/add_cart" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/card_right_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/amatic_sc"
             android:textColor="@color/colorLight"
             android:textSize="18sp"
-            android:textStyle="bold" />
-    </FrameLayout>
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/input_quantity"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="quantity"
+            android:fontFamily="@font/amatic_sc"
+            android:hint="@string/str_select_quantity"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorLight"
+            android:textColorHighlight="@color/colorGunmetal"
+            android:textColorLink="@color/colorBeige"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/str_x"
+            android:textColor="@color/colorBeige"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/card_blocker"

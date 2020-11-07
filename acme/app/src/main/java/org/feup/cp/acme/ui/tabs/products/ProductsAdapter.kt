@@ -31,15 +31,15 @@ class ProductsAdapter(
         val card = holder.itemView
         val button = card.findViewById<Button>(R.id.card_button)
 
-        Picasso.get().load(dataSet[position]["card_image"])
+        Picasso.get().load(dataSet[position]["image"])
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text =
-            dataSet[position]["card_product_name"] as String
+            dataSet[position]["name"] as String
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            dataSet[position]["card_product_price"] as String
+            dataSet[position]["price"] as String
         button.visibility = Button.VISIBLE
         button.setOnClickListener { view ->
-            val dialog = AddCartDialog(dataSet[position]["id_product"]!!.toInt())
+            val dialog = AddCartDialog(dataSet[position]["id"]!!.toInt())
             dialog.show(activity.supportFragmentManager, "addCart")
         }
     }

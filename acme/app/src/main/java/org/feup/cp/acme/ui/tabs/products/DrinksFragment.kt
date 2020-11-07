@@ -17,22 +17,22 @@ class DrinksFragment : Fragment() {
     ): View? {
         val hList = listOf(
             hashMapOf(
-                "id_product" to "4",
-                "card_image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRBHJ0huLjA-K31IVui7sPVZj_nC4acZbfgWQ&usqp=CAU",
-                "card_product_name" to "Drink A",
-                "card_product_price" to "10.5€"
+                "id" to "4",
+                "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRBHJ0huLjA-K31IVui7sPVZj_nC4acZbfgWQ&usqp=CAU",
+                "name" to "Drink A",
+                "price" to "10.5€"
             ),
             hashMapOf(
-                "id_product" to "5",
-                "card_image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYME2L4Hcncff5cQiafc8tz0h-H76PK-PE1w&usqp=CAU",
-                "card_product_name" to "Drink B",
-                "card_product_price" to "1.25€"
+                "id" to "5",
+                "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYME2L4Hcncff5cQiafc8tz0h-H76PK-PE1w&usqp=CAU",
+                "name" to "Drink B",
+                "price" to "1.25€"
             ),
             hashMapOf(
-                "id_product" to "6",
-                "card_image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhS6WbFgcxW0Gs7fwuvOWLO0OsoiPpr6jRaw&usqp=CAU",
-                "card_product_name" to "Drink C",
-                "card_product_price" to "5.75€"
+                "id" to "6",
+                "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhS6WbFgcxW0Gs7fwuvOWLO0OsoiPpr6jRaw&usqp=CAU",
+                "name" to "Drink C",
+                "price" to "5.75€"
             )
         )
 

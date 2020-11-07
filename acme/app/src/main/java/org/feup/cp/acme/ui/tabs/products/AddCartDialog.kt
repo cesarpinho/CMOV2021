@@ -21,7 +21,7 @@ class AddCartDialog(private val idProduct: Int) : DialogFragment() {
                 val quantity =
                     view.findViewById<EditText>(R.id.input_dialog_quantity).text.toString().toInt()
                 println("Id Product: $idProduct\nQuantity: $quantity")
-//                TODO("Add product and quantity to cart")
+//                TODO("Save product and quantity on cart")
                 this.dismiss()
             }
             view.findViewById<Button>(R.id.btn_close_dialog).setOnClickListener { listenerView ->
