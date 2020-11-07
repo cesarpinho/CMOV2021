@@ -14,5 +14,14 @@ data class RegisterData(
         @SerializedName("password")
         var password : String,
         @SerializedName("certificate")
-        var certificate : String?
+        var certificate : String? = null
+)
+
+data class LoginData(
+        @SerializedName("nickname")
+        var nickname : String,
+        @SerializedName("password")
+        var password : String,
+        @SerializedName("certificate")
+        var certificate : String? = null
 )

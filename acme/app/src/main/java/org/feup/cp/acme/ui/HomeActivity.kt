@@ -10,6 +10,5 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         Toolbar(this, "home")
-        println(User.getInstance()!!.currentUser.nickname)
     }
 }

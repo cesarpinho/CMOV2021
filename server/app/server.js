@@ -30,6 +30,48 @@ app.get('/', (req, res) => {
 
 /**
  * @description 
+ * Endpoint responsible for authenticate a
+ * customer.
+ * 
+ * @returns
+ * Returns the needed user information for 
+ * local storage on success. Otherwise, returns
+ * an empty response with the 400 status code.
+ */
+app.post('/login', async (req, res) => {
+  // Validate request body
+  if(req.body.nickname == null || req.body.password == null)
+    return res.status(400).send({description: "Both nickname and password must have a value."})
+  
+  db.Customer.findOne({ where: { nickname: req.body.nickname }})
+      .then((customer) => {
+        if(customer == null)
+          return res.status(400).send({description: "Invalid credentials!"})
+        else {
+          if(!bcrypt.compareSync(req.body.password, customer.dataValues.password))
+            return res.status(400).send({description: "Invalid credentials!"})
+          else {
+            if(req.body.certificate != null)
+              db.Certificate.create(  {
+                certificate: req.body.certificate,
+                id_customer: customer.dataValues.id
+              })          
+            
+            res.send({
+              "uuid": customer.dataValues.uuid,
+              "name": customer.dataValues.name,
+              "card": customer.dataValues.card,
+              "nif": customer.dataValues.nif,
+              "nickname": customer.dataValues.nickname
+            })
+          }
+        }
+      })
+
+})
+
+/**
+ * @description 
  * Endpoint responsible for registering new
  * customers into the server.
  * 
@@ -89,7 +131,7 @@ app.post('/register', (req, res) => {
 
 // This code snippet is used to make the signature validation function
 
-var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
+  var object = forge.asn1.fromDer(forge.util.decode64(req.body.certificate));
 
   const cert = forge.pki.certificateFromAsn1(object)
 

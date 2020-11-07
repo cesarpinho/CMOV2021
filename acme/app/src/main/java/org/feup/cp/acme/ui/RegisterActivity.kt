@@ -48,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
         // Add register button listener
         findViewById<View>(R.id.btn_register_action).setOnClickListener(this::btnRegisterAction)
 
-        // TODO - Add OnFocusChangeListener to check if value matches regex
+        // TODO - Add OnFocusChangeListener to check if register input value matches regex
     }
 
     /**
@@ -56,9 +56,9 @@ class RegisterActivity : AppCompatActivity() {
      * it is, false otherwise.
      */
     private fun anyInputEmpty(): Boolean {
-        return (TextUtils.isEmpty(name!!.text) || TextUtils.isEmpty(card!!.text)
-                || TextUtils.isEmpty(nif!!.text) || TextUtils.isEmpty(nickname!!.text)
-                || TextUtils.isEmpty(password!!.text))
+        return (TextUtils.isEmpty(this.name!!.text) || TextUtils.isEmpty(this.card!!.text)
+                || TextUtils.isEmpty(this.nif!!.text) || TextUtils.isEmpty(this.nickname!!.text)
+                || TextUtils.isEmpty(this.password!!.text))
     }
 
     /**
@@ -66,16 +66,16 @@ class RegisterActivity : AppCompatActivity() {
      * it is, false otherwise.
      */
     private fun anyInvalidInput(): Boolean {
-        return !(TextUtils.isEmpty(name!!.error) && TextUtils.isEmpty(card!!.error)
-                && TextUtils.isEmpty(nif!!.error) && TextUtils.isEmpty(nickname!!.error)
-                && TextUtils.isEmpty(password!!.error))
+        return !(TextUtils.isEmpty(this.name!!.error) && TextUtils.isEmpty(this.card!!.error)
+                && TextUtils.isEmpty(this.nif!!.error) && TextUtils.isEmpty(this.nickname!!.error)
+                && TextUtils.isEmpty(this.password!!.error))
     }
 
     /**
      * Register listener
      */
     private fun btnRegisterAction(view: View) {
-        // Validate input register fields before actually register
+        // Validate input register fields before actually register the customer
         if(anyInputEmpty() || anyInvalidInput()) {
             return println("All fields are required and must be valid!") // TODO - Update UI with printed message
         }
@@ -85,8 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                 this.card!!.text.toString().toBigInteger(),
                 this.nif!!.text.toString().toInt(),
                 this.nickname!!.text.toString(),
-                this.password!!.text.toString(),
-                null)
+                this.password!!.text.toString())
 
         // Used for test only [To be removed]
 //        val nickname = "rmaria"

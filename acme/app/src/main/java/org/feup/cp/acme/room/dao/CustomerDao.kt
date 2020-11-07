@@ -18,6 +18,9 @@ interface CustomerDao {
     @Query("SELECT * FROM customer")
     fun getAll(): List<Customer>
 
+    @Query("SELECT * FROM customer WHERE nickname = :nickname")
+    fun getOne(nickname: String): List<Customer>
+
     @Query("DELETE FROM customer")
     fun nukeTable()
 

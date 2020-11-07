@@ -14,4 +14,8 @@ interface HttpClientInterface {
     @POST("register")
     fun register(@Body body: RegisterData): Call<CustomerInfoResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("login")
+    fun login(@Body body: LoginData): Call<CustomerInfoResponse>
+
 }
