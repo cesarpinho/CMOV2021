@@ -10,7 +10,6 @@
     <string name="cart_icon_description">Cart Icon to access buying items</string>
     <string name="coffee_icon_description">Coffee icon</string>
     <string name="str_coffee_time">Coffee Time</string>
-    <string name="str_menu">Menu</string>
     <string name="str_home">Home</string>
     <string name="str_products">Products</string>
     <string name="str_account">Account</string>
@@ -24,4 +23,5 @@
     <string name="str_discount_description">5% Discount</string>
     <string name="str_free_coffee">1 Free Coffee</string>
     <string name="str_hash_tag">#</string>
+    <string name="str_next">Next</string>
 </resources>

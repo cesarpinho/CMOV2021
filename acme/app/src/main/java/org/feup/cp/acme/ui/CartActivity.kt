@@ -21,9 +21,9 @@ class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-        Toolbar(this, null)
+        Toolbar(this, "cart")
 
-        findViewById<View>(R.id.cart_selected)
+        findViewById<View>(R.id.cart_selected).visibility = View.VISIBLE
 
         tabLayout = findViewById(R.id.tabs)
         viewPager = findViewById(R.id.view_pager)
@@ -41,6 +41,6 @@ class CartActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_num_1_light)
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_num_2_light)
-        tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_num_3_black)
+        tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_num_3_light)
     }
 }
