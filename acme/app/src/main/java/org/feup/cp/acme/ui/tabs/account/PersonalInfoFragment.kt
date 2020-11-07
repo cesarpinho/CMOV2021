@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.User
 
 class PersonalInfoFragment : Fragment() {
 
@@ -14,11 +15,10 @@ class PersonalInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        TODO("Replace variables for db information")
-        val name = "John Costa Lion Doe"
-        val nif = 123456789
-        val creditCard = 6060589412347676
-        val nickname = "zedocafe"
+        val name = User.getInstance()!!.currentUser.name
+        val nif = User.getInstance()!!.currentUser.nif
+        val creditCard = User.getInstance()!!.currentUser.card
+        val nickname = User.getInstance()!!.currentUser.nickname
 
         val view = inflater.inflate(R.layout.fragment_personal_info, container, false)
         view.findViewById<TextView>(R.id.info_name).text = name

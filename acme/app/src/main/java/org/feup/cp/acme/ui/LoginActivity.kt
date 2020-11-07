@@ -74,7 +74,6 @@ class LoginActivity : AppCompatActivity() {
 
         // Create customer data object
         val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
-//        val customer = LoginData("rmaria", "a1234")
 
         // Create new key pair for the current customer if current nickname is absent on key store
         if(KeyStoreManager.isKeyEntryUnique(customer.nickname)) {

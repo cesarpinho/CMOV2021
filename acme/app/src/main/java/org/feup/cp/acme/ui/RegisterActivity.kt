@@ -87,10 +87,6 @@ class RegisterActivity : AppCompatActivity() {
                 this.nickname!!.text.toString(),
                 this.password!!.text.toString())
 
-        // Used for test only [To be removed]
-//        val nickname = "rmaria"
-//        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, nickname, "a1234", null)
-
         // Check for key entry pair with customer current nickname
         if(!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
             return println("Nickname chosen is already taken.") // TODO - Update UI with printed message
