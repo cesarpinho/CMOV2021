@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.User
 
 class Toolbar(private val activity: Activity, actualMenuView: String?) {
     private val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer)
@@ -75,7 +76,14 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
         activity.startActivity(intent)
     }
 
+    /**
+     * Logout function. Destroys the current user singleton
+     * instance.
+     */
     private fun logoutAction(view: View) {
-//        TODO("Implement Logout Action")
+        User.destroyUser()
+        val intent = Intent(activity, LoginActivity::class.java)
+        drawerClose(view)
+        activity.startActivity(intent)
     }
 }

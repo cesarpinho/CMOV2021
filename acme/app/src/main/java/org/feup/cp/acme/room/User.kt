@@ -2,7 +2,7 @@ package org.feup.cp.acme.room
 
 import org.feup.cp.acme.network.CustomerInfoResponse
 
-class User(val currentUser: CustomerInfoResponse) {
+class User(val currentUser: CustomerInfoResponse, val passwordLength: Int) {
 
     /**
      * Static functions
@@ -17,10 +17,10 @@ class User(val currentUser: CustomerInfoResponse) {
         /**
          * Returns current user instance
          */
-        fun getInstance(currentUser: CustomerInfoResponse? = null): User? {
+        fun getInstance(currentUser: CustomerInfoResponse? = null, passwordLength: Int? = null): User? {
             if (instance == null){
                 synchronized(lock = true) {
-                    instance = User(currentUser!!)
+                    instance = User(currentUser!!, passwordLength!!)
                 }
             }
             return instance

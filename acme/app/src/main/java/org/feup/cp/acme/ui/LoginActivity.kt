@@ -32,13 +32,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         AppDatabase.getInstance(context = this)
 
-//        val inputNickname = findViewById<EditText>(R.id.input_login_nickname)
-//        inputNickname.setOnFocusChangeListener { view, hasFocus ->
-//            if (!hasFocus)
-//                if ((view as EditText).text.length < 5)
-//                    inputNickname.error = "Nick name is short"
-//        }
-
         // Initialize input variables
         this.nickname = findViewById(R.id.input_login_nickname)
         this.password = findViewById(R.id.input_login_password)
@@ -48,6 +41,13 @@ class LoginActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_login_action).setOnClickListener(this::btnLoginAction)
 
         // TODO - Add OnFocusChangeListener to check if register input value matches regex
+
+//        val inputNickname = findViewById<EditText>(R.id.input_login_nickname)
+//        inputNickname.setOnFocusChangeListener { view, hasFocus ->
+//            if (!hasFocus)
+//                if ((view as EditText).text.length < 5)
+//                    inputNickname.error = "Nick name is short"
+//        }
     }
 
     /**
@@ -105,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     // Create customer singleton instance
-                    User.getInstance(customerInfo)
+                    User.getInstance(customerInfo, customer.password.length)
 
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)

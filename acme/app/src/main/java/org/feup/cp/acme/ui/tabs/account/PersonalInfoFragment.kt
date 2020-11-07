@@ -19,7 +19,8 @@ class PersonalInfoFragment : Fragment() {
         val nif = User.getInstance()!!.currentUser.nif
         val creditCard = User.getInstance()!!.currentUser.card
         val nickname = User.getInstance()!!.currentUser.nickname
-
+        val passwordLength = User.getInstance()!!.passwordLength    // TODO - Update UI with current password length
+        
         val view = inflater.inflate(R.layout.fragment_personal_info, container, false)
         view.findViewById<TextView>(R.id.info_name).text = name
         view.findViewById<TextView>(R.id.info_nif).text = nif.toString()
