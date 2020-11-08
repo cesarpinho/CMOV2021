@@ -157,7 +157,7 @@ app.get('/products', async (req, res) => {
   // Check if there is the need to update the app local database
   if(newestProductDate.getTime() - versionDate.getTime() > 0) {
     db.Product.findAll({
-      attributes: ['type', 'icon', 'name', 'price', 'updatedAt']
+      attributes: ['type', 'icon', 'name', 'price']
     })
     .then((products) => {
       res.send(products)
