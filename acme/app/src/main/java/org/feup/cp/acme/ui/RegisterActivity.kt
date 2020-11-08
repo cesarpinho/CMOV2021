@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.feup.cp.acme.R
+import org.feup.cp.acme.network.CustomerInfoResponse
 import org.feup.cp.acme.network.HttpClient
 import org.feup.cp.acme.network.HttpClientInterface
 import org.feup.cp.acme.network.RegisterData
-import org.feup.cp.acme.network.CustomerInfoResponse
 import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.room.User
 import org.feup.cp.acme.room.entity.Customer
@@ -19,8 +20,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.math.BigInteger
-import kotlin.math.absoluteValue
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -34,6 +33,9 @@ class RegisterActivity : AppCompatActivity() {
     private var nickname: EditText? = null
     private var password: EditText? = null
 
+    /**
+     * Creates the register activity and apply inputs listeners
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -48,10 +50,58 @@ class RegisterActivity : AppCompatActivity() {
         // Add register button listener
         findViewById<View>(R.id.btn_register_action).setOnClickListener(this::btnRegisterAction)
 
-        // TODO - Add OnFocusChangeListener to check if register input value matches regex
+        addInputRegexValidation()
     }
 
     /**
+     * Add OnFocusChangeListener to check if register input value matches regex
+     */
+    private fun addInputRegexValidation() {
+        this.name!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus &&
+                !Regex("^[a-zA-ZÀ-ú]+((['. -][a-zA-ZÀ-ú ])?[a-zA-ZÀ-ú ]*)*\$")
+                    .containsMatchIn(this.name!!.text)
+            )
+                this.name!!.error = "Name is not valid."
+        }
+
+        this.card!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus &&
+                !Regex("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})\$")
+                    .containsMatchIn(this.card!!.text)
+            )
+                this.card!!.error =
+                    "Credit Card number is not valid.\nMust have 12 number without spaces."
+        }
+
+        this.nif!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus &&
+                !Regex("([a-z]|[A-Z]|[0-9])[0-9]{7}([a-z]|[A-Z]|[0-9])")
+                    .containsMatchIn(this.nif!!.text)
+            )
+                this.nif!!.error = "NIF is not valid.\nMust have 9 number without spaces."
+        }
+
+        this.nickname!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus &&
+                !Regex("^(?=.{4,20}\$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])\$")
+                    .containsMatchIn(this.nickname!!.text)
+            )
+                this.nickname!!.error =
+                    "Nickname is not valid.\nMust be between 4 and 20 characters long, with no special characters."
+        }
+
+        this.password!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus &&
+                !Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,}\$")
+                    .containsMatchIn(this.password!!.text)
+            )
+                this.password!!.error =
+                    "The password must contain at least 1 number and 1 letter and be at least 4 characters."
+        }
+    }
+
+    /**.
      * Check if any register input is empty. Returns true if
      * it is, false otherwise.
      */
@@ -76,20 +126,30 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun btnRegisterAction(view: View) {
         // Validate input register fields before actually register the customer
-        if(anyInputEmpty() || anyInvalidInput()) {
-            return println("All fields are required and must be valid!") // TODO - Update UI with printed message
+        if (anyInputEmpty() || anyInvalidInput()) {
+            return Toast.makeText(
+                applicationContext,
+                "All fields are required and must be valid!",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         // Create customer data object
-        val customer = RegisterData(this.name!!.text.toString(),
-                this.card!!.text.toString().toBigInteger(),
-                this.nif!!.text.toString().toInt(),
-                this.nickname!!.text.toString(),
-                this.password!!.text.toString())
+        val customer = RegisterData(
+            this.name!!.text.toString(),
+            this.card!!.text.toString().toBigInteger(),
+            this.nif!!.text.toString().toInt(),
+            this.nickname!!.text.toString(),
+            this.password!!.text.toString()
+        )
 
         // Check for key entry pair with customer current nickname
-        if(!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
-            return println("Nickname chosen is already taken.") // TODO - Update UI with printed message
+        if (!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
+            return Toast.makeText(
+                applicationContext,
+                "Nickname chosen is already taken.",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         // Create new key pair for the current customer
@@ -100,22 +160,33 @@ class RegisterActivity : AppCompatActivity() {
         val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
 
         webService.register(customer).enqueue(object : Callback<CustomerInfoResponse> {
-            override fun onResponse(call: Call<CustomerInfoResponse>, response: Response<CustomerInfoResponse>) {
+            override fun onResponse(
+                call: Call<CustomerInfoResponse>,
+                response: Response<CustomerInfoResponse>
+            ) {
                 if (!response.isSuccessful) {
                     // Delete key pair entry from key store
                     KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
-                    println(JSONObject(response.errorBody()!!.string()).get("description")) // TODO - Update UI with printed message
+                    Toast.makeText(
+                        applicationContext,
+                        JSONObject(response.errorBody()!!.string()).get("description").toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     val customerInfo = response.body()!!
 
                     // Store user information locally
                     AppDatabase.getInstance()!!.customerDao()
-                            .insertAll(Customer(0,
-                                    customerInfo.uuid,
-                                    customerInfo.name,
-                                    customerInfo.card.toDouble(),
-                                    customerInfo.nif.toInt(),
-                                    customerInfo.nickname))
+                        .insertAll(
+                            Customer(
+                                0,
+                                customerInfo.uuid,
+                                customerInfo.name,
+                                customerInfo.card.toDouble(),
+                                customerInfo.nif.toInt(),
+                                customerInfo.nickname
+                            )
+                        )
 
                     // Create customer singleton instance
                     User.getInstance(customerInfo)
