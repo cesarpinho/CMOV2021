@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ACME</string>
+    <string name="app_type">Terminal</string>
+    <string name="str_nickname">Nickname</string>
+    <string name="str_password">Password</string>
+    <string name="str_login">Login</string>
+    <string name="coffee_icon_description">Coffee icon</string>
+    <string name="str_coffee_time">Coffee Time</string>
+    <string name="str_home">Home</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_x">X</string>
+    <string name="str_hash_tag">#</string>
+    <string name="str_voucher">Voucher</string>
+</resources>
