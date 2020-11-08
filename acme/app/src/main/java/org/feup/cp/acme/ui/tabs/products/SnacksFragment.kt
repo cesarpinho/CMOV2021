@@ -8,8 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
+import org.feup.cp.acme.repository.ProductsRepository
+import org.feup.cp.acme.room.entity.Product
+import org.feup.cp.acme.vmodel.ProductsViewModel
 
 class SnacksFragment : Fragment() {
+
+    /**
+     * Products view model
+     */
+    private val viewModel = ProductsViewModel(ProductsRepository())
 
     /**
      * Creates the snacks tab view
@@ -18,34 +26,30 @@ class SnacksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val hList = listOf(
-            hashMapOf(
-                "id" to "7",
-                "image" to "https://pbs.twimg.com/profile_images/2731599222/efcd6910b2b007029726ec62fda265cf.jpeg",
-                "name" to "Snack A",
-                "price" to "0.5€"
-            ),
-            hashMapOf(
-                "id" to "8",
-                "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSs9LGR5IsTy2UQC5nxD87v-XvSDBNqy0LCBg&usqp=CAU",
-                "name" to "Snack B",
-                "price" to "1.25€"
-            ),
-            hashMapOf(
-                "id" to "9",
-                "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ5_0iP5YSQfydRwdXjkfLYC8HG5T0evJXG7Q&usqp=CAU",
-                "name" to "Snack C",
-                "price" to "5.75€"
-            )
-        )
-
         val view = inflater.inflate(R.layout.fragment_snacks, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        val adapter = activity?.let { ProductsAdapter(hList, it) }
-        listView.adapter = adapter
 
         return view
+    }
+
+    /**
+     * Operations after the view being created
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.products.observe(viewLifecycleOwner) { products ->
+            val data: ArrayList<Product> = ArrayList()
+
+            products.forEach() {
+                if(it.type == "snack")
+                    data.add(it)
+            }
+
+            val listView = view.findViewById<RecyclerView>(R.id.list_view)
+            val adapter = activity?.let { ProductsAdapter(data, requireActivity()) }
+            listView.adapter = adapter
+        }
     }
 
     /**

@@ -4,15 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import org.feup.cp.acme.room.dao.CustomerDao
+import org.feup.cp.acme.room.dao.ProductDao
 import org.feup.cp.acme.room.entity.Customer
+import org.feup.cp.acme.room.entity.Product
 
-@Database(entities = [Customer::class], version = 1)
+@Database(entities = [Customer::class, Product::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
+
     /**
      * Dao Classes
      */
     abstract fun customerDao(): CustomerDao
+    abstract fun productDao(): ProductDao
 
     /**
      * Static functions

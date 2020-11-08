@@ -23,5 +23,4 @@ interface CustomerDao {
 
     @Query("DELETE FROM customer")
     fun nukeTable()
-
 }

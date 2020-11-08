@@ -10,9 +10,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.entity.Product
 
 class ProductsAdapter(
-    private val dataSet: List<HashMap<String, String>>,
+    private val dataSet: List<Product>,
     private val activity: FragmentActivity
 ) :
     RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
@@ -40,15 +41,15 @@ class ProductsAdapter(
         val card = holder.itemView
         val button = card.findViewById<Button>(R.id.card_button)
 
-        Picasso.get().load(dataSet[position]["image"])
+        Picasso.get().load(dataSet[position].icon)
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text =
-            dataSet[position]["name"] as String
+            dataSet[position].name as String
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            dataSet[position]["price"] as String
+            dataSet[position].price.toString().plus("$")
         button.visibility = Button.VISIBLE
         button.setOnClickListener { view ->
-            val dialog = AddCartDialog(dataSet[position]["id"]!!.toInt())
+            val dialog = AddCartDialog(dataSet[position].id)
             dialog.show(activity.supportFragmentManager, "addCart")
         }
     }

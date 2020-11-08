@@ -14,3 +14,14 @@ data class CustomerInfoResponse(
         @SerializedName("nickname")
         var nickname : String
 )
+
+data class ProductInfoResponse(
+        @SerializedName("type")
+        var type : String,
+        @SerializedName("icon")
+        var icon : String,
+        @SerializedName("name")
+        var name : String,
+        @SerializedName("price")
+        var price : Double
+)

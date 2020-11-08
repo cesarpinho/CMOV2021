@@ -142,7 +142,7 @@ app.post('/register', (req, res) => {
 app.get('/products', async (req, res) => {
   // Retrieves the version of oldest product present the app local database
   const version = req.query.version == undefined ? null: req.query.version
-  
+  console.log(version)
   // Retrieve the most recent product instance from the database
   const newestProduct = await db.Product.findOne({
     order: [
