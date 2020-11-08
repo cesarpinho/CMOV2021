@@ -1,3 +1,7 @@
+const crypto = require('crypto')
+const forge = require('node-forge')
+const db = require('./models/index.js')
+
 /**
  * Determines whether the name variable corresponds
  * to a valid persons' name
@@ -90,4 +94,32 @@ exports.endpointRegisterBody = function(reqBody) {
         return {status: false, description: "Invalid customer password: <" + reqBody.password + ">"}
 
     return {status: true, description: ""}
+}
+
+/**
+ * @description Checks the validity of certain signature for a certain user.
+ * 
+ * @param {object} customer Customer object containing the customer information
+ * @param {string} signedData Signature received by the server
+ * 
+ * @returns {boolean} True if the signature is valid, false otherwise.
+ */
+exports.validSignature = async function(customer, signedData) {
+    // Get the certificates for customer
+    const certificates = await db.Certificate.findAll({where: {id_customer: customer.id}})
+
+    certificates.forEach(elem => {
+        try {
+            let asn1 = forge.asn1.fromDer(forge.util.decode64(elem.certificate))    
+            
+            const cert = forge.pki.certificateFromAsn1(asn1)
+        
+            let verifier = crypto.createVerify('sha256WithRSAEncryption')
+            verifier.update(customer.uuid)
+            
+            if(verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64'))
+                return true
+        } catch (_) {}
+    })
+    return false
 }

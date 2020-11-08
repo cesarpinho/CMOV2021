@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         AppDatabase.getInstance(context = this)
-
+        
         // Initialize input variables
         this.nickname = findViewById(R.id.input_login_nickname)
         this.password = findViewById(R.id.input_login_password)
