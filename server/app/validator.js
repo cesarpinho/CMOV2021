@@ -7,7 +7,7 @@
  * @returns {boolean} True if valid, false otherwise
  */
 exports.name = function(name) {
-    const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/
+    const re = /^[a-zA-ZÀ-ú]+((['. -][a-zA-ZÀ-ú ])?[a-zA-ZÀ-ú ]*)*$/
     return re.test(name)
 }
   

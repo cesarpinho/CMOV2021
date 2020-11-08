@@ -6,10 +6,13 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.*
+import org.feup.cp.acme.network.CustomerInfoResponse
+import org.feup.cp.acme.network.HttpClient
+import org.feup.cp.acme.network.HttpClientInterface
+import org.feup.cp.acme.network.LoginData
 import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.room.User
 import org.feup.cp.acme.room.entity.Customer
@@ -22,11 +25,14 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     /**
-     * Register input variables
+     * Login input variables
      */
     private var nickname: EditText? = null
     private var password: EditText? = null
 
+    /**
+     * Creates the login activity and apply inputs listeners
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -40,14 +46,14 @@ class LoginActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_register_link).setOnClickListener(this::btnRegisterLink)
         findViewById<Button>(R.id.btn_login_action).setOnClickListener(this::btnLoginAction)
 
-        // TODO - Add OnFocusChangeListener to check if register input value matches regex
-
-//        val inputNickname = findViewById<EditText>(R.id.input_login_nickname)
-//        inputNickname.setOnFocusChangeListener { view, hasFocus ->
-//            if (!hasFocus)
-//                if ((view as EditText).text.length < 5)
-//                    inputNickname.error = "Nick name is short"
-//        }
+        this.nickname!!.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val pattern = Regex("^(?=.{4,20}\$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])\$")
+                if (!pattern.containsMatchIn(this.nickname!!.text))
+                    this.nickname!!.error =
+                        "Nickname is not valid.\nMust be between 4 and 20 characters long, with no special characters."
+            }
+        }
     }
 
     /**
@@ -68,16 +74,19 @@ class LoginActivity : AppCompatActivity() {
 
     private fun btnLoginAction(view: View) {
         // Validate input login fields before actually login the customer
-//        if(anyInputEmpty() || anyInvalidInput()) {
-//            return println("All fields are required and must be valid!") // TODO - Update UI with printed message
-//        }
+        if (anyInputEmpty() || anyInvalidInput()) {
+            return Toast.makeText(
+                applicationContext,
+                "All fields are required and must be valid!",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         // Create customer data object
-//        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
-        val customer = LoginData("rmaria", "a1234")
+        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
 
         // Create new key pair for the current customer if current nickname is absent on key store
-        if(KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
+        if (KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
             KeyStoreManager(customer.nickname).generateKeyPair()
             customer.certificate = KeyStoreManager.encodeCertToString(customer.nickname)
         }
@@ -86,23 +95,36 @@ class LoginActivity : AppCompatActivity() {
         val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
 
         webService.login(customer).enqueue(object : Callback<CustomerInfoResponse> {
-            override fun onResponse(call: Call<CustomerInfoResponse>, response: Response<CustomerInfoResponse>) {
+            override fun onResponse(
+                call: Call<CustomerInfoResponse>,
+                response: Response<CustomerInfoResponse>
+            ) {
                 if (!response.isSuccessful) {
                     // Delete key pair entry from key store
                     KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
-                    println(JSONObject(response.errorBody()!!.string()).get("description")) // TODO - Update UI with printed message
+                    Toast.makeText(
+                        applicationContext,
+                        JSONObject(response.errorBody()!!.string()).get("description").toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     val customerInfo = response.body()!!
 
                     // Store user information locally if needed
-                    if(AppDatabase.getInstance()!!.customerDao().getOne(customerInfo.nickname).isEmpty()) {
+                    if (AppDatabase.getInstance()!!.customerDao().getOne(customerInfo.nickname)
+                            .isEmpty()
+                    ) {
                         AppDatabase.getInstance()!!.customerDao()
-                                .insertAll(Customer(0,
-                                        customerInfo.uuid,
-                                        customerInfo.name,
-                                        customerInfo.card.toDouble(),
-                                        customerInfo.nif.toInt(),
-                                        customerInfo.nickname))
+                            .insertAll(
+                                Customer(
+                                    0,
+                                    customerInfo.uuid,
+                                    customerInfo.name,
+                                    customerInfo.card.toDouble(),
+                                    customerInfo.nif.toInt(),
+                                    customerInfo.nickname
+                                )
+                            )
                     }
 
                     // Create customer singleton instance
