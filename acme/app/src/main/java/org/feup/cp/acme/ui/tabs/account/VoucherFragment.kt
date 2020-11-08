@@ -19,6 +19,7 @@ class VoucherFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // TODO - Remove inactive voucher view
         val vouchers = listOf(
             mapOf(
                 "id" to "2020disc1014", "type" to "discount",

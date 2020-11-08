@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@drawable/background_drawer">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_close_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/str_x"
+            android:textColor="@color/colorLight"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/text_drawer_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_close_drawer"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/str_home"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorBeige"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp" />
+
+        <Button
+            android:id="@+id/text_drawer_qr_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_drawer_home"
+            android:layout_alignParentStart="false"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/str_qr_code"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorBeige"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp" />
+
+        <Button
+            android:id="@+id/text_drawer_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_drawer_qr_code"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/str_logout"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorBeige"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"/>
+
+        <TextView
+            android:id="@+id/text_drawer_app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/amatic_sc"
+            android:text="@string/app_type"
+            android:textAlignment="center"
+            android:textColor="@color/colorGunmetal"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</com.google.android.material.navigation.NavigationView>
