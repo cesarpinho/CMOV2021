@@ -1,8 +1,7 @@
-package org.feup.cp.acme.ui
+package org.feup.cp.terminal
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.feup.cp.acme.R
 
 class HomeActivity : AppCompatActivity() {
 

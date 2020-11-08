@@ -7,8 +7,12 @@
     <string name="coffee_icon_description">Coffee icon</string>
     <string name="str_coffee_time">Coffee Time</string>
     <string name="str_home">Home</string>
+    <string name="str_qr_code">QR Code</string>
     <string name="str_logout">Logout</string>
     <string name="str_x">X</string>
-    <string name="str_hash_tag">#</string>
-    <string name="str_voucher">Voucher</string>
+    <string name="str_voucher">Voucher:</string>
+    <string name="str_total">Total:</string>
+    <string name="str_order">Order:</string>
+    <string name="str_invalid_order">Invalid Order</string>
+    <string name="str_order_status_icon">Order Status Icon</string>
 </resources>
