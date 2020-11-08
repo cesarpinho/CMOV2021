@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     total: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.REAL
     },
     id_customer: {
       allowNull: false,

@@ -11,18 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Quantity.hasOne(models.Receipt, { foreignKey: 'id_receipt' })
+      Quantity.hasOne(models.Product, { foreignKey: 'id_product' })
     }
   };
   Quantity.init({
-    id_customer: {
+    id_receipt: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.UUID
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Receipts',
+        key: 'id'
+      }
     },
     id_product: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Products',
+        key: 'id'
+      }
     },
     quantity: {
       allowNull: false,

@@ -37,9 +37,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-//        AppDatabase.nukeDatabase(context = this)
+
+        AppDatabase.nukeDatabase(context = this)
+        KeyStoreManager.deleteKeyStoreEntry("admin")
+
         AppDatabase.getInstance(context = this)
-//        KeyStoreManager.deleteKeyStoreEntry("rmaria")
+
         // Initialize input variables
         this.nickname = findViewById(R.id.input_login_nickname)
         this.password = findViewById(R.id.input_login_password)
@@ -86,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Create customer data object
 //        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
-        val customer = LoginData("rmaria", "a1234")
+        val customer = LoginData("admin", "a1234")
 
         // Create new key pair for the current customer if current nickname is absent on key store
         if (KeyStoreManager.isKeyEntryUnique(customer.nickname)) {

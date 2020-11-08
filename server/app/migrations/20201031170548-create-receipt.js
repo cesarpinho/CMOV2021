@@ -14,7 +14,7 @@ module.exports = {
       },
       total: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.REAL
       },
       id_customer: {
         allowNull: false,

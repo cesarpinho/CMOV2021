@@ -142,7 +142,7 @@ class RegisterActivity : AppCompatActivity() {
 //            this.nickname!!.text.toString(),
 //            this.password!!.text.toString()
 //        )
-        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, "rmaria", "a1234")
+        val customer = RegisterData("admin", 4231312312312311, 123456789, "admin", "a1234")
 
         // Check for key entry pair with customer current nickname
         if (!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {

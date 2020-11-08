@@ -129,6 +129,54 @@ app.post('/register', (req, res) => {
 /**
  * @description 
  * Endpoint responsible for retrieving the 
+ * receipts for a certain customer.
+ * 
+ * @returns
+ * Returns the customer receipts for
+ * local storage on success. Otherwise returns a 
+ * BAD_REQUEST.
+ */
+app.post('/receipts', async (req, res) => {
+  // Validate request body
+  if(req.body.nickname == null || req.body.signature == null || req.body.timestamp == null)
+    return res.status(400).send({description: "Both the <nickname>, <signature> and <timestamp> fields cannot be empty"})
+
+  // Date variables definition
+  let timestamp = new Date(req.body.timestamp)
+  let currentDate = new Date()
+  let diffDate = currentDate.getTime() - timestamp.getTime()
+  
+  // Check for timestamp fault tolerance
+  if(diffDate < 0)
+    return res.status(400).send({description: "Invalid timestamp."})
+  else if(diffDate >= FAULT_TOLERANCE)
+    return res.status(400).send({description: "Timestamp not within the defined fault tolerance."})
+  
+  // Retrieve and validate customer 
+  const customer = await db.Customer.findOne({ where: { nickname: req.body.nickname }})
+
+  if(customer == null)
+    return res.status(400).send({description: "Customer with nickname <" + req.body.nickname + "> does not exist."})
+  
+  let signatureValidity = await validator.validSignature(customer, uuid.stringify(uuid.parse(customer.uuid)), req.body.signature)
+  
+  if(!signatureValidity)
+    return res.status(400).send({description: "Signature invalid."})
+
+  // TODO - Retrieve data and properly structure it
+  // Retrieve and send receipts
+  db.Receipt.findAll({ 
+    where: {id_customer: customer.id },
+    attributes: ['date', 'total']
+  })
+  .then((receipts) => {
+    res.send(receipts)
+  })
+})
+
+/**
+ * @description 
+ * Endpoint responsible for retrieving the 
  * vouchers for a certain customer.
  * 
  * @returns
