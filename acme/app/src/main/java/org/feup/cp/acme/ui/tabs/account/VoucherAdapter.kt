@@ -9,8 +9,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.entity.Voucher
 
-class VoucherAdapter(private val vouchers: List<Map<String, String>>, val context: Context) :
+class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) :
     RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder>() {
 
     /**
@@ -36,27 +37,29 @@ class VoucherAdapter(private val vouchers: List<Map<String, String>>, val contex
         val card = holder.itemView
         val date = card.findViewById<TextView>(R.id.card_right_info)
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            context.getString(R.string.str_hash_tag).plus(vouchers[position]["id"])
-        date.text = vouchers[position]["date"]
+            context.getString(R.string.str_hash_tag).plus(vouchers[position].id)
+        date.text = vouchers[position].date.toString()
         date.visibility = TextView.VISIBLE
 
-        when (vouchers[position]["type"]) {
-            "discount" -> {
+        when (vouchers[position].type) {
+            // Discount Voucher
+            true -> {
                 card.findViewById<ImageView>(R.id.card_image)
                     .setImageResource(R.drawable.ic_discount)
                 card.findViewById<TextView>(R.id.card_title).text =
                     context.getText(R.string.str_discount_description)
             }
-            "coffee" -> {
+            // Coffee Voucher
+            false -> {
                 card.findViewById<ImageView>(R.id.card_image)
                     .setImageResource(R.drawable.ic_free_coffee)
                 card.findViewById<TextView>(R.id.card_title).text = context
                     .getString(R.string.str_free_coffee)
             }
         }
-
-        if (!vouchers[position]["active"].toBoolean())
-            card.findViewById<View>(R.id.card_blocker).visibility = View.VISIBLE
+        // TODO - Remove code bellow
+//        if (!vouchers[position]["active"].toBoolean())
+//            card.findViewById<View>(R.id.card_blocker).visibility = View.VISIBLE
 
     }
 

@@ -9,19 +9,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.CustomerInfoResponse
-import org.feup.cp.acme.network.HttpClient
-import org.feup.cp.acme.network.HttpClientInterface
-import org.feup.cp.acme.network.LoginData
+import org.feup.cp.acme.network.*
 import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.room.User
 import org.feup.cp.acme.room.entity.Customer
+import org.feup.cp.acme.room.entity.Voucher
 import org.feup.cp.acme.security.KeyStoreManager
 import org.feup.cp.acme.vmodel.ProductsViewModel
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.Key
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
@@ -38,8 +37,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+//        AppDatabase.nukeDatabase(context = this)
         AppDatabase.getInstance(context = this)
-        
+//        KeyStoreManager.deleteKeyStoreEntry("rmaria")
         // Initialize input variables
         this.nickname = findViewById(R.id.input_login_nickname)
         this.password = findViewById(R.id.input_login_password)
@@ -76,16 +76,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun btnLoginAction(view: View) {
         // Validate input login fields before actually login the customer
-        if (anyInputEmpty() || anyInvalidInput()) {
-            return Toast.makeText(
-                applicationContext,
-                "All fields are required and must be valid!",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+//        if (anyInputEmpty() || anyInvalidInput()) {
+//            return Toast.makeText(
+//                applicationContext,
+//                "All fields are required and must be valid!",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        }
 
         // Create customer data object
-        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
+//        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
+        val customer = LoginData("rmaria", "a1234")
 
         // Create new key pair for the current customer if current nickname is absent on key store
         if (KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
@@ -141,7 +142,6 @@ class LoginActivity : AppCompatActivity() {
                 println(t.stackTrace)
             }
         })
-
     }
 
     private fun btnRegisterLink(view: View) {

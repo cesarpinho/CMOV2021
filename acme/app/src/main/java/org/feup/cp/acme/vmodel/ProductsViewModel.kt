@@ -12,5 +12,4 @@ class ProductsViewModel(productsRepository: ProductsRepository): ViewModel() {
      * and that can dynamically change.
      */
     val products: LiveData<List<Product>> = productsRepository.getProducts()
-
-    }
+}

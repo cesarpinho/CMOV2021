@@ -126,22 +126,23 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun btnRegisterAction(view: View) {
         // Validate input register fields before actually register the customer
-        if (anyInputEmpty() || anyInvalidInput()) {
-            return Toast.makeText(
-                applicationContext,
-                "All fields are required and must be valid!",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+//        if (anyInputEmpty() || anyInvalidInput()) {
+//            return Toast.makeText(
+//                applicationContext,
+//                "All fields are required and must be valid!",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        }
 
         // Create customer data object
-        val customer = RegisterData(
-            this.name!!.text.toString(),
-            this.card!!.text.toString().toBigInteger(),
-            this.nif!!.text.toString().toInt(),
-            this.nickname!!.text.toString(),
-            this.password!!.text.toString()
-        )
+//        val customer = RegisterData(
+//            this.name!!.text.toString(),
+//            this.card!!.text.toString().toBigInteger(),
+//            this.nif!!.text.toString().toInt(),
+//            this.nickname!!.text.toString(),
+//            this.password!!.text.toString()
+//        )
+        val customer = RegisterData("Roberto Maria", 4231312312312311, 123456789, "rmaria", "a1234")
 
         // Check for key entry pair with customer current nickname
         if (!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
@@ -189,7 +190,7 @@ class RegisterActivity : AppCompatActivity() {
                         )
 
                     // Create customer singleton instance
-                    User.getInstance(customerInfo)
+                    User.getInstance(customerInfo, customer.password.length)
 
                     val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
                     startActivity(intent)
@@ -197,6 +198,8 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<CustomerInfoResponse>, t: Throwable) {
+                // Delete key pair entry from key store
+                KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
                 println(t.stackTrace)
             }
         })

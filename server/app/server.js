@@ -12,7 +12,7 @@ const validator = require('./validator.js')
 
 const PORT = process.env.PORT || 3000
 const SALT_ROUNDS = 10
-const FAULT_TOLERANCE = 1000
+const FAULT_TOLERANCE = 2750
 
 const db = require('./models/index.js')
 
@@ -138,8 +138,8 @@ app.post('/register', (req, res) => {
  */
 app.post('/vouchers', async (req, res) => {
   // Validate request body
-  if(req.body.nickname == null || req.body.uuid == null || req.body.timestamp == null)
-    return res.status(400).send({description: "Both the <uuid> and <timestamp> fields cannot be empty"})
+  if(req.body.nickname == null || req.body.signature == null || req.body.timestamp == null)
+    return res.status(400).send({description: "Both the <nickname>, <signature> and <timestamp> fields cannot be empty"})
 
   // Date variables definition
   let timestamp = new Date(req.body.timestamp)
@@ -158,13 +158,16 @@ app.post('/vouchers', async (req, res) => {
   if(customer == null)
     return res.status(400).send({description: "Customer with nickname <" + req.body.nickname + "> does not exist."})
   
-  let signatureValidity = await validator.validSignature(customer, req.body.uuid)
-
-  if(!signatureValidity)
-    return res.status(400).send({description: "Signature invalid,"})
+  let signatureValidity = await validator.validSignature(customer, uuid.stringify(uuid.parse(customer.uuid)), req.body.signature)
   
+  if(!signatureValidity)
+    return res.status(400).send({description: "Signature invalid."})
+
   // Retrieve and send vouchers
-  db.Voucher.findAll({ where: {id_customer: customer.id }})
+  db.Voucher.findAll({ 
+    where: {id_customer: customer.id },
+    attributes: ['type', 'date']
+  })
   .then((vouchers) => {
     res.send(vouchers)
   })

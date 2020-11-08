@@ -1,6 +1,7 @@
 package org.feup.cp.acme.network
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class CustomerInfoResponse(
         @SerializedName("uuid")
@@ -24,4 +25,11 @@ data class ProductInfoResponse(
         var name : String,
         @SerializedName("price")
         var price : Double
+)
+
+data class VoucherInfoResponse(
+        @SerializedName("type")
+        var type : Boolean,
+        @SerializedName("date")
+        var date : Date
 )

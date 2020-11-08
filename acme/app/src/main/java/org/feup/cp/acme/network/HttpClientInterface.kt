@@ -20,4 +20,8 @@ interface HttpClientInterface {
     @POST("register")
     fun register(@Body body: RegisterData): Call<CustomerInfoResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("vouchers")
+    fun vouchers(@Body body: VoucherData): Call<List<VoucherInfoResponse>>
+
 }

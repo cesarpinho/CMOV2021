@@ -1,6 +1,7 @@
 package org.feup.cp.acme.network
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class RegisterData(
         @SerializedName("name")
@@ -24,4 +25,13 @@ data class LoginData(
         var password : String,
         @SerializedName("certificate")
         var certificate : String? = null
+)
+
+data class VoucherData(
+        @SerializedName("nickname")
+        var nickname : String,
+        @SerializedName("signature")
+        var signature : String,
+        @SerializedName("timestamp")
+        var timestamp : Date
 )

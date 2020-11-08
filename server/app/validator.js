@@ -104,7 +104,10 @@ exports.endpointRegisterBody = function(reqBody) {
  * 
  * @returns {boolean} True if the signature is valid, false otherwise.
  */
-exports.validSignature = async function(customer, signedData) {
+exports.validSignature = async function(customer, data, signedData) {
+    // Validation result
+    let result = false
+
     // Get the certificates for customer
     const certificates = await db.Certificate.findAll({where: {id_customer: customer.id}})
 
@@ -113,13 +116,15 @@ exports.validSignature = async function(customer, signedData) {
             let asn1 = forge.asn1.fromDer(forge.util.decode64(elem.certificate))    
             
             const cert = forge.pki.certificateFromAsn1(asn1)
-        
-            let verifier = crypto.createVerify('sha256WithRSAEncryption')
-            verifier.update(customer.uuid)
             
-            if(verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64'))
+            let verifier = crypto.createVerify('sha256WithRSAEncryption')
+            verifier.update(data)
+            
+            result = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64')
+
+            if(result)
                 return true
         } catch (_) {}
     })
-    return false
+    return result
 }
