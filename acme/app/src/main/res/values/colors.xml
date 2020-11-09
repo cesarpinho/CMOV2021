@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Solid Colors -->
+    <color name="colorBlack">#000000</color>
     <color name="colorGunmetal">#2D3344</color>
     <color name="colorTroopGreen">#767441</color>
     <color name="colorLight">#F6F7EB</color>
@@ -13,5 +14,5 @@
     <color name="colorBlocked">#6533446A</color>
     <color name="colorSelected">#90B9B079</color>
 
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
@@ -30,7 +29,7 @@ class CoffeesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_coffees, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-
+        listView.adapter = ProductsAdapter(listOf(), requireActivity())
         return view
     }
 
@@ -43,13 +42,12 @@ class CoffeesFragment : Fragment() {
             val data: ArrayList<Product> = ArrayList()
 
             products.forEach() {
-                if(it.type == "coffee")
+                if (it.type == "coffee")
                     data.add(it)
             }
 
             val listView = view.findViewById<RecyclerView>(R.id.list_view)
-            val adapter = activity?.let { ProductsAdapter(data, requireActivity()) }
-            listView.adapter = adapter
+            listView.adapter = ProductsAdapter(data, requireActivity())
         }
     }
 

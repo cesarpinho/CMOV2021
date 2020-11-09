@@ -29,7 +29,7 @@ class DrinksFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_drinks, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-
+        listView.adapter = ProductsAdapter(listOf(),requireActivity())
         return view
     }
 
@@ -47,8 +47,7 @@ class DrinksFragment : Fragment() {
             }
 
             val listView = view.findViewById<RecyclerView>(R.id.list_view)
-            val adapter = activity?.let { ProductsAdapter(data, requireActivity()) }
-            listView.adapter = adapter
+            listView.adapter = ProductsAdapter(data, requireActivity())
         }
     }
 

@@ -26,9 +26,9 @@
         android:layout_below="@+id/text_order"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:padding="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp"
         android:background="@drawable/background_qrcode"
         android:contentDescription="@string/str_order_complete" />
 
