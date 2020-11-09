@@ -36,6 +36,9 @@ class QRCodeFragment : Fragment() {
      * Static functions
      */
     companion object {
+        @JvmStatic
+        fun newInstance() = QRCodeFragment()
+    }
 
     /**
      * Creates a QR code in bitmap format
@@ -63,8 +66,5 @@ class QRCodeFragment : Fragment() {
             }
         }
         return bmp
-    }
-        @JvmStatic
-        fun newInstance() = QRCodeFragment()
     }
 }
