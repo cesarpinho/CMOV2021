@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.feup.cp.acme.network.*
 import org.feup.cp.acme.room.AppDatabase
-import org.feup.cp.acme.room.User
+import org.feup.cp.acme.singleton.User
 import org.feup.cp.acme.room.entity.Product
 import org.feup.cp.acme.room.entity.Quantity
 import org.feup.cp.acme.room.entity.Receipt
-import org.feup.cp.acme.room.entity.Voucher
 import org.feup.cp.acme.security.KeyStoreManager
 import retrofit2.Call
 import retrofit2.Callback

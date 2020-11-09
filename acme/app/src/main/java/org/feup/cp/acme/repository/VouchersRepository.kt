@@ -7,7 +7,7 @@ import org.feup.cp.acme.network.HttpClientInterface
 import org.feup.cp.acme.network.CustomerAppData
 import org.feup.cp.acme.network.VoucherInfoResponse
 import org.feup.cp.acme.room.AppDatabase
-import org.feup.cp.acme.room.User
+import org.feup.cp.acme.singleton.User
 import org.feup.cp.acme.room.entity.Voucher
 import org.feup.cp.acme.security.KeyStoreManager
 import retrofit2.Call

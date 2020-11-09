@@ -1,4 +1,4 @@
-package org.feup.cp.acme.room
+package org.feup.cp.acme.singleton
 
 import org.feup.cp.acme.network.CustomerInfoResponse
 

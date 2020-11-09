@@ -9,20 +9,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.*
-import org.feup.cp.acme.repository.ReceiptsRepository
+import org.feup.cp.acme.network.CustomerInfoResponse
+import org.feup.cp.acme.network.HttpClient
+import org.feup.cp.acme.network.HttpClientInterface
+import org.feup.cp.acme.network.LoginData
 import org.feup.cp.acme.room.AppDatabase
-import org.feup.cp.acme.room.User
 import org.feup.cp.acme.room.entity.Customer
-import org.feup.cp.acme.room.entity.Voucher
 import org.feup.cp.acme.security.KeyStoreManager
-import org.feup.cp.acme.vmodel.ProductsViewModel
+import org.feup.cp.acme.singleton.User
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.security.Key
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 

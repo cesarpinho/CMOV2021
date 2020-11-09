@@ -13,7 +13,7 @@ import org.feup.cp.acme.network.HttpClient
 import org.feup.cp.acme.network.HttpClientInterface
 import org.feup.cp.acme.network.RegisterData
 import org.feup.cp.acme.room.AppDatabase
-import org.feup.cp.acme.room.User
+import org.feup.cp.acme.singleton.User
 import org.feup.cp.acme.room.entity.Customer
 import org.feup.cp.acme.security.KeyStoreManager
 import org.json.JSONObject

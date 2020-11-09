@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import org.feup.cp.acme.R
-import org.feup.cp.acme.room.User
+import org.feup.cp.acme.singleton.User
 
 class Toolbar(private val activity: Activity, actualMenuView: String?) {
 

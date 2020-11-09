@@ -44,10 +44,10 @@ data class ReceiptInfoResponse(
         @SerializedName("total")
         var total : Double,
         @SerializedName("products")
-        var products : List<ReceiptProductInfo>,
+        var products : List<ProductQuantityInfo>,
 )
 
-data class ReceiptProductInfo(
+data class ProductQuantityInfo(
         @SerializedName("type")
         var type : String,
         @SerializedName("name")

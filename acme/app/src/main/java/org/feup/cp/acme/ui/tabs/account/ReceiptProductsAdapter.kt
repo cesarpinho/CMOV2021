@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.ReceiptProductInfo
+import org.feup.cp.acme.network.ProductQuantityInfo
 
-class ReceiptProductsAdapter(val products: List<ReceiptProductInfo>) :
+class ReceiptProductsAdapter(val products: List<ProductQuantityInfo>) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
     /**
