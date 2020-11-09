@@ -7,7 +7,7 @@ import java.math.BigInteger
 
 @Entity(indices = [Index(value = ["nickname"], unique = true)])
 data class Customer(
-        @PrimaryKey(autoGenerate = true) val id: Int,
+        @PrimaryKey(autoGenerate = true) val id: Long,
         val uuid: String,
         val name: String,
         val card: Double,

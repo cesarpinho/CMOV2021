@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    code: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.STRING
+    },
     date: {
       allowNull: false,
       type: DataTypes.DATE

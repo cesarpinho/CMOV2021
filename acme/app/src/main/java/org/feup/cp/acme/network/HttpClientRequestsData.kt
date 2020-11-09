@@ -27,7 +27,7 @@ data class LoginData(
         var certificate : String? = null
 )
 
-data class VoucherData(
+data class CustomerAppData(
         @SerializedName("nickname")
         var nickname : String,
         @SerializedName("signature")

@@ -30,22 +30,6 @@ class VoucherFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO - Remove inactive voucher view
-        val vouchers = listOf(
-            mapOf(
-                "id" to "2020disc1014", "type" to "discount",
-                "date" to "14/10/2020", "active" to "true"
-            ),
-            mapOf(
-                "id" to "2020disc1014", "type" to "coffee",
-                "date" to "14/10/2020", "active" to "true"
-            ),
-            mapOf(
-                "id" to "2020disc1014", "type" to "discount",
-                "date" to "14/10/2020", "active" to "false"
-            )
-        )
-
         val view = inflater.inflate(R.layout.fragment_voucher, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.voucher_list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)

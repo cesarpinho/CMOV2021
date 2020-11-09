@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
+import org.feup.cp.acme.network.ReceiptProductInfo
 
-class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
+class ReceiptProductsAdapter(val products: List<ReceiptProductInfo>) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
     /**
@@ -32,13 +33,13 @@ class ReceiptProductsAdapter(val products: List<Map<String, String>>) :
     override fun onBindViewHolder(holder: ReceiptAdapter.ReceiptViewHolder, position: Int) {
         val card = holder.itemView
         card.findViewById<View>(R.id.divider).visibility = View.GONE
-        card.findViewById<TextView>(R.id.card_title).text = products[position]["name"]
-        card.findViewById<TextView>(R.id.card_subtitle).text = products[position]["price"]
+        card.findViewById<TextView>(R.id.card_title).text = products[position].name
+        card.findViewById<TextView>(R.id.card_subtitle).text = products[position].price.toString().plus("$")
         val quantity = card.findViewById<TextView>(R.id.card_right_info)
-        quantity.text = products[position]["quantity"].plus(" units")
+        quantity.text = products[position].quantity.toString().plus(" units")
         quantity.textSize = 25F
         quantity.visibility = TextView.VISIBLE
-        Picasso.get().load(products[position]["image"])
+        Picasso.get().load(products[position].icon)
             .into(card.findViewById<ImageView>(R.id.card_image))
     }
 

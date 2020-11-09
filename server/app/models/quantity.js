@@ -11,8 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Quantity.hasOne(models.Receipt, { foreignKey: 'id_receipt' })
-      Quantity.hasOne(models.Product, { foreignKey: 'id_product' })
     }
   };
   Quantity.init({

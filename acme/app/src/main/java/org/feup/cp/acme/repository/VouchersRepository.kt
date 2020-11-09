@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.feup.cp.acme.network.HttpClient
 import org.feup.cp.acme.network.HttpClientInterface
-import org.feup.cp.acme.network.VoucherData
+import org.feup.cp.acme.network.CustomerAppData
 import org.feup.cp.acme.network.VoucherInfoResponse
 import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.room.User
@@ -32,11 +32,11 @@ class VouchersRepository {
         // Retrieve current user and construct voucher request body
         val currentUser = User.getInstance()!!.currentUser
 
-        val voucherData = VoucherData(currentUser.nickname,
+        val requestData = CustomerAppData(currentUser.nickname,
                 KeyStoreManager.signData(currentUser.uuid, KeyStoreManager.getPrivateKey(currentUser.nickname)),
                 Date(System.currentTimeMillis()))
 
-        webService.vouchers(voucherData).enqueue(object : Callback<List<VoucherInfoResponse>> {
+        webService.vouchers(requestData).enqueue(object : Callback<List<VoucherInfoResponse>> {
             override fun onResponse(call: Call<List<VoucherInfoResponse>>, response: Response<List<VoucherInfoResponse>>) {
                 if (response.isSuccessful) {
                     // Clear previous data
@@ -45,7 +45,7 @@ class VouchersRepository {
                     // Store new updated information
                     response.body()?.forEach {
                         AppDatabase.getInstance()!!.voucherDao()
-                                .insertAll(Voucher(0, it.type, it.date, currentUser.nickname))
+                                .insertAll(Voucher(0, it.type, it.code, it.date, currentUser.nickname))
                     }
                 }
                 vouchersData.value = AppDatabase.getInstance()!!.voucherDao().getAll()

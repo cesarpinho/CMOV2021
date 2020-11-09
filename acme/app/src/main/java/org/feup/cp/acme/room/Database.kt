@@ -5,14 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import org.feup.cp.acme.room.dao.CustomerDao
-import org.feup.cp.acme.room.dao.ProductDao
-import org.feup.cp.acme.room.dao.VoucherDao
-import org.feup.cp.acme.room.entity.Customer
-import org.feup.cp.acme.room.entity.Product
-import org.feup.cp.acme.room.entity.Voucher
+import org.feup.cp.acme.room.dao.*
+import org.feup.cp.acme.room.entity.*
 
-@Database(entities = [Customer::class, Product::class, Voucher::class], version = 1)
+@Database(entities = [Customer::class, Product::class, Voucher::class, Receipt::class, Quantity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -22,6 +18,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun customerDao(): CustomerDao
     abstract fun productDao(): ProductDao
     abstract fun voucherDao(): VoucherDao
+    abstract fun receiptsDao(): ReceiptDao
+    abstract fun quantityDao(): QuantityDao
 
     /**
      * Static functions

@@ -11,8 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
+import org.feup.cp.acme.network.ReceiptInfoResponse
 
-class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: Context) :
+class ReceiptAdapter(private val dataSet: List<ReceiptInfoResponse>, val context: Context) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
     /**
@@ -37,15 +38,15 @@ class ReceiptAdapter(private val dataSet: List<Map<String, Any>>, val context: C
     override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) {
         val card = holder.itemView
 
-        val total = "Total: " + dataSet[position]["total"]
+        val total = "Total: " + dataSet[position].total + " $"
         val productsList = card.findViewById<RecyclerView>(R.id.card_receipt_products_list)
         val productsAdapter =
-            ReceiptProductsAdapter(dataSet[position]["products"] as List<Map<String, String>>)
+            ReceiptProductsAdapter(dataSet[position].products)
 
         card.findViewById<TextView>(R.id.card_receipt_id).text =
-            context.getString(R.string.str_hash_tag).plus(dataSet[position]["id"])
+            context.getString(R.string.str_hash_tag).plus(dataSet[position].code)
         card.findViewById<TextView>(R.id.card_receipt_date).text =
-            dataSet[position]["date"] as String
+            dataSet[position].date.toString()
         card.findViewById<TextView>(R.id.card_receipt_total).text = total
         card.setOnClickListener(this::openCollapsible)
 

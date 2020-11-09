@@ -7,8 +7,9 @@ import java.util.*
 
 @Entity(foreignKeys = [ForeignKey(entity = Customer::class, parentColumns = ["nickname"], childColumns = ["nickname"])])
 data class Voucher(
-        @PrimaryKey(autoGenerate = true) val id: Int,
+        @PrimaryKey(autoGenerate = true) val id: Long,
         val type: Boolean,
-        val date: Date = Date(System.currentTimeMillis()),
+        val code: String,
+        val date: Date,
         val nickname: String
 )

@@ -37,7 +37,7 @@ class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) 
         val card = holder.itemView
         val date = card.findViewById<TextView>(R.id.card_right_info)
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            context.getString(R.string.str_hash_tag).plus(vouchers[position].id)
+            context.getString(R.string.str_hash_tag).plus(vouchers[position].code)
         date.text = vouchers[position].date.toString()
         date.visibility = TextView.VISIBLE
 

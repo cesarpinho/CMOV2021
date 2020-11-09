@@ -8,6 +8,7 @@ const uuid = require('uuid')
 const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
 const validator = require('./validator.js')
+const sequelize = require('sequelize')
 
 
 const PORT = process.env.PORT || 3000
@@ -163,15 +164,22 @@ app.post('/receipts', async (req, res) => {
   if(!signatureValidity)
     return res.status(400).send({description: "Signature invalid."})
 
-  // TODO - Retrieve data and properly structure it
   // Retrieve and send receipts
-  db.Receipt.findAll({ 
+  let receipts = await db.Receipt.findAll({ 
     where: {id_customer: customer.id },
-    attributes: ['date', 'total']
+    attributes: ['id', 'code', 'date', 'total']
   })
-  .then((receipts) => {
-    res.send(receipts)
-  })
+
+  for(let receipt of receipts) {
+    receipt.dataValues["products"] = await db.sequelize.query('SELECT type, name, quantity, icon, price FROM "Quantities" INNER JOIN "Products" ON id_product = "Products".id WHERE id_receipt = :id_receipt', 
+    { 
+      replacements:  {id_receipt: receipt.id},
+      type: sequelize.QueryTypes.SELECT
+    })
+
+    delete receipt.dataValues.id
+  }
+  res.send(receipts)
 })
 
 /**
@@ -214,7 +222,7 @@ app.post('/vouchers', async (req, res) => {
   // Retrieve and send vouchers
   db.Voucher.findAll({ 
     where: {id_customer: customer.id },
-    attributes: ['type', 'date']
+    attributes: ['type', 'code', 'date']
   })
   .then((vouchers) => {
     res.send(vouchers)

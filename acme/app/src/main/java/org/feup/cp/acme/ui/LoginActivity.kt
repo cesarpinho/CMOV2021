@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.feup.cp.acme.R
 import org.feup.cp.acme.network.*
+import org.feup.cp.acme.repository.ReceiptsRepository
 import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.room.User
 import org.feup.cp.acme.room.entity.Customer
@@ -38,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        AppDatabase.nukeDatabase(context = this)
-        KeyStoreManager.deleteKeyStoreEntry("admin")
+//        AppDatabase.nukeDatabase(context = this)
+//        KeyStoreManager.deleteKeyStoreEntry("admin")
 
         AppDatabase.getInstance(context = this)
 
@@ -142,6 +143,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<CustomerInfoResponse>, t: Throwable) {
+                // Delete key pair entry from key store
+                KeyStoreManager.deleteKeyStoreEntry(customer.nickname)
                 println(t.stackTrace)
             }
         })

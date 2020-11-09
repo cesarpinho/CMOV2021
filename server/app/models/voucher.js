@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.BOOLEAN
     },
+    code: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.STRING
+    },
     date: {
       allowNull: false,
       type: DataTypes.DATE

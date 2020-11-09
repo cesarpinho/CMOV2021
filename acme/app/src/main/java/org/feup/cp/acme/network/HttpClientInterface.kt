@@ -22,6 +22,9 @@ interface HttpClientInterface {
 
     @Headers("Content-Type: application/json")
     @POST("vouchers")
-    fun vouchers(@Body body: VoucherData): Call<List<VoucherInfoResponse>>
+    fun vouchers(@Body body: CustomerAppData): Call<List<VoucherInfoResponse>>
 
+    @Headers("Content-Type: application/json")
+    @POST("receipts")
+    fun receipts(@Body body: CustomerAppData): Call<List<ReceiptInfoResponse>>
 }
