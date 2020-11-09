@@ -32,7 +32,7 @@ class ReceiptsRepository {
         // Retrieve current user and construct voucher request body
         val currentUser = User.getInstance()!!.currentUser
 
-        val requestData = CustomerAppData(currentUser.nickname,
+        val requestData = CustomerAppData(currentUser.uuid,
                 KeyStoreManager.signData(currentUser.uuid, KeyStoreManager.getPrivateKey(currentUser.nickname)),
                 Date(System.currentTimeMillis()))
 
@@ -52,7 +52,7 @@ class ReceiptsRepository {
                             var productId = db.productDao().getId(product.name)
 
                             if(productId.compareTo(0) == 0)
-                                productId = db.productDao().insert(Product(0, product.type, product.icon, product.name, product.price))
+                                productId = db.productDao().insert(Product(0, product.type, product.icon, product.name, product.price, Date(2020)))
 
                             db.quantityDao().insertAll(Quantity(receiptId, productId, product.quantity))
                         }

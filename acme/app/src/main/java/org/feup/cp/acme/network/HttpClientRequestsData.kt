@@ -28,8 +28,8 @@ data class LoginData(
 )
 
 data class CustomerAppData(
-        @SerializedName("nickname")
-        var nickname : String,
+        @SerializedName("uuid")
+        var uuid : String,
         @SerializedName("signature")
         var signature : String,
         @SerializedName("timestamp")

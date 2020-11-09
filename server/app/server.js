@@ -139,8 +139,8 @@ app.post('/register', (req, res) => {
  */
 app.post('/receipts', async (req, res) => {
   // Validate request body
-  if(req.body.nickname == null || req.body.signature == null || req.body.timestamp == null)
-    return res.status(400).send({description: "Both the <nickname>, <signature> and <timestamp> fields cannot be empty"})
+  if(req.body.uuid == null || req.body.signature == null || req.body.timestamp == null)
+    return res.status(400).send({description: "Both the <uuid>, <signature> and <timestamp> fields cannot be empty"})
 
   // Date variables definition
   let timestamp = new Date(req.body.timestamp)
@@ -154,10 +154,10 @@ app.post('/receipts', async (req, res) => {
     return res.status(400).send({description: "Timestamp not within the defined fault tolerance."})
   
   // Retrieve and validate customer 
-  const customer = await db.Customer.findOne({ where: { nickname: req.body.nickname }})
+  const customer = await db.Customer.findOne({ where: { uuid: req.body.uuid }})
 
   if(customer == null)
-    return res.status(400).send({description: "Customer with nickname <" + req.body.nickname + "> does not exist."})
+    return res.status(400).send({description: "Customer with uuid <" + req.body.uuid + "> does not exist."})
   
   let signatureValidity = await validator.validSignature(customer, uuid.stringify(uuid.parse(customer.uuid)), req.body.signature)
   
@@ -194,8 +194,8 @@ app.post('/receipts', async (req, res) => {
  */
 app.post('/vouchers', async (req, res) => {
   // Validate request body
-  if(req.body.nickname == null || req.body.signature == null || req.body.timestamp == null)
-    return res.status(400).send({description: "Both the <nickname>, <signature> and <timestamp> fields cannot be empty"})
+  if(req.body.uuid == null || req.body.signature == null || req.body.timestamp == null)
+    return res.status(400).send({description: "Both the <uuid>, <signature> and <timestamp> fields cannot be empty"})
 
   // Date variables definition
   let timestamp = new Date(req.body.timestamp)
@@ -209,10 +209,10 @@ app.post('/vouchers', async (req, res) => {
     return res.status(400).send({description: "Timestamp not within the defined fault tolerance."})
   
   // Retrieve and validate customer 
-  const customer = await db.Customer.findOne({ where: { nickname: req.body.nickname }})
+  const customer = await db.Customer.findOne({ where: { uuid: req.body.uuid }})
 
   if(customer == null)
-    return res.status(400).send({description: "Customer with nickname <" + req.body.nickname + "> does not exist."})
+    return res.status(400).send({description: "Customer with uuid <" + req.body.uuid + "> does not exist."})
   
   let signatureValidity = await validator.validSignature(customer, uuid.stringify(uuid.parse(customer.uuid)), req.body.signature)
   

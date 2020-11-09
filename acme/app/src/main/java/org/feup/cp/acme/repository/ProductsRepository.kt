@@ -32,6 +32,7 @@ class ProductsRepository() {
             override fun onResponse(call: Call<List<ProductInfoResponse>>, response: Response<List<ProductInfoResponse>>) {
                 if (response.isSuccessful) {
                     // Clear previous data
+                    AppDatabase.getInstance()!!.quantityDao().nukeTable()
                     AppDatabase.getInstance()!!.productDao().nukeTable()
 
                     // Store new updated information

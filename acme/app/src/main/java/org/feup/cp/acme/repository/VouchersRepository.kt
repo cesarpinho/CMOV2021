@@ -32,7 +32,7 @@ class VouchersRepository {
         // Retrieve current user and construct voucher request body
         val currentUser = User.getInstance()!!.currentUser
 
-        val requestData = CustomerAppData(currentUser.nickname,
+        val requestData = CustomerAppData(currentUser.uuid,
                 KeyStoreManager.signData(currentUser.uuid, KeyStoreManager.getPrivateKey(currentUser.nickname)),
                 Date(System.currentTimeMillis()))
 
