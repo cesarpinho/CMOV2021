@@ -48,7 +48,7 @@ class ProductsAdapter(
         card.findViewById<TextView>(R.id.card_subtitle).text =
             dataSet[position].price.toString().plus("$")
         button.visibility = Button.VISIBLE
-        button.setOnClickListener { view ->
+        button.setOnClickListener { _ ->
             val dialog = AddCartDialog(dataSet[position].id.toInt())
             dialog.show(activity.supportFragmentManager, "addCart")
         }
