@@ -20,8 +20,7 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
      */
     private val btn = mapOf<String, View>(
         "home" to activity.findViewById(R.id.text_drawer_home),
-        "qr_code" to activity.findViewById(R.id.text_drawer_qr_code),
-        "logout" to activity.findViewById(R.id.text_drawer_logout)
+        "qr_code" to activity.findViewById(R.id.text_drawer_qr_code)
     )
 
     /**
@@ -32,7 +31,6 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
     init {
         activity.findViewById<View>(R.id.btn_burger_menu).setOnClickListener(this::drawerOpen)
         activity.findViewById<View>(R.id.btn_close_drawer).setOnClickListener(this::drawerClose)
-        activity.findViewById<View>(R.id.text_drawer_logout).setOnClickListener(this::logoutAction)
         btn["home"]?.setOnClickListener(this::homeRedirect)
         btn["qr_code"]?.setOnClickListener(this::qrCodeRedirect)
 
@@ -74,19 +72,7 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
      * Redirects to the QR code reader activity
      */
     private fun qrCodeRedirect(view: View) {
-        val intent = Intent(activity, QRCodeActivity::class.java)
-        drawerClose(view)
-        activity.startActivity(intent)
-    }
-
-    /**
-     * Logout function. Destroys the current user singleton
-     * instance.
-     */
-    private fun logoutAction(view: View) {
-//        User.destroyUser()
-        // TODO - Implement Logout
-        val intent = Intent(activity, LoginActivity::class.java)
+        val intent = Intent(activity, ScanActivity::class.java)
         drawerClose(view)
         activity.startActivity(intent)
     }

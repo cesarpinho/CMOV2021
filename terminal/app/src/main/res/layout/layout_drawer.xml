@@ -55,22 +55,6 @@
             android:paddingStart="20dp"
             android:paddingEnd="0dp" />
 
-        <Button
-            android:id="@+id/text_drawer_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_drawer_qr_code"
-            android:layout_marginTop="5dp"
-            android:background="#00FFFFFF"
-            android:fontFamily="@font/amatic_sc"
-            android:text="@string/str_logout"
-            android:textAlignment="viewStart"
-            android:textColor="@color/colorBeige"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"/>
-
         <TextView
             android:id="@+id/text_drawer_app_name"
             android:layout_width="match_parent"
