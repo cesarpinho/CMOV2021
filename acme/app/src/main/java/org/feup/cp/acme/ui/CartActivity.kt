@@ -29,6 +29,11 @@ class CartActivity : AppCompatActivity() {
     private lateinit var pagerAdapter: PagerAdapter
 
     /**
+     * QRCode fragment instance
+     */
+    private lateinit var qrCodeFragment: QRCodeFragment
+
+    /**
      * Voucher tab lock indicator
      */
     private var lockVoucher = true
@@ -85,10 +90,17 @@ class CartActivity : AppCompatActivity() {
      */
     fun addQRCodeTab() {
         if (lockQRCode) {
-            pagerAdapter.addFragment(QRCodeFragment.newInstance())
+            // Creates the QRCode Fragment instance and adds to pager adapter
+            qrCodeFragment = QRCodeFragment.newInstance()
+            pagerAdapter.addFragment(qrCodeFragment)
             pagerAdapter.notifyDataSetChanged()
             addTabIcons()
             lockQRCode = false
+        } else {
+            // Notifies to regenerate the QRCode in QRCode fragment
+            qrCodeFragment.qrCodeIsEmpty = true
+            pagerAdapter.notifyDataSetChanged()
+            addTabIcons()
         }
         viewPager.setCurrentItem(2, true)
     }

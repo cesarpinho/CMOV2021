@@ -17,9 +17,8 @@ import org.feup.cp.acme.singleton.Cart
 
 class QRCodeFragment : Fragment() {
 
-    var qrCodeInitialized: Boolean = false
+    var qrCodeIsEmpty: Boolean = true
     private lateinit var qrCode: Bitmap
-    private lateinit var imageView: ImageView
 
     /**
      * Creates the QRCode tab view of the cart
@@ -31,13 +30,11 @@ class QRCodeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_qrcode, container, false)
 
-        if (!qrCodeInitialized) {
-            qrCode = encodeToQrCode(Cart.getInstance()!!.encodeToString(), inflater.context)
-            qrCodeInitialized = true
-            println("Create qr code!!")
+        if (qrCodeIsEmpty) {
+            qrCode = encodeToQrCode(Cart.getInstance()!!.generateCartString(), inflater.context)
+            qrCodeIsEmpty = false
         }
-        imageView = view.findViewById(R.id.qrcode_image)
-        imageView.setImageBitmap(qrCode)
+        view.findViewById<ImageView>(R.id.qrcode_image).setImageBitmap(qrCode)
 
         return view
     }

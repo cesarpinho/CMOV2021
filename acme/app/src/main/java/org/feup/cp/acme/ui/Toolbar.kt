@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import org.feup.cp.acme.R
+import org.feup.cp.acme.singleton.Cart
 import org.feup.cp.acme.singleton.User
 
 class Toolbar(private val activity: Activity, actualMenuView: String?) {
@@ -29,9 +30,9 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
     )
 
     /**
-     * Primary constructor
+     * Primary constructor.
      * Add listener for all the buttons in the toolbar and the drawer,
-     * except the button corresponding to the actual activity
+     * except the button corresponding to the actual activity.
      */
     init {
         activity.findViewById<View>(R.id.btn_burger_menu).setOnClickListener(this::drawerOpen)
@@ -102,11 +103,12 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
     }
 
     /**
-     * Logout function. Destroys the current user singleton
-     * instance.
+     * Logout function. Destroys the singleton instances
+     * of the current user and the Cart .
      */
     private fun logoutAction(view: View) {
         User.destroyUser()
+        Cart.destroyCart()
         val intent = Intent(activity, LoginActivity::class.java)
         drawerClose(view)
         activity.startActivity(intent)

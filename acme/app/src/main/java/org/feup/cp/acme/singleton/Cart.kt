@@ -114,7 +114,10 @@ class Cart(private val cartData: LiveData<CartData>) {
         val md = MessageDigest.getInstance("SHA-256")
         val bytes = md.digest(input)
 
-        this.cartData.value!!.signature = KeyStoreManager.signData(encodeToString(bytes, DEFAULT), KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname))
+        this.cartData.value!!.signature = KeyStoreManager.signData(
+            encodeToString(bytes, DEFAULT),
+            KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname)
+        )
         return Gson().toJson(this.cartData.value!!).toString()
     }
 
