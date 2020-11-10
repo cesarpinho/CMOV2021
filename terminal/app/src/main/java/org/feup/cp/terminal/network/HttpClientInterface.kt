@@ -9,22 +9,7 @@ import java.util.*
  */
 interface HttpClientInterface {
 
-    @GET("products")
-    fun products(@Query("version") version: Date?): Call<List<ProductInfoResponse>>
-
     @Headers("Content-Type: application/json")
-    @POST("login")
-    fun login(@Body body: LoginData): Call<CustomerInfoResponse>
-
-    @Headers("Content-Type: application/json")
-    @POST("register")
-    fun register(@Body body: RegisterData): Call<CustomerInfoResponse>
-
-    @Headers("Content-Type: application/json")
-    @POST("vouchers")
-    fun vouchers(@Body body: CustomerAppData): Call<List<VoucherInfoResponse>>
-
-    @Headers("Content-Type: application/json")
-    @POST("receipts")
-    fun receipts(@Body body: CustomerAppData): Call<List<ReceiptInfoResponse>>
+    @POST("purchase")
+    fun purchase(@Body body: OrderData): Call<OrderInfoResponse>
 }

@@ -6,20 +6,27 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import org.feup.cp.terminal.network.HttpClient
+import org.feup.cp.terminal.network.HttpClientInterface
+import org.feup.cp.terminal.network.OrderData
+import org.feup.cp.terminal.network.OrderInfoResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OrderProcessActivity() : AppCompatActivity() {
+
+    var status: Boolean = false
+    lateinit var orderId: String
+    lateinit var voucher: String
+    var total: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val encodedOrder = intent.extras?.getString("org.feup.cp.terminal.ENCODED_ORDER")
         println(encodedOrder)
-        // TODO - Send encoded order to server
-        // TODO - Get response and init val's
-        val status = true
-        val orderId = "123549822"
-        val voucher = "1235"
-        val total = "1,00"
+        connectToServer(encodedOrder!!)
 
         setContentView(R.layout.activity_order_process)
         Toolbar(this, null)
@@ -30,7 +37,7 @@ class OrderProcessActivity() : AppCompatActivity() {
             icon.setImageResource(R.drawable.ic_correct)
             findViewById<TableLayout>(R.id.order_info).visibility = TableLayout.VISIBLE
             findViewById<TextView>(R.id.order_id).text = "#".plus(orderId)
-            findViewById<TextView>(R.id.total_display).text = total.plus("€")
+            findViewById<TextView>(R.id.total_display).text = total.toString().plus("€")
 
             // If the order don't have a voucher, the row is hidden
             if (voucher != "")
@@ -41,6 +48,35 @@ class OrderProcessActivity() : AppCompatActivity() {
             icon.setImageResource(R.drawable.ic_error)
             findViewById<TextView>(R.id.order_error).visibility = TextView.VISIBLE
         }
+    }
+
+    private fun connectToServer(encodedOrder: String) {
+        val order = OrderData(encodedOrder)
+        val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
+
+        webService.purchase(order).enqueue(object : Callback<OrderInfoResponse> {
+            override fun onResponse(
+                call: Call<OrderInfoResponse>,
+                response: Response<OrderInfoResponse>
+            ) {
+                if (!response.isSuccessful) {
+                    status = false
+                    return
+                } else {
+                    val orderInfo = response.body()!!
+                    status = true
+                    orderId = orderInfo.order
+                    voucher = orderInfo.voucher
+                    total = orderInfo.total
+                    return
+                }
+            }
+
+            override fun onFailure(call: Call<OrderInfoResponse>, t: Throwable) {
+                println(t.stackTrace)
+            }
+        })
+
     }
 
 }
