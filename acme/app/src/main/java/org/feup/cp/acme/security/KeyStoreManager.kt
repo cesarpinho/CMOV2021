@@ -17,6 +17,11 @@ class KeyStoreManager(alias: String) {
     private val provider = "AndroidKeyStore"
 
     /**
+     * Keystore key size
+     */
+    private val keySize = 512
+
+    /**
      * Key Pair Generator
      */
     private var kpg: KeyPairGenerator
@@ -51,6 +56,7 @@ class KeyStoreManager(alias: String) {
         this.parameterSpec = KeyGenParameterSpec
             .Builder(alias, KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY)
             .run {
+                setKeySize(keySize)
                 setCertificateSerialNumber(BigInteger.valueOf(1))
                 setCertificateSubject(X500Principal("CN=$alias"))
                 setDigests(KeyProperties.DIGEST_SHA256)

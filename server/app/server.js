@@ -186,11 +186,11 @@ app.post('/receipts', async (req, res) => {
   // Validate request body
   if(req.body.uuid == null || req.body.signature == null || req.body.timestamp == null)
     return res.status(400).send({description: "Both the <uuid>, <signature> and <timestamp> fields cannot be empty"})
-
+  
   // Date variables definition
   let timestamp = new Date(req.body.timestamp)
   let currentDate = new Date()
-  let diffDate = currentDate.getTime() - timestamp.getTime()
+  let diffDate = Math.abs(currentDate.getTime() - timestamp.getTime())
   
   // Check for timestamp fault tolerance
   if(diffDate < 0)
@@ -282,7 +282,7 @@ app.post('/vouchers', async (req, res) => {
   // Date variables definition
   let timestamp = new Date(req.body.timestamp)
   let currentDate = new Date()
-  let diffDate = currentDate.getTime() - timestamp.getTime()
+  let diffDate = Math.abs(currentDate.getTime() - timestamp.getTime())
   
   // Check for timestamp fault tolerance
   if(diffDate < 0)
