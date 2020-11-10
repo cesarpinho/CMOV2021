@@ -2,7 +2,6 @@ package org.feup.cp.acme.ui.tabs.account
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -41,26 +40,20 @@ class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) 
         date.text = vouchers[position].date.toString()
         date.visibility = TextView.VISIBLE
 
-        when (vouchers[position].type) {
+        // if true the voucher is a Discount voucher, otherwise is a coffee free voucher
+        if (vouchers[position].type) {
             // Discount Voucher
-            true -> {
-                card.findViewById<ImageView>(R.id.card_image)
-                    .setImageResource(R.drawable.ic_discount)
-                card.findViewById<TextView>(R.id.card_title).text =
-                    context.getText(R.string.str_discount_description)
-            }
+            card.findViewById<ImageView>(R.id.card_image)
+                .setImageResource(R.drawable.ic_discount)
+            card.findViewById<TextView>(R.id.card_title).text =
+                context.getText(R.string.str_discount_description)
+        } else {
             // Coffee Voucher
-            false -> {
-                card.findViewById<ImageView>(R.id.card_image)
-                    .setImageResource(R.drawable.ic_free_coffee)
-                card.findViewById<TextView>(R.id.card_title).text = context
-                    .getString(R.string.str_free_coffee)
-            }
+            card.findViewById<ImageView>(R.id.card_image)
+                .setImageResource(R.drawable.ic_free_coffee)
+            card.findViewById<TextView>(R.id.card_title).text =
+                context.getString(R.string.str_free_coffee)
         }
-        // TODO - Remove code bellow
-//        if (!vouchers[position]["active"].toBoolean())
-//            card.findViewById<View>(R.id.card_blocker).visibility = View.VISIBLE
-
     }
 
     /**

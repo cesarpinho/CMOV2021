@@ -5,17 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.ProductQuantityInfo
-import org.feup.cp.acme.repository.ReceiptsRepository
+import org.feup.cp.acme.singleton.Cart
 import org.feup.cp.acme.singleton.CartData
 import org.feup.cp.acme.ui.CartActivity
-import org.feup.cp.acme.ui.tabs.account.ReceiptAdapter
 import org.feup.cp.acme.vmodel.CartViewModel
-import org.feup.cp.acme.vmodel.ReceiptsViewModel
 
 class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
 
@@ -35,11 +33,15 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart_list, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        listView.adapter = CartProductsAdapter(CartData("", ArrayList()), view.findViewById(R.id.cart_total))
+        listView.adapter =
+            CartProductsAdapter(CartData("", ArrayList()), view.findViewById(R.id.cart_total))
 
         // Add listener to the Next button
         view.findViewById<Button>(R.id.btn_next).setOnClickListener {
-            cartActivity.addVoucherTab()
+            if (!Cart.getInstance()!!.isEmpty())
+                cartActivity.addVoucherTab()
+            else
+                Toast.makeText(context, "Cart is empty!", Toast.LENGTH_LONG).show()
         }
 
         return view
@@ -56,8 +58,6 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
             listView.adapter = adapter
         }
     }
-
-
 
     /**
      * Static functions

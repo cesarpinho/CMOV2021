@@ -96,19 +96,7 @@
             android:textSize="30sp"
             android:textStyle="bold"
             android:visibility="gone" />
-
     </LinearLayout>
-
-    <View
-        android:id="@+id/card_blocker"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/divider"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/colorBlocked"
-        android:visibility="gone" />
 
     <View
         android:id="@+id/divider"

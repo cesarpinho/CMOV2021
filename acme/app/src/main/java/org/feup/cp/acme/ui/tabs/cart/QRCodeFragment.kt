@@ -13,8 +13,13 @@ import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import org.feup.cp.acme.R
+import org.feup.cp.acme.singleton.Cart
 
 class QRCodeFragment : Fragment() {
+
+    var qrCodeInitialized: Boolean = false
+    private lateinit var qrCode: Bitmap
+    private lateinit var imageView: ImageView
 
     /**
      * Creates the QRCode tab view of the cart
@@ -25,30 +30,27 @@ class QRCodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_qrcode, container, false)
-        view.findViewById<ImageView>(R.id.qrcode_image).setImageBitmap(
-            encodeToQrCode("test 1 2 3", inflater.context)
-        )
+
+        if (!qrCodeInitialized) {
+            qrCode = encodeToQrCode(Cart.getInstance()!!.encodeToString(), inflater.context)
+            qrCodeInitialized = true
+            println("Create qr code!!")
+        }
+        imageView = view.findViewById(R.id.qrcode_image)
+        imageView.setImageBitmap(qrCode)
 
         return view
     }
 
-    /**
-     * Static functions
-     */
-    companion object {
-        @JvmStatic
-        fun newInstance() = QRCodeFragment()
-    }
 
     /**
      * Creates a QR code in bitmap format
      */
-    // TODO - Include in cart class
-    private fun encodeToQrCode(text: String?, context: Context): Bitmap? {
-        val width = 500
+    private fun encodeToQrCode(text: String?, context: Context): Bitmap {
+        val width = 500;
         val height = 500
         var matrix: BitMatrix? = null
-        val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
 
         try {
             matrix = QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, width, height)
@@ -58,13 +60,21 @@ class QRCodeFragment : Fragment() {
 
         for (x in 0 until width) {
             for (y in 0 until height) {
-                bmp.setPixel(
+                bitmap.setPixel(
                     x, y,
                     if (matrix!![x, y]) context.getColor(R.color.colorBlack)
                     else context.getColor(R.color.colorBeige)
                 )
             }
         }
-        return bmp
+        return bitmap
+    }
+
+    /**
+     * Static functions
+     */
+    companion object {
+        @JvmStatic
+        fun newInstance() = QRCodeFragment()
     }
 }

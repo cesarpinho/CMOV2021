@@ -11,16 +11,16 @@ import org.feup.cp.acme.security.KeyStoreManager
 import java.security.MessageDigest
 
 data class CartData(
-        @SerializedName("uuid")
-        var uuid : String,
-        @SerializedName("products")
-        var products : ArrayList<ProductQuantityInfo>,
-        @SerializedName("total")
-        var total : Double = 0.0,
-        @SerializedName("voucherCode")
-        var voucherCode : String? = null,
-        @SerializedName("signature")
-        var signature : String? = null,
+    @SerializedName("uuid")
+    var uuid: String,
+    @SerializedName("products")
+    var products: ArrayList<ProductQuantityInfo>,
+    @SerializedName("total")
+    var total: Double = 0.0,
+    @SerializedName("voucherCode")
+    var voucherCode: String? = null,
+    @SerializedName("signature")
+    var signature: String? = null,
 )
 
 class Cart(private val cartData: LiveData<CartData>) {
@@ -31,8 +31,8 @@ class Cart(private val cartData: LiveData<CartData>) {
      *  returns -1.
      */
     private fun getProductIndex(name: String): Int {
-        for(i in this.cartData.value!!.products.indices) {
-            if(this.cartData.value!!.products[i].name == name)
+        for (i in this.cartData.value!!.products.indices) {
+            if (this.cartData.value!!.products[i].name == name)
                 return i
         }
         return -1
@@ -45,7 +45,7 @@ class Cart(private val cartData: LiveData<CartData>) {
     fun insertProduct(product: ProductQuantityInfo) {
         val productIndex = this.getProductIndex(product.name)
 
-        if(productIndex == -1)
+        if (productIndex == -1)
             this.cartData.value!!.products.add(product)
         else
             this.cartData.value!!.products[productIndex].quantity += product.quantity
@@ -61,7 +61,7 @@ class Cart(private val cartData: LiveData<CartData>) {
     fun removeProduct(productName: String) {
         val productIndex = this.getProductIndex(productName)
 
-        if(productIndex != -1)
+        if (productIndex != -1)
             this.cartData.value!!.products.removeAt(productIndex)
 
         // Update total value
@@ -74,7 +74,7 @@ class Cart(private val cartData: LiveData<CartData>) {
     fun updateProductQuantity(productName: String, quantity: Int) {
         val productIndex = this.getProductIndex(productName)
 
-        if(productIndex != -1)
+        if (productIndex != -1)
             this.cartData.value!!.products[productIndex].quantity = quantity
 
         // Update total value
@@ -88,7 +88,7 @@ class Cart(private val cartData: LiveData<CartData>) {
         var totalValue = 0.0
 
         this.cartData.value!!.products.forEach() {
-            totalValue += it.quantity*it.price
+            totalValue += it.quantity * it.price
         }
 
         this.cartData.value!!.total = totalValue
@@ -125,6 +125,12 @@ class Cart(private val cartData: LiveData<CartData>) {
         return this.cartData
     }
 
+    /**
+     * Check if the cart have products
+     */
+    fun isEmpty(): Boolean {
+        return this.cartData.value!!.products.isEmpty()
+    }
 
     /**
      * Static functions
@@ -143,7 +149,14 @@ class Cart(private val cartData: LiveData<CartData>) {
         fun getInstance(): Cart? {
             if (instance == null) {
                 synchronized(lock = true) {
-                    instance = Cart(MutableLiveData(CartData(User.getInstance()!!.currentUser.uuid, ArrayList())))
+                    instance = Cart(
+                        MutableLiveData(
+                            CartData(
+                                User.getInstance()!!.currentUser.uuid,
+                                ArrayList()
+                            )
+                        )
+                    )
                 }
             }
             return instance

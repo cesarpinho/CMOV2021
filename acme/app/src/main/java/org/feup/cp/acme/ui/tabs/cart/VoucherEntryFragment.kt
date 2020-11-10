@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import org.feup.cp.acme.R
 import org.feup.cp.acme.room.AppDatabase
@@ -32,29 +33,25 @@ class VoucherEntryFragment(
 
         voucherInput.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus)
-                if (voucherInput.text.length < VOUCHER_SIZE + 1)
-                    voucherInput.error = "Voucher has 9 characters\nOnly can insert one voucher per purchase" // TODO - Update validation message
+                if (voucherInput.text.length < VOUCHER_SIZE)
+                    voucherInput.error =
+                        "Voucher has 9 characters\nOnly can insert one voucher per purchase"
         }
 
         view.findViewById<Button>(R.id.btn_complete).setOnClickListener {
             val voucher = voucherInput.text.toString()
-            println(voucher)
-            if (voucher.isNotEmpty() && voucher.length > VOUCHER_SIZE + 1)
-                voucherInput.error = "Voucher has 9 characters\nOnly can insert one voucher per purchase" // TODO - Update validation message
-            else if (voucher.isNotBlank()) {
-                if(AppDatabase.getInstance()!!.voucherDao().has(voucher).isNotEmpty()) {
-                    Cart.getInstance()!!.setVoucher(voucher)
 
-                    println(Cart.getInstance()!!.generateCartString()) // String for the QR Code
-                    cartActivity.addQRCodeTab() // TODO - Generate string for qr code
-                }
-                else
-                    println("Invalid voucher") // TODO - Display on screen the voucher error invalidity
-            }
-            else {
-                println(Cart.getInstance()!!.generateCartString()) // String for the QR Code
-                cartActivity.addQRCodeTab() // TODO - Generate string for qr code
-            }
+            if (voucher.isNotEmpty() && voucher.length > VOUCHER_SIZE)
+                voucherInput.error =
+                    "Voucher has 9 characters\nOnly can insert one voucher per purchase"
+            else if (voucher.isNotBlank()) {
+                if (AppDatabase.getInstance()!!.voucherDao().has(voucher).isNotEmpty()) {
+                    Cart.getInstance()!!.setVoucher(voucher)
+                    cartActivity.addQRCodeTab()
+                } else
+                    Toast.makeText(context, "Invalid voucher", Toast.LENGTH_LONG).show()
+            } else
+                cartActivity.addQRCodeTab()
         }
         return view
     }
@@ -67,7 +64,7 @@ class VoucherEntryFragment(
         /**
          * Voucher length constant
          */
-        const val VOUCHER_SIZE = 8
+        const val VOUCHER_SIZE = 9
 
         @JvmStatic
         fun newInstance(cartActivity: CartActivity) = VoucherEntryFragment(cartActivity)
