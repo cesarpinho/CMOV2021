@@ -7,8 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import org.feup.cp.acme.R
+import org.feup.cp.acme.network.ProductQuantityInfo
+import org.feup.cp.acme.room.entity.Product
+import org.feup.cp.acme.singleton.Cart
 
-class AddCartDialog(private val idProduct: Int) : DialogFragment() {
+class AddCartDialog(private val product: Product) : DialogFragment() {
 
     /**
      * Creates the dialog for selects the quantity of the product and add the product to the cart
@@ -24,8 +27,9 @@ class AddCartDialog(private val idProduct: Int) : DialogFragment() {
             view.findViewById<Button>(R.id.btn_dialog_add_cart).setOnClickListener { listenerView ->
                 val quantity =
                     view.findViewById<EditText>(R.id.input_dialog_quantity).text.toString().toInt()
-                println("Id Product: $idProduct\nQuantity: $quantity")
-//                TODO("Save product and quantity on cart")
+
+                Cart.getInstance()!!.insertProduct(ProductQuantityInfo(product.type, product.name, quantity, product.icon, product.price))
+
                 // Closes the dialog
                 this.dismiss()
             }

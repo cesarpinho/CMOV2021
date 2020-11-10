@@ -1,9 +1,27 @@
 package org.feup.cp.acme.singleton
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import org.feup.cp.acme.network.ProductQuantityInfo
+import org.feup.cp.acme.security.KeyStoreManager
+import java.security.MessageDigest
 
-class Cart(val cartData: CartData) {
+data class CartData(
+        @SerializedName("uuid")
+        var uuid : String,
+        @SerializedName("products")
+        var products : ArrayList<ProductQuantityInfo>,
+        @SerializedName("total")
+        var total : Double = 0.0,
+        @SerializedName("voucherCode")
+        var voucherCode : String? = null,
+        @SerializedName("signature")
+        var signature : String? = null,
+)
+
+class Cart(private val cartData: LiveData<CartData>) {
 
     /**
      *  Retrieves the product index in the products
@@ -11,8 +29,8 @@ class Cart(val cartData: CartData) {
      *  returns -1.
      */
     private fun getProductIndex(name: String): Int {
-        for(i in this.cartData.products.indices) {
-            if(this.cartData.products[i].name == name)
+        for(i in this.cartData.value!!.products.indices) {
+            if(this.cartData.value!!.products[i].name == name)
                 return i
         }
         return -1
@@ -25,8 +43,13 @@ class Cart(val cartData: CartData) {
     fun insertProduct(product: ProductQuantityInfo) {
         val productIndex = this.getProductIndex(product.name)
 
-        if(productIndex != -1)
-            this.cartData.products.add(product)
+        if(productIndex == -1)
+            this.cartData.value!!.products.add(product)
+        else
+            this.cartData.value!!.products[productIndex].quantity += product.quantity
+
+        // Update total value
+        this.updateTotal()
     }
 
     /**
@@ -37,8 +60,69 @@ class Cart(val cartData: CartData) {
         val productIndex = this.getProductIndex(productName)
 
         if(productIndex != -1)
-            this.cartData.products.removeAt(productIndex)
+            this.cartData.value!!.products.removeAt(productIndex)
+
+        // Update total value
+        this.updateTotal()
     }
+
+    /**
+     * Updates the total cart value
+     */
+    fun updateProductQuantity(productName: String, quantity: Int) {
+        val productIndex = this.getProductIndex(productName)
+
+        if(productIndex != -1)
+            this.cartData.value!!.products[productIndex].quantity = quantity
+
+        // Update total value
+        this.updateTotal()
+    }
+
+    /**
+     * Updates the total cart value
+     */
+    private fun updateTotal() {
+        var totalValue = 0.0
+
+        this.cartData.value!!.products.forEach() {
+            totalValue += it.quantity*it.price
+        }
+
+        this.cartData.value!!.total = totalValue
+    }
+
+    /**
+     * Updates the cart voucher code used
+     */
+    fun setVoucher(code: String) {
+        this.cartData.value!!.voucherCode = code
+    }
+
+    /**
+     * Encodes the cart data to string and generates a signature.
+     * The signature is generated from the hash of the json object string
+     * representation of the cartData data class.
+     */
+    fun encodeToString(): String {
+        // Ensure that the certificate at this point is null
+        this.cartData.value!!.signature = null
+
+        val bytes = Gson().toJson(this.cartData.value!!).toString().toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+
+        this.cartData.value!!.signature = KeyStoreManager.signData(digest.fold("", { str, it -> str + "%02x".format(it) }), KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname))
+        return Gson().toJson(this.cartData.value!!).toString()
+    }
+
+    /**
+     * Return cart information structure
+     */
+    fun getCartData(): LiveData<CartData> {
+        return this.cartData
+    }
+
 
     /**
      * Static functions
@@ -57,7 +141,7 @@ class Cart(val cartData: CartData) {
         fun getInstance(): Cart? {
             if (instance == null) {
                 synchronized(lock = true) {
-                    instance = Cart(CartData(User.getInstance()!!.currentUser.uuid, ArrayList()))
+                    instance = Cart(MutableLiveData(CartData(User.getInstance()!!.currentUser.uuid, ArrayList())))
                 }
             }
             return instance
@@ -72,14 +156,3 @@ class Cart(val cartData: CartData) {
     }
 
 }
-
-data class CartData(
-        @SerializedName("uuid")
-        var uuid : String,
-        @SerializedName("products")
-        var products : ArrayList<ProductQuantityInfo>,
-        @SerializedName("voucherCode")
-        var voucherCode : String? = null,
-        @SerializedName("signature")
-        var signature : String? = null,
-)

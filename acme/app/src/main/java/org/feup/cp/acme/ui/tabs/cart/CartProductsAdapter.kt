@@ -8,45 +8,16 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
+import org.feup.cp.acme.singleton.Cart
+import org.feup.cp.acme.singleton.CartData
 
-class CartProductsAdapter(private val totalView: TextView) :
+class CartProductsAdapter(private val dataSet: CartData, private val totalView: TextView) :
     RecyclerView.Adapter<CartProductsAdapter.ViewHolder>() {
 
     /**
      * Cart product View holder class
      */
     class ViewHolder(relativeLayout: RelativeLayout) : RecyclerView.ViewHolder(relativeLayout)
-
-    /**
-     * Quantities of each product for calculate the total
-     */
-    private var totalCalc: MutableMap<String, Int> = mutableMapOf()
-
-    //    TODO - Replace with Cart info
-    val products = mutableListOf(
-        hashMapOf(
-            "id" to "1",
-            "image" to "https://images.freeimages.com/images/premium/small-comps/2380/23805331-coffee-art.jpg",
-            "name" to "Coffee A",
-            "price" to "0.5€",
-            "quantity" to "2"
-        ),
-        hashMapOf(
-            "id" to "2",
-            "image" to "https://pbs.twimg.com/profile_images/703891712427425793/KF1zgVqx.jpg",
-            "name" to "Coffee B",
-            "price" to "1.25€",
-            "quantity" to "1"
-        )
-    )
-
-    /**
-     * Primary constructor
-     */
-    init {
-        products.forEach { totalCalc[it["id"]!!] = it["quantity"]!!.toInt() }
-        calculateTotal()
-    }
 
     /**
      * Creates card view holder
@@ -70,54 +41,37 @@ class CartProductsAdapter(private val totalView: TextView) :
         val removeBtn = card.findViewById<Button>(R.id.btn_remove)
 
         // Load the image
-        Picasso.get().load(products[position]["image"])
+        Picasso.get().load(dataSet.products[position].icon)
             .into(card.findViewById<ImageView>(R.id.card_image))
-        card.findViewById<TextView>(R.id.card_title).text = products[position]["name"]
-        card.findViewById<TextView>(R.id.card_subtitle).text = products[position]["price"]
+        card.findViewById<TextView>(R.id.card_title).text = dataSet.products[position].name
+        card.findViewById<TextView>(R.id.card_subtitle).text = dataSet.products[position].price.toString().plus("$")
         quantityInput.visibility = EditText.VISIBLE
-        quantityInput.setText(products[position]["quantity"])
+        quantityInput.setText(dataSet.products[position].quantity.toString())
+
+        totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
 
         // Add listener to update the total when th quantity is changed
         quantityInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.isNotEmpty()) {
-                    totalCalc[products[position]["id"]!!] = "$s".toInt()
-                    calculateTotal()
+                    Cart.getInstance()!!.updateProductQuantity(dataSet.products[position].name, "$s".toInt())
+                    totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
                 }
             }
         })
 
         removeBtn.visibility = Button.VISIBLE
-        removeBtn.setOnClickListener { view ->
-            products.removeAt(position)
+        removeBtn.setOnClickListener {
+            Cart.getInstance()!!.removeProduct(dataSet.products[position].name)
+            totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
             this.notifyDataSetChanged()
         }
     }
 
     /**
-     * Calculates and display the total
-     */
-    private fun calculateTotal() {
-        var newTotal = 0F
-
-        products.forEach {
-            var price = it["price"]!!
-            price = price.substring(0, price.length - 1)
-            newTotal += (totalCalc[it["id"]]!! * price.toFloat())
-        }
-
-        val totalText = "Total: " + newTotal + "€"
-        totalView.text = totalText
-    }
-
-    /**
      * Returns the quantity of card views
      */
-    override fun getItemCount() = products.size
+    override fun getItemCount() = dataSet.products.size
 }

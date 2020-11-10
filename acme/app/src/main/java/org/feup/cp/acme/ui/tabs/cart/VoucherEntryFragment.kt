@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.AppDatabase
+import org.feup.cp.acme.singleton.Cart
 import org.feup.cp.acme.ui.CartActivity
 
 class VoucherEntryFragment(
@@ -31,19 +33,27 @@ class VoucherEntryFragment(
         voucherInput.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus)
                 if (voucherInput.text.length < VOUCHER_SIZE + 1)
-                    voucherInput.error =
-                        "Voucher has 9 characters\nOnly can insert one voucher per purchase"
+                    voucherInput.error = "Voucher has 9 characters\nOnly can insert one voucher per purchase" // TODO - Update validation message
         }
 
         view.findViewById<Button>(R.id.btn_complete).setOnClickListener {
             val voucher = voucherInput.text.toString()
+            println(voucher)
+            if (voucher.isNotEmpty() && voucher.length > VOUCHER_SIZE + 1)
+                voucherInput.error = "Voucher has 9 characters\nOnly can insert one voucher per purchase" // TODO - Update validation message
+            else if (voucher.isNotBlank()) {
+                if(AppDatabase.getInstance()!!.voucherDao().has(voucher).isNotEmpty()) {
+                    Cart.getInstance()!!.setVoucher(voucher)
 
-            if (voucher.length < VOUCHER_SIZE + 1 && voucher.isNotEmpty())
-                voucherInput.error =
-                    "Voucher has 9 characters\nOnly can insert one voucher per purchase"
-            else if ((voucher.isNotBlank() && voucherInput.error.isEmpty()) || voucher.isEmpty()) {
-                // TODO - Voucher value to apply
-                cartActivity.addQRCodeTab()
+                    println(Cart.getInstance()!!.encodeToString()) // String for the QR Code
+                    cartActivity.addQRCodeTab() // TODO - Generate string for qr code
+                }
+                else
+                    println("Invalid voucher") // TODO - Display on screen the voucher error invalidity
+            }
+            else {
+                println(Cart.getInstance()!!.encodeToString()) // String for the QR Code
+                cartActivity.addQRCodeTab() // TODO - Generate string for qr code
             }
         }
         return view

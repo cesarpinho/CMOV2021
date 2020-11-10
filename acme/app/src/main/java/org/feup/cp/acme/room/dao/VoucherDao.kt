@@ -17,6 +17,9 @@ interface VoucherDao {
     @Query("SELECT * FROM voucher")
     fun getAll(): List<Voucher>
 
+    @Query("SELECT * FROM voucher WHERE code = :code")
+    fun has(code: String): List<Voucher>
+
     @Query("DELETE FROM voucher")
     fun nukeTable()
 }

@@ -49,7 +49,7 @@ class ProductsAdapter(
             dataSet[position].price.toString().plus("$")
         button.visibility = Button.VISIBLE
         button.setOnClickListener { _ ->
-            val dialog = AddCartDialog(dataSet[position].id.toInt())
+            val dialog = AddCartDialog(dataSet[position])
             dialog.show(activity.supportFragmentManager, "addCart")
         }
     }

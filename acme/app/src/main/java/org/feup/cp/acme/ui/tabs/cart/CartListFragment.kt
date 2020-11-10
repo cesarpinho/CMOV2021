@@ -9,9 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
+import org.feup.cp.acme.network.ProductQuantityInfo
+import org.feup.cp.acme.repository.ReceiptsRepository
+import org.feup.cp.acme.singleton.CartData
 import org.feup.cp.acme.ui.CartActivity
+import org.feup.cp.acme.ui.tabs.account.ReceiptAdapter
+import org.feup.cp.acme.vmodel.CartViewModel
+import org.feup.cp.acme.vmodel.ReceiptsViewModel
 
 class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
+
+    /**
+     * Vouchers view model
+     */
+    private val viewModel = CartViewModel()
 
     /**
      * Creates card list tab view
@@ -24,8 +35,7 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cart_list, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        val adapter = CartProductsAdapter(view.findViewById(R.id.cart_total))
-        listView.adapter = adapter
+        listView.adapter = CartProductsAdapter(CartData("", ArrayList()), view.findViewById(R.id.cart_total))
 
         // Add listener to the Next button
         view.findViewById<Button>(R.id.btn_next).setOnClickListener {
@@ -34,6 +44,20 @@ class CartListFragment(private val cartActivity: CartActivity) : Fragment() {
 
         return view
     }
+
+    /**
+     * Operations after the view being created
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.cart.observe(viewLifecycleOwner) { cartData ->
+            val listView = view.findViewById<RecyclerView>(R.id.list_view)
+            val adapter = CartProductsAdapter(cartData, view.findViewById(R.id.cart_total))
+            listView.adapter = adapter
+        }
+    }
+
+
 
     /**
      * Static functions

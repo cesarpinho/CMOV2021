@@ -31,7 +31,7 @@ class ReceiptFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_receipt, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.receipt_list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-
+        listView.adapter = ReceiptAdapter(listOf(), inflater.context)
         return view
     }
 
