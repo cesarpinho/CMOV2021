@@ -53,6 +53,9 @@ class VoucherEntryFragment(
             } else
                 cartActivity.addQRCodeTab()
         }
+        // TODO - Update dates display
+        // TODO - Check voucher not valid why not appear
+        // TODO - Is possible to order the display by recentest date
         return view
     }
 

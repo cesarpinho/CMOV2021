@@ -10,13 +10,15 @@ const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
 const validator = require('./validator.js')
 const sequelize = require('sequelize')
-
+const nano = require('nanoid')
 
 const PORT = process.env.PORT || 3000
 const SALT_ROUNDS = 10
 const FAULT_TOLERANCE = 2750
 
 const db = require('./models/index.js')
+const receipt = require('./models/receipt.js')
+const alpha = nano.customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVXZ', 9)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -258,10 +260,66 @@ app.post('/purchase', async (req, res) => {
 
   // Validates request through hash and signature
   await validator.validSignature(customer, hash, signature)
+  
+  // Voucher validation and applicability
+  let total = body.total
+  let voucher = await db.Voucher.findOne({ where: { code: body.voucherCode == null ? "" : body.voucherCode }})
+  
+  // Define voucher info variables
+  let voucherCode = voucher == null ? null : voucher.dataValues.code
+  let voucherType = voucher == null ? null : voucher.dataValues.type
 
-  // TODO - Validations made. Parse the request and respond
+  // Apply discount voucher and delete instance from database
+  if(voucher != null) {
+    if(voucher.type) 
+      total = total*0.95
+    
+    // Delete voucher from db
+    await db.Voucher.destroy({ where: { code: voucherCode }})
+  }
 
-  res.send(body)
+  // Retrieve data before any insertion
+  const totalBeforePurchase = Math.floor((await db.Receipt.sum('total', { where: {id_customer: customer.id}}))/100)
+  const coffeeBeforePurchase = (await db.sequelize.query('SELECT sum(quantity) FROM "Quantities" INNER JOIN "Products" ON id_product = "Products".id INNER JOIN "Receipts" ON id_receipt = "Receipts".id WHERE "Receipts".id_customer = :customerId AND "Products".type = :type' , 
+  { 
+    replacements:  {customerId: customer.id, type: "coffee"},
+    type: sequelize.QueryTypes.SELECT
+  }))[0].sum
+
+  // Generate receipt and quantity instances
+  const receipt = await db.Receipt.create({ code: alpha(), total: total, date: new Date(), id_customer: customer.id, createdAt: new Date(), updatedAt: new Date() })
+
+  // Generate quantity instances
+  for(let elem of body.products) {
+    const product = await db.Product.findOne({ where: { name: elem.name }})
+    db.Quantity.create({id_receipt: receipt.id, id_product: product.id, quantity: elem.quantity,  createdAt: new Date(), updatedAt: new Date()})
+  }
+  
+  // Retrieve data after any insertion
+  const totalAfterPurchase = Math.floor((await db.Receipt.sum('total', { where: {id_customer: customer.id}}))/100)
+  const coffeeAfterPurchase = (await db.sequelize.query('SELECT sum(quantity) FROM "Quantities" INNER JOIN "Products" ON id_product = "Products".id INNER JOIN "Receipts" ON id_receipt = "Receipts".id WHERE "Receipts".id_customer = :customerId AND "Products".type = :type' , 
+  { 
+    replacements:  {customerId: customer.id, type: "coffee"},
+    type: sequelize.QueryTypes.SELECT
+  }))[0].sum
+  
+  // Calculate differences
+  let diffTotal = totalAfterPurchase - totalBeforePurchase
+  let diffCoffees = Math.floor(coffeeAfterPurchase/3) - Math.floor(coffeeBeforePurchase/3)
+
+  // Generate discount vouchers
+  while(diffTotal > 0) {
+    db.Voucher.create({type: true, date: new Date(), id_customer: customer.id, code: alpha(), createdAt: new Date(), updatedAt: new Date()})
+    diffTotal--
+  }
+
+  // Generate free coffee vouchers
+  while(diffCoffees > 0) {
+    db.Voucher.create({type: false, date: new Date(), id_customer: customer.id, code: alpha(), createdAt: new Date(), updatedAt: new Date()})
+    diffCoffees--
+  }
+
+  res.send({orderId: receipt.code, voucherCode: voucherCode, voucherType: voucherType, total: total})
 })
 
 /**
