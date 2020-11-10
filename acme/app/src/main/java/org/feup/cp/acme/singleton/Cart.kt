@@ -1,5 +1,7 @@
 package org.feup.cp.acme.singleton
 
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -104,15 +106,15 @@ class Cart(private val cartData: LiveData<CartData>) {
      * The signature is generated from the hash of the json object string
      * representation of the cartData data class.
      */
-    fun encodeToString(): String {
+    fun generateCartString(): String {
         // Ensure that the certificate at this point is null
         this.cartData.value!!.signature = null
 
-        val bytes = Gson().toJson(this.cartData.value!!).toString().toByteArray()
+        val input = Gson().toJson(this.cartData.value!!).toString().toByteArray(Charsets.UTF_8)
         val md = MessageDigest.getInstance("SHA-256")
-        val digest = md.digest(bytes)
+        val bytes = md.digest(input)
 
-        this.cartData.value!!.signature = KeyStoreManager.signData(digest.fold("", { str, it -> str + "%02x".format(it) }), KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname))
+        this.cartData.value!!.signature = KeyStoreManager.signData(encodeToString(bytes, DEFAULT), KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname))
         return Gson().toJson(this.cartData.value!!).toString()
     }
 

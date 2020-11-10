@@ -45,14 +45,14 @@ class VoucherEntryFragment(
                 if(AppDatabase.getInstance()!!.voucherDao().has(voucher).isNotEmpty()) {
                     Cart.getInstance()!!.setVoucher(voucher)
 
-                    println(Cart.getInstance()!!.encodeToString()) // String for the QR Code
+                    println(Cart.getInstance()!!.generateCartString()) // String for the QR Code
                     cartActivity.addQRCodeTab() // TODO - Generate string for qr code
                 }
                 else
                     println("Invalid voucher") // TODO - Display on screen the voucher error invalidity
             }
             else {
-                println(Cart.getInstance()!!.encodeToString()) // String for the QR Code
+                println(Cart.getInstance()!!.generateCartString()) // String for the QR Code
                 cartActivity.addQRCodeTab() // TODO - Generate string for qr code
             }
         }

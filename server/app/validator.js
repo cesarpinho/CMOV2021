@@ -118,10 +118,10 @@ exports.validSignature = async function(customer, data, signedData) {
             const cert = forge.pki.certificateFromAsn1(asn1)
             
             let verifier = crypto.createVerify('sha256WithRSAEncryption')
-            verifier.update(data)
+            verifier.update(Buffer.from(data))
             
             result = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64')
-
+            
             if(result)
                 return true
         } catch (_) {}

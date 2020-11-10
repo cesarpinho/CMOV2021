@@ -5,6 +5,7 @@
 const express = require('express')
 const app = express()
 const uuid = require('uuid')
+const crypto = require('crypto')
 const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
 const validator = require('./validator.js')
@@ -26,6 +27,50 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('ACME REST SERVICE')
+})
+
+/**
+ * @description 
+ * Endpoint responsible for retrieving the products
+ * present on the database, making sure the local one
+ * is up-to-date.
+ * 
+ * @returns
+ * Returns all the products present in the database if the local
+ * on does not have any product or has older versions that need
+ * to be updated. Otherwise returns a BAD_REQUEST which means that
+ * the local database is up-to-date.
+ */
+app.get('/products', async (req, res) => {
+  // Retrieves the version of oldest product present the app local database
+  const version = req.query.version == undefined ? null: req.query.version
+  
+  // Retrieve the most recent product instance from the database
+  const newestProduct = await db.Product.findOne({
+    order: [
+      ['updatedAt', 'DESC']
+    ]
+  })
+
+  // No need for update
+  if(newestProduct == null)
+    return res.status(400).send({description: "Products table up-to-date!"})
+
+  // Convert dates to date objects for comparison
+  let versionDate = new Date(version)
+  let newestProductDate = new Date(newestProduct.dataValues.updatedAt)
+
+  // Check if there is the need to update the app local database
+  if(newestProductDate.getTime() - versionDate.getTime() > 0) {
+    db.Product.findAll({
+      attributes: ['type', 'icon', 'name', 'price']
+    })
+    .then((products) => {
+      res.send(products)
+    })
+  } 
+  else 
+    return res.status(400).send({description: "Products table up-to-date!"})
 })
 
 /**
@@ -184,6 +229,43 @@ app.post('/receipts', async (req, res) => {
 
 /**
  * @description 
+ * Endpoint responsible for handling the 
+ * customer orders.
+ * 
+ * @returns
+ * Returns the validation result of the purchase.
+ */
+app.post('/purchase', async (req, res) => {
+  // Validate request body
+  if(req.body.order == null)
+    return res.status(400).send({description: "The request <order> field cannot be null."})
+  
+  // Parse order to JSON
+  let body = JSON.parse(req.body.order)
+  
+  // Retrieve signature and delete it from body
+  const signature = body.signature
+  delete body.signature
+
+  // Generate body hash
+  const hash = crypto.createHash('sha256').update(JSON.stringify(body), 'utf8').digest('base64');
+  
+  // Retrieve and validate customer 
+  const customer = await db.Customer.findOne({ where: { uuid: body.uuid }})
+
+  if(customer == null)
+    return res.status(400).send({description: "Customer with uuid <" + body.uuid + "> does not exist."})
+
+  // Validates request through hash and signature
+  await validator.validSignature(customer, hash, signature)
+
+  // TODO - Validations made. Parse the request and respond
+
+  res.send(body)
+})
+
+/**
+ * @description 
  * Endpoint responsible for retrieving the 
  * vouchers for a certain customer.
  * 
@@ -229,49 +311,7 @@ app.post('/vouchers', async (req, res) => {
   })
 })
 
-/**
- * @description 
- * Endpoint responsible for retrieving the products
- * present on the database, making sure the local one
- * is up-to-date.
- * 
- * @returns
- * Returns all the products present in the database if the local
- * on does not have any product or has older versions that need
- * to be updated. Otherwise returns a BAD_REQUEST which means that
- * the local database is up-to-date.
- */
-app.get('/products', async (req, res) => {
-  // Retrieves the version of oldest product present the app local database
-  const version = req.query.version == undefined ? null: req.query.version
-  
-  // Retrieve the most recent product instance from the database
-  const newestProduct = await db.Product.findOne({
-    order: [
-      ['updatedAt', 'DESC']
-    ]
-  })
 
-  // No need for update
-  if(newestProduct == null)
-    return res.status(400).send({description: "Products table up-to-date!"})
-
-  // Convert dates to date objects for comparison
-  let versionDate = new Date(version)
-  let newestProductDate = new Date(newestProduct.dataValues.updatedAt)
-
-  // Check if there is the need to update the app local database
-  if(newestProductDate.getTime() - versionDate.getTime() > 0) {
-    db.Product.findAll({
-      attributes: ['type', 'icon', 'name', 'price']
-    })
-    .then((products) => {
-      res.send(products)
-    })
-  } 
-  else 
-    return res.status(400).send({description: "Products table up-to-date!"})
-})
 
 // Development
 const ADDRESS = '192.168.0.101' // Run ipconfig to check your IPv4 Address 
