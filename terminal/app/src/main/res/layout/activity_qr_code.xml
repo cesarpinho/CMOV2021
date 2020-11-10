@@ -4,7 +4,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QRCodeActivity">
+    tools:context=".ScanActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,15 +37,12 @@
 
         <include layout="@layout/layout_logo" />
 
-        <!-- TODO - Replace for qr code reader widget -->
-        <TextView
+        <com.journeyapps.barcodescanner.CompoundBarcodeView
             android:id="@+id/qr_reader"
-            android:layout_width="match_parent"
+            android:layout_width="330dp"
             android:layout_height="330dp"
-            android:layout_margin="30dp"
             android:layout_below="@id/layout_logo"
-            android:background="@drawable/background_button"
-            android:text="QR Code Reader"/>
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:layout_width="match_parent"
