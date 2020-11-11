@@ -8,7 +8,6 @@ import java.util.*
  * REST Api Interface
  */
 interface HttpClientInterface {
-
     @Headers("Content-Type: application/json")
     @POST("purchase")
     fun purchase(@Body body: OrderData): Call<OrderInfoResponse>

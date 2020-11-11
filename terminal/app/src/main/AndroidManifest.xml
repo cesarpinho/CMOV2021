@@ -13,7 +13,8 @@
         android:label="ACME - Terminal"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true" >
         <activity android:name=".OrderProcessActivity" />
         <activity android:name=".ScanActivity" />
         <activity android:name=".HomeActivity" >

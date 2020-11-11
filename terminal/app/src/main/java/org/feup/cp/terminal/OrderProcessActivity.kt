@@ -16,40 +16,27 @@ import retrofit2.Response
 
 class OrderProcessActivity() : AppCompatActivity() {
 
-    var status: Boolean = false
-    lateinit var orderId: String
-    lateinit var voucher: String
-    var total: Double = 0.0
+    /**
+     * Icon image view instance
+     */
+    lateinit var icon: ImageView
 
+    /**
+     * Creates the order process activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val encodedOrder = intent.extras?.getString("org.feup.cp.terminal.ENCODED_ORDER")
-        println(encodedOrder)
-        connectToServer(encodedOrder!!)
-
         setContentView(R.layout.activity_order_process)
         Toolbar(this, null)
-        val icon = findViewById<ImageView>(R.id.order_status)
+        icon = findViewById(R.id.order_status)
 
-        if (status) {
-            // If order is valid displays the order information and the OK icon
-            icon.setImageResource(R.drawable.ic_correct)
-            findViewById<TableLayout>(R.id.order_info).visibility = TableLayout.VISIBLE
-            findViewById<TextView>(R.id.order_id).text = "#".plus(orderId)
-            findViewById<TextView>(R.id.total_display).text = total.toString().plus("€")
-
-            // If the order don't have a voucher, the row is hidden
-            if (voucher != "")
-                findViewById<TextView>(R.id.voucher_id).text = "#".plus(voucher)
-            else
-                findViewById<TableRow>(R.id.row_voucher).visibility = TableRow.GONE
-        } else {
-            icon.setImageResource(R.drawable.ic_error)
-            findViewById<TextView>(R.id.order_error).visibility = TextView.VISIBLE
-        }
+        val encodedOrder = intent.extras?.getString("org.feup.cp.terminal.ENCODED_ORDER")
+        connectToServer(encodedOrder!!)
     }
 
+    /**
+     * Creates the connection with the server and updates view with the response
+     */
     private fun connectToServer(encodedOrder: String) {
         val order = OrderData(encodedOrder)
         val webService: HttpClientInterface = HttpClient.getInstance()!!.getEndpoint()
@@ -60,16 +47,27 @@ class OrderProcessActivity() : AppCompatActivity() {
                 response: Response<OrderInfoResponse>
             ) {
                 if (!response.isSuccessful) {
-                    status = false
-                    return
+                    icon.setImageResource(R.drawable.ic_error)
+                    findViewById<TextView>(R.id.order_error).visibility = TextView.VISIBLE
                 } else {
                     val orderInfo = response.body()!!
-                    status = true
-                    orderId = orderInfo.order
-                    voucher = orderInfo.voucher
-                    total = orderInfo.total
-                    return
+
+                    // If order is valid displays the order information and the OK icon
+                    icon.setImageResource(R.drawable.ic_correct)
+                    findViewById<TableLayout>(R.id.order_info).visibility = TableLayout.VISIBLE
+                    findViewById<TextView>(R.id.order_id).text = "#".plus(orderInfo.order)
+                    findViewById<TextView>(R.id.total_display).text =
+                        orderInfo.total.toString().plus("€")
+
+                    // If the order don't have a voucher, the row is hidden
+                    if (orderInfo.voucherCode != null)
+                        findViewById<TextView>(R.id.voucher_id).text =
+                            "#".plus(orderInfo.voucherCode)
+                                .plus(" (${if (orderInfo.voucherType) "5% Discount" else "Free Extra Coffee"})")
+                    else
+                        findViewById<TableRow>(R.id.row_voucher).visibility = TableRow.GONE
                 }
+
             }
 
             override fun onFailure(call: Call<OrderInfoResponse>, t: Throwable) {

@@ -11,6 +11,9 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView
 
 class ScanActivity : AppCompatActivity() {
 
+    /**
+     * Scanner view instance
+     */
     lateinit var barcodeView: CompoundBarcodeView
 
     /**
@@ -26,6 +29,9 @@ class ScanActivity : AppCompatActivity() {
         barcodeView.setStatusText("Place the QR Code to scan it")
     }
 
+    /**
+     * Redirects to order process activity when read a QR code
+     */
     private val callback: BarcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(encodedOrder: BarcodeResult) {
             if (encodedOrder.text != null) {
