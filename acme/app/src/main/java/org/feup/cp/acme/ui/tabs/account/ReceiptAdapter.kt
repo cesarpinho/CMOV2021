@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
 import org.feup.cp.acme.network.ReceiptInfoResponse
 
-class ReceiptAdapter(private val dataSet: List<ReceiptInfoResponse>, val context: Context) :
+class ReceiptAdapter(private var dataSet: List<ReceiptInfoResponse>, val context: Context) :
     RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder>() {
 
     /**
@@ -21,6 +21,13 @@ class ReceiptAdapter(private val dataSet: List<ReceiptInfoResponse>, val context
      */
     class ReceiptViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
+
+    /**
+     * Primary constructor
+     */
+    init {
+        dataSet = dataSet.reversed()
+    }
 
     /**
      * Creates card view holder
@@ -46,7 +53,7 @@ class ReceiptAdapter(private val dataSet: List<ReceiptInfoResponse>, val context
         card.findViewById<TextView>(R.id.card_receipt_id).text =
             context.getString(R.string.str_hash_tag).plus(dataSet[position].code)
         card.findViewById<TextView>(R.id.card_receipt_date).text =
-            dataSet[position].date.toString()
+            dateFormat(dataSet[position].date.toString())
         card.findViewById<TextView>(R.id.card_receipt_total).text = total
         card.setOnClickListener(this::openCollapsible)
 
@@ -79,4 +86,12 @@ class ReceiptAdapter(private val dataSet: List<ReceiptInfoResponse>, val context
      */
     override fun getItemCount() = dataSet.size
 
+
+    /**
+     * Returns a formatted string date
+     */
+    private fun dateFormat(date: String): String {
+        val dateList = date.split(" ")
+        return dateList[1] + " " + dateList[2] + ", " + dateList.last()
+    }
 }

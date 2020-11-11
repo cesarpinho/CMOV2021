@@ -41,7 +41,7 @@ class VoucherEntryFragment(
         view.findViewById<Button>(R.id.btn_complete).setOnClickListener {
             val voucher = voucherInput.text.toString()
 
-            if (voucher.isNotEmpty() && voucher.length > VOUCHER_SIZE)
+            if (voucher.isNotEmpty() && (voucher.length > VOUCHER_SIZE || voucher.length < VOUCHER_SIZE))
                 voucherInput.error =
                     "Voucher has 9 characters\nOnly can insert one voucher per purchase"
             else if (voucher.isNotBlank()) {
@@ -49,13 +49,14 @@ class VoucherEntryFragment(
                     Cart.getInstance()!!.setVoucher(voucher)
                     cartActivity.addQRCodeTab()
                 } else
-                    Toast.makeText(context, "Invalid voucher", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        cartActivity.applicationContext,
+                        "Invalid voucher",
+                        Toast.LENGTH_LONG
+                    ).show()
             } else
                 cartActivity.addQRCodeTab()
         }
-        // TODO - Update dates display
-        // TODO - Check voucher not valid why not appear
-        // TODO - Is possible to order the display by recentest date
         return view
     }
 

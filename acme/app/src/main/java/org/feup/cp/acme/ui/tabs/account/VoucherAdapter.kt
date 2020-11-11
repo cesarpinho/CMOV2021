@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.feup.cp.acme.R
 import org.feup.cp.acme.room.entity.Voucher
 
-class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) :
+class VoucherAdapter(private var vouchers: List<Voucher>, val context: Context) :
     RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder>() {
 
     /**
@@ -18,6 +18,13 @@ class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) 
      */
     class VoucherViewHolder(relativeLayout: RelativeLayout) :
         RecyclerView.ViewHolder(relativeLayout)
+
+    /**
+     * Primary constructor
+     */
+    init {
+        vouchers = vouchers.reversed()
+    }
 
     /**
      * Creates card view holder
@@ -37,7 +44,7 @@ class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) 
         val date = card.findViewById<TextView>(R.id.card_right_info)
         card.findViewById<TextView>(R.id.card_subtitle).text =
             context.getString(R.string.str_hash_tag).plus(vouchers[position].code)
-        date.text = vouchers[position].date.toString()
+        date.text = dateFormat(vouchers[position].date.toString())
         date.visibility = TextView.VISIBLE
 
         // if true the voucher is a Discount voucher, otherwise is a coffee free voucher
@@ -60,4 +67,12 @@ class VoucherAdapter(private val vouchers: List<Voucher>, val context: Context) 
      * Returns the quantity of card views
      */
     override fun getItemCount() = vouchers.size
+
+    /**
+     * Returns a formatted string date
+     */
+    private fun dateFormat(date: String): String {
+        val dateList = date.split(" ")
+        return dateList[1] + " " + dateList[2] + ", " + dateList.last()
+    }
 }
