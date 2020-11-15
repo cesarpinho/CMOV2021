@@ -34,7 +34,8 @@ class ReceiptProductsAdapter(val products: List<ProductQuantityInfo>) :
         val card = holder.itemView
         card.findViewById<View>(R.id.divider).visibility = View.GONE
         card.findViewById<TextView>(R.id.card_title).text = products[position].name
-        card.findViewById<TextView>(R.id.card_subtitle).text = products[position].price.toString().plus("$")
+        card.findViewById<TextView>(R.id.card_subtitle).text =
+            String.format("%.2f", products[position].price).plus("$")
         val quantity = card.findViewById<TextView>(R.id.card_right_info)
         quantity.text = products[position].quantity.toString().plus(" units")
         quantity.textSize = 25F

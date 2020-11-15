@@ -44,9 +44,9 @@ class ProductsAdapter(
         Picasso.get().load(dataSet[position].icon)
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text =
-            dataSet[position].name as String
+            dataSet[position].name
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            dataSet[position].price.toString().plus("$")
+            String.format("%.2f",dataSet[position].price).plus("$")
         button.visibility = Button.VISIBLE
         button.setOnClickListener { _ ->
             val dialog = AddCartDialog(dataSet[position])

@@ -75,4 +75,12 @@ class VoucherAdapter(private var vouchers: List<Voucher>, val context: Context) 
         val dateList = date.split(" ")
         return dateList[1] + " " + dateList[2] + ", " + dateList.last()
     }
+
+    /**
+     * Updates the dataSet and refresh the view
+     */
+    fun setData(vouchers: List<Voucher>?) {
+        this.vouchers = vouchers!!.reversed()
+        this.notifyDataSetChanged()
+    }
 }

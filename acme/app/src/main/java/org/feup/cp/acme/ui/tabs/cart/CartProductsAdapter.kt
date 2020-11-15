@@ -47,14 +47,19 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text = dataSet.products[position].name
         card.findViewById<TextView>(R.id.card_subtitle).text =
-            AppDatabase.getInstance()!!.productDao().getPrice(dataSet.products[position].name)
-                .toString().plus("$")
+            String.format(
+                "%.2f",
+                AppDatabase.getInstance()!!.productDao().getPrice(dataSet.products[position].name)
+                ).plus("$")
         quantityInput.visibility = EditText.VISIBLE
         quantityInput.setText(dataSet.products[position].quantity.toString())
 
         totalView.text = StringBuilder(
             "Total: ".plus(
-                Cart.getInstance()!!.getCartData().value!!.total.toString()
+                String.format(
+                    "%.2f",
+                    Cart.getInstance()!!.getCartData().value!!.total
+                )
             ).plus("$")
         )
 
@@ -68,7 +73,10 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
                         .updateProductQuantity(dataSet.products[position].name, "$s".toInt())
                     totalView.text = StringBuilder(
                         "Total: ".plus(
-                            Cart.getInstance()!!.getCartData().value!!.total.toString()
+                            String.format(
+                                "%.2f",
+                                Cart.getInstance()!!.getCartData().value!!.total
+                            )
                         ).plus("$")
                     )
                 }
@@ -80,7 +88,10 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
             Cart.getInstance()!!.removeProduct(dataSet.products[position].name)
             totalView.text = StringBuilder(
                 "Total: ".plus(
-                    Cart.getInstance()!!.getCartData().value!!.total.toString()
+                    String.format(
+                        "%.2f",
+                        Cart.getInstance()!!.getCartData().value!!.total
+                    )
                 ).plus("$")
             )
             this.notifyDataSetChanged()

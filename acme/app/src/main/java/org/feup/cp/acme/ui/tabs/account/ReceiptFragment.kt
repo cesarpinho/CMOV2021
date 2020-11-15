@@ -21,6 +21,11 @@ class ReceiptFragment : Fragment() {
     private val viewModel = ReceiptsViewModel(ReceiptsRepository())
 
     /**
+     * Receipt Adapter instance
+     */
+    private lateinit var adapter: ReceiptAdapter
+
+    /**
      * Creates receipt tab view
      */
     override fun onCreateView(
@@ -31,7 +36,8 @@ class ReceiptFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_receipt, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.receipt_list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
-        listView.adapter = ReceiptAdapter(listOf(), inflater.context)
+        adapter = ReceiptAdapter(listOf(), requireContext())
+        listView.adapter = adapter
         return view
     }
 
@@ -41,9 +47,7 @@ class ReceiptFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.receipts.observe(viewLifecycleOwner) { receipts ->
-            val listView = view.findViewById<RecyclerView>(R.id.receipt_list_view)
-            val adapter = ReceiptAdapter(receipts, requireContext())
-            listView.adapter = adapter
+            adapter.setData(receipts)
         }
     }
 

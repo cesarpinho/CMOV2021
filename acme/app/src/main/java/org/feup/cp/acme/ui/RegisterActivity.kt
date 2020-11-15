@@ -101,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    /**.
+    /**
      * Check if any register input is empty. Returns true if
      * it is, false otherwise.
      */
@@ -126,23 +126,22 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun btnRegisterAction(view: View) {
         // Validate input register fields before actually register the customer
-//        if (anyInputEmpty() || anyInvalidInput()) {
-//            return Toast.makeText(
-//                applicationContext,
-//                "All fields are required and must be valid!",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
+        if (anyInputEmpty() || anyInvalidInput()) {
+            return Toast.makeText(
+                applicationContext,
+                "All fields are required and must be valid!",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         // Create customer data object
-//        val customer = RegisterData(
-//            this.name!!.text.toString(),
-//            this.card!!.text.toString().toBigInteger(),
-//            this.nif!!.text.toString().toInt(),
-//            this.nickname!!.text.toString(),
-//            this.password!!.text.toString()
-//        )
-        val customer = RegisterData("admin", 4231312312312311, 123456789, "admin", "a1234")
+        val customer = RegisterData(
+            this.name!!.text.toString(),
+            this.card!!.text.toString().toBigInteger(),
+            this.nif!!.text.toString().toInt(),
+            this.nickname!!.text.toString(),
+            this.password!!.text.toString()
+        )
 
         // Check for key entry pair with customer current nickname
         if (!KeyStoreManager.isKeyEntryUnique(customer.nickname)) {

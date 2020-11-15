@@ -23,6 +23,11 @@ class VoucherFragment : Fragment() {
     private val viewModel = VouchersViewModel(VouchersRepository())
 
     /**
+     * Voucher Adapter instance
+     */
+    private lateinit var adapter: VoucherAdapter
+
+    /**
      * Creates voucher tab view
      */
     override fun onCreateView(
@@ -33,6 +38,8 @@ class VoucherFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_voucher, container, false)
         val listView = view.findViewById<RecyclerView>(R.id.voucher_list_view)
         listView.layoutManager = LinearLayoutManager(inflater.context)
+        adapter = VoucherAdapter(listOf(), requireContext())
+        listView.adapter = adapter
 
         return view
     }
@@ -43,9 +50,7 @@ class VoucherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.vouchers.observe(viewLifecycleOwner) { vouchers ->
-            val listView = view.findViewById<RecyclerView>(R.id.voucher_list_view)
-            val adapter = VoucherAdapter(vouchers, requireContext())
-            listView.adapter = adapter
+            adapter.setData(vouchers)
         }
     }
 
