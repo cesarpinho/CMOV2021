@@ -57,7 +57,7 @@ class OrderProcessActivity() : AppCompatActivity() {
                     findViewById<TableLayout>(R.id.order_info).visibility = TableLayout.VISIBLE
                     findViewById<TextView>(R.id.order_id).text = "#".plus(orderInfo.order)
                     findViewById<TextView>(R.id.total_display).text =
-                        orderInfo.total.toString().plus("€")
+                        String.format("%.2f",orderInfo.total).plus("$")
 
                     // If the order don't have a voucher, the row is hidden
                     if (orderInfo.voucherCode != null)
