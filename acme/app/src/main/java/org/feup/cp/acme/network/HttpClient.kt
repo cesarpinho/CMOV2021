@@ -9,12 +9,12 @@ class HttpClient() {
     /**
      * Url used for the development environment
      */
-    private val devBaseUrl: String = "http://192.168.0.101:3000"
+    private val devBaseUrl: String = "http://192.168.1.166:3000"
 
     /**
      * Url used for the production environment
      */
-    private val prodBaseUrl: String = "https://jsonplaceholder.typicode.com/"
+    private val prodBaseUrl: String = "https://immense-thicket-06929.herokuapp.com"
 
     /**
      * Retrofit instance
@@ -31,7 +31,7 @@ class HttpClient() {
      */
     init {
         this.httpClient = Retrofit.Builder()
-                                .baseUrl(devBaseUrl)
+                                .baseUrl(prodBaseUrl)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
 
