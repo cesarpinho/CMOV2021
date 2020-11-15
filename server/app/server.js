@@ -244,6 +244,16 @@ app.post('/purchase', async (req, res) => {
   
   // Parse order to JSON
   let body = JSON.parse(req.body.order)
+
+  // Validate body object
+  if(body.products == null || body.signature == null || body.uuid == null || body.total == null)
+  return res.status(400).send({description: "The request <products>, <signature>, <uuid> and <total> fields cannot be null."})
+
+  // Validate products objects
+  for(let elem in body.products) {
+    if(elem.name == null || elem.quantity == null)
+      return res.status(400).send({description: "The request <product.name> and <product.quantity> fields cannot be null."})
+  }
   
   // Retrieve signature and delete it from body
   const signature = body.signature
