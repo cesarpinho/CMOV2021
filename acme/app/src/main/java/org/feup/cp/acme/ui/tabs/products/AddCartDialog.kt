@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import org.feup.cp.acme.R
-import org.feup.cp.acme.network.ProductQuantityInfo
+import org.feup.cp.acme.network.ProductCartInfo
 import org.feup.cp.acme.room.entity.Product
 import org.feup.cp.acme.singleton.Cart
 
@@ -30,12 +30,9 @@ class AddCartDialog(private val product: Product) : DialogFragment() {
                     view.findViewById<EditText>(R.id.input_dialog_quantity).text.toString().toInt()
 
                 Cart.getInstance()!!.insertProduct(
-                    ProductQuantityInfo(
-                        product.type,
+                    ProductCartInfo(
                         product.name,
-                        quantity,
-                        product.icon,
-                        product.price
+                        quantity
                     )
                 )
 

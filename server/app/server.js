@@ -319,7 +319,7 @@ app.post('/purchase', async (req, res) => {
     diffCoffees--
   }
 
-  res.send({orderId: receipt.code, voucherCode: voucherCode, voucherType: voucherType, total: total})
+  res.send({orderId: receipt.id, voucherCode: voucherCode, voucherType: voucherType, total: total})
 })
 
 /**

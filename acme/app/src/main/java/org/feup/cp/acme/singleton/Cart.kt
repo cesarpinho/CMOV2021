@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import org.feup.cp.acme.network.ProductQuantityInfo
+import org.feup.cp.acme.network.ProductCartInfo
+import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.security.KeyStoreManager
 import java.security.MessageDigest
 
@@ -14,7 +15,7 @@ data class CartData(
     @SerializedName("uuid")
     var uuid: String,
     @SerializedName("products")
-    var products: ArrayList<ProductQuantityInfo>,
+    var products: ArrayList<ProductCartInfo>,
     @SerializedName("total")
     var total: Double = 0.0,
     @SerializedName("voucherCode")
@@ -42,7 +43,7 @@ class Cart(private val cartData: LiveData<CartData>) {
      *  Inserts a new product into the products
      *  structure.
      */
-    fun insertProduct(product: ProductQuantityInfo) {
+    fun insertProduct(product: ProductCartInfo) {
         val productIndex = this.getProductIndex(product.name)
 
         if (productIndex == -1)
@@ -88,7 +89,7 @@ class Cart(private val cartData: LiveData<CartData>) {
         var totalValue = 0.0
 
         this.cartData.value!!.products.forEach() {
-            totalValue += it.quantity * it.price
+            totalValue += it.quantity * AppDatabase.getInstance()!!.productDao().getPrice(it.name)
         }
 
         this.cartData.value!!.total = totalValue
@@ -119,6 +120,7 @@ class Cart(private val cartData: LiveData<CartData>) {
             KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname)
         )
 
+        println(Gson().toJson(this.cartData.value!!).toString())
         return Gson().toJson(this.cartData.value!!).toString()
     }
 

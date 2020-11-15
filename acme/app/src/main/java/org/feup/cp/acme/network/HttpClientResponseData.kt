@@ -59,3 +59,10 @@ data class ProductQuantityInfo(
         @SerializedName("price")
         var price: Double
 )
+
+data class ProductCartInfo(
+        @SerializedName("name")
+        var name : String,
+        @SerializedName("quantity")
+        var quantity : Int
+)

@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.feup.cp.acme.R
+import org.feup.cp.acme.room.AppDatabase
 import org.feup.cp.acme.singleton.Cart
 import org.feup.cp.acme.singleton.CartData
 
@@ -41,14 +42,21 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
         val removeBtn = card.findViewById<Button>(R.id.btn_remove)
 
         // Load the image
-        Picasso.get().load(dataSet.products[position].icon)
+        Picasso.get()
+            .load(AppDatabase.getInstance()!!.productDao().getIcon(dataSet.products[position].name))
             .into(card.findViewById<ImageView>(R.id.card_image))
         card.findViewById<TextView>(R.id.card_title).text = dataSet.products[position].name
-        card.findViewById<TextView>(R.id.card_subtitle).text = dataSet.products[position].price.toString().plus("$")
+        card.findViewById<TextView>(R.id.card_subtitle).text =
+            AppDatabase.getInstance()!!.productDao().getPrice(dataSet.products[position].name)
+                .toString().plus("$")
         quantityInput.visibility = EditText.VISIBLE
         quantityInput.setText(dataSet.products[position].quantity.toString())
 
-        totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
+        totalView.text = StringBuilder(
+            "Total: ".plus(
+                Cart.getInstance()!!.getCartData().value!!.total.toString()
+            ).plus("$")
+        )
 
         // Add listener to update the total when th quantity is changed
         quantityInput.addTextChangedListener(object : TextWatcher {
@@ -56,8 +64,13 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.isNotEmpty()) {
-                    Cart.getInstance()!!.updateProductQuantity(dataSet.products[position].name, "$s".toInt())
-                    totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
+                    Cart.getInstance()!!
+                        .updateProductQuantity(dataSet.products[position].name, "$s".toInt())
+                    totalView.text = StringBuilder(
+                        "Total: ".plus(
+                            Cart.getInstance()!!.getCartData().value!!.total.toString()
+                        ).plus("$")
+                    )
                 }
             }
         })
@@ -65,7 +78,11 @@ class CartProductsAdapter(private val dataSet: CartData, private val totalView: 
         removeBtn.visibility = Button.VISIBLE
         removeBtn.setOnClickListener {
             Cart.getInstance()!!.removeProduct(dataSet.products[position].name)
-            totalView.text = StringBuilder("Total: ".plus(Cart.getInstance()!!.getCartData().value!!.total.toString()).plus("$"))
+            totalView.text = StringBuilder(
+                "Total: ".plus(
+                    Cart.getInstance()!!.getCartData().value!!.total.toString()
+                ).plus("$")
+            )
             this.notifyDataSetChanged()
         }
     }

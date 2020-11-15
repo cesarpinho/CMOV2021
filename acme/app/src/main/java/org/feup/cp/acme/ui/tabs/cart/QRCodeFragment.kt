@@ -44,7 +44,7 @@ class QRCodeFragment : Fragment() {
      * Creates a QR code in bitmap format
      */
     private fun encodeToQrCode(text: String?, context: Context): Bitmap {
-        val width = 500;
+        val width = 500
         val height = 500
         var matrix: BitMatrix? = null
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)

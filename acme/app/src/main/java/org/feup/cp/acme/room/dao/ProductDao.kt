@@ -27,6 +27,12 @@ interface ProductDao {
     @Query("SELECT id FROM product WHERE name = :name")
     fun getId(name: String): Long
 
+    @Query("SELECT icon FROM product WHERE name = :name")
+    fun getIcon(name: String): String
+
+    @Query("SELECT price FROM product WHERE name = :name")
+    fun getPrice(name: String): Double
+
     @Query("DELETE FROM product")
     fun nukeTable()
 }
