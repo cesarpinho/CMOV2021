@@ -250,7 +250,7 @@ app.post('/purchase', async (req, res) => {
   return res.status(400).send({description: "The request <products>, <signature>, <uuid> and <total> fields cannot be null."})
 
   // Validate products objects
-  for(let elem in body.products) {
+  for(let elem of body.products) {
     if(elem.name == null || elem.quantity == null)
       return res.status(400).send({description: "The request <product.name> and <product.quantity> fields cannot be null."})
   }
@@ -382,7 +382,7 @@ app.post('/vouchers', async (req, res) => {
 
 
 // Development
-const ADDRESS = '192.168.0.101' // Run ipconfig to check your IPv4 Address 
+const ADDRESS = '192.168.1.166' // Run ipconfig to check your IPv4 Address 
 
 app.listen(PORT, ADDRESS, () => {
   console.log(`App is running on http://${ ADDRESS }:${ PORT }`)
