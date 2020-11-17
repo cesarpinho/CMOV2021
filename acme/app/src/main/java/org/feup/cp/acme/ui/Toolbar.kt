@@ -109,8 +109,9 @@ class Toolbar(private val activity: Activity, actualMenuView: String?) {
     private fun logoutAction(view: View) {
         User.destroyUser()
         Cart.destroyCart()
-        val intent = Intent(activity, LoginActivity::class.java)
         drawerClose(view)
+        activity.finishAffinity()
+        val intent = Intent(activity, LoginActivity::class.java)
         activity.startActivity(intent)
     }
 }
