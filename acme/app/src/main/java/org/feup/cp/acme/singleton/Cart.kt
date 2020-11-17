@@ -120,7 +120,6 @@ class Cart(private val cartData: LiveData<CartData>) {
             KeyStoreManager.getPrivateKey(User.getInstance()!!.currentUser.nickname)
         )
 
-        println(Gson().toJson(this.cartData.value!!).toString())
         return Gson().toJson(this.cartData.value!!).toString()
     }
 

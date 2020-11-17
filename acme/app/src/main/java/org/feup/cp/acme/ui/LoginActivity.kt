@@ -37,9 +37,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        AppDatabase.nukeDatabase(context = this)
-//        KeyStoreManager.deleteKeyStoreEntry("admin")
-
         AppDatabase.getInstance(context = this)
 
         // Initialize input variables
@@ -78,17 +75,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun btnLoginAction(view: View) {
         // Validate input login fields before actually login the customer
-//        if (anyInputEmpty() || anyInvalidInput()) {
-//            return Toast.makeText(
-//                applicationContext,
-//                "All fields are required and must be valid!",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
+        if (anyInputEmpty() || anyInvalidInput()) {
+            return Toast.makeText(
+                applicationContext,
+                "All fields are required and must be valid!",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         // Create customer data object
-//        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
-        val customer = LoginData("admin", "a1234")
+        val customer = LoginData(this.nickname!!.text.toString(), this.password!!.text.toString())
 
         // Create new key pair for the current customer if current nickname is absent on key store
         if (KeyStoreManager.isKeyEntryUnique(customer.nickname)) {
