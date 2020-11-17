@@ -111,7 +111,7 @@ exports.validSignature = async function(customer, data, signedData) {
     // Get the certificates for customer
     const certificates = await db.Certificate.findAll({where: {id_customer: customer.id}})
 
-    certificates.forEach(elem => {
+    for(let elem of certificates) {
         try {
             let asn1 = forge.asn1.fromDer(forge.util.decode64(elem.certificate))    
             
@@ -120,11 +120,10 @@ exports.validSignature = async function(customer, data, signedData) {
             let verifier = crypto.createVerify('sha256WithRSAEncryption')
             verifier.update(Buffer.from(data))
             
-            result = verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64')
-            
-            if(result)
+            if(verifier.verify(forge.pki.publicKeyToPem(cert.publicKey), signedData, 'base64'))
                 return true
-        } catch (_) {}
-    })
-    return result
+        } 
+        catch (_) {}
+    }    
+    return false
 }
