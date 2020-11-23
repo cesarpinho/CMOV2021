@@ -71,6 +71,8 @@ class OrderProcessActivity() : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<OrderInfoResponse>, t: Throwable) {
+                icon.setImageResource(R.drawable.ic_error)
+                findViewById<TextView>(R.id.order_error).visibility = TextView.VISIBLE
                 println(t.stackTrace)
             }
         })
